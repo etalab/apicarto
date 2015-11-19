@@ -1,5 +1,5 @@
 {
-  "name": "apicarto-aoc",
+  "name": "apicarto",
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "Vincent Sagniez <vincent.sagniez@ign.fr>",
     "Mickael Borne <mickael.borne@ign.fr>"
   ],
-  "repository": "sgmap/apicarto-aoc",
+  "repository": "sgmap/apicarto",
   "license": "AGPL-3.0",
   "dependencies": {
     "body-parser": "^1.14.1",

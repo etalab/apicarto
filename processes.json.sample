@@ -1,12 +1,12 @@
 {
     "apps": [
         {
-            "name": "apicarto-aoc",
+            "name": "apicarto",
             "script": "server.js",
             "exec_mode": "cluster",
             "instances": 1,
             "env": {
-                "PG_URI": "postgres://localhost/apicarto-aoc",
+                "PG_URI": "postgres://localhost/apicarto",
                 "PORT": 8091
             }
         }

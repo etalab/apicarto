@@ -17,7 +17,7 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'short' : 'dev'));
 
 /* Middlewares */
 function pgClient(req, res, next) {
-    pg.connect(process.env.PG_URI || 'postgres://localhost/apicarto-aoc', function (err, client, done) {
+    pg.connect(process.env.PG_URI || 'postgres://localhost/apicarto', function (err, client, done) {
         if (err) return next(err);
         req.pgClient = client;
         req.pgEnd = _.once(done);
