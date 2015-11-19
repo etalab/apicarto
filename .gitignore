@@ -1,0 +1,8 @@
+data/
+node_modules/
+
+*.log
+tmp
+.DS_Store
+
+processes.json
