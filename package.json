@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
+    "test": "npm run test-unit && npm run lint",
+    "test-unit": "mocha",
     "lint": "eslint controllers/**/*.js helpers/**/*/js *.js tests/**/*.js",
-    "test": "mocha",
     "start": "node server"
   },
   "contributors": [
