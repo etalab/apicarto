@@ -36,3 +36,5 @@ app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
 app.listen(port, function () {
     console.log('Start listening on port %d', port);
 });
+
+module.exports = app;

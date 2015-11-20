@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js",
+    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js tests/**/*.js",
+    "test": "mocha",
     "start": "node server"
   },
   "contributors": [
@@ -28,6 +29,8 @@
     "pg-format": "0.1.4"
   },
   "devDependencies": {
-    "eslint": "^1.7.2"
+    "eslint": "^1.7.2",
+    "mocha": "^2.3.4",
+    "supertest": "^1.1.0"
   }
 }
