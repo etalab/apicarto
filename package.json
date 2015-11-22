@@ -1,9 +1,11 @@
 {
   "name": "apicarto",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js",
+    "test": "npm run test-unit && npm run lint",
+    "test-unit": "mocha",
+    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js tests/**/*.js",
     "start": "node server"
   },
   "contributors": [
@@ -16,6 +18,7 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "codes-postaux": "^1.0.1",
     "cors": "^2.7.1",
     "debug": "^2.2.0",
     "express": "^4.13.3",
@@ -27,6 +30,8 @@
     "pg-format": "0.1.4"
   },
   "devDependencies": {
-    "eslint": "^1.7.2"
+    "eslint": "^1.7.2",
+    "mocha": "^2.3.4",
+    "supertest": "^1.1.0"
   }
 }
