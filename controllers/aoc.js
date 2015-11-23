@@ -51,11 +51,18 @@ exports.in = function(req, res, next) {
         return res.send({
             type: 'FeatureCollection',
             features: result.rows.map(function (row) {
-                return {
+                const feature = {
                     type: 'Feature',
                     geometry: JSON.parse(row.geom),
                     properties: _.omit(row, 'geom')
                 };
+                if (row.granularite === 'commune' && !row.instruction_obligatoire) {
+                    const commune = _.find(req.intersectedCommunes, { insee: row.insee });
+                    feature.properties.area = commune.intersect_area;
+                    feature.properties.contains = commune.contains;
+                    feature.geometry = JSON.parse(commune.geom);
+                }
+                return feature;
             })
         });
     });
