@@ -17,7 +17,7 @@ var inQuery = Handlebars.compile(`
         FROM
             (SELECT ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326) geom) input,
             appellation
-        WHERE appellation.insee IN (%L) AND (appellation.geom IS NULL OR ST_Intersects(appellation.geom, input.geom));
+        WHERE appellation.insee IN (%L);
 `);
 
 function buildSQLQuery(options) {
