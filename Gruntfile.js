@@ -45,7 +45,7 @@ module.exports = function (grunt) {
                         '-h localhost',
                         '-d ' + pgConfig.dbName
                     ];
-                    if (pgConfig.user) psqlOptions.push('- U ' + pgConfig.user);
+                    if (pgConfig.user) psqlOptions.push('-U ' + pgConfig.user);
 
                     return 'ogr2ogr ' + ogrOptions.join(' ') + ' ' + config.dataSource + ' | psql ' + psqlOptions.join(' ') + ' -f -';
                 },
