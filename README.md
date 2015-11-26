@@ -42,7 +42,7 @@ npm config set apicarto:refDataDir http://###:###@apicarto-data.sgmap.fr/prod
 npm run import
 ```
 
-## Lancer le service
+### Lancer le service
 ```
 npm start
 ```
