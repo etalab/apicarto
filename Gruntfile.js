@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         shell: {
             wget: {
-                command: (scope) => 'wget -N ' + sourceFiles[scope]
+                command: (scope) => 'wget -N --quiet ' + sourceFiles[scope]
             },
             importpg: {
                 command: (scope) => {
