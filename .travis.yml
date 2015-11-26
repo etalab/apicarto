@@ -16,6 +16,7 @@ before_script:
   - psql -c "CREATE DATABASE apicarto;" -U postgres
   - psql -d apicarto -c "CREATE EXTENSION postgis;" -U postgres
   - npm config set apicarto:pgUser postgres
+  - npm config list
   - npm run import
 
 script: "npm test"
