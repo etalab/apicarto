@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "v4"
+  - "v4.2"
 
 dist: trusty
 
@@ -15,14 +15,8 @@ before_script:
   - sudo apt-get install -y gdal-bin postgis postgresql-9.4-postgis-2.1
   - psql -c "CREATE DATABASE apicarto;" -U postgres
   - psql -d apicarto -c "CREATE EXTENSION postgis;" -U postgres
-  - mkdir -p data
-  - cd data
-  - wget https://www.data.gouv.fr/s/resources/aires-geographiques-des-appellations-de-la-filiere-viticole/20151026-144523/Appellation.zip
-  - unzip Appellation.zip
-  - "ogr2ogr --config PG_USE_COPY YES -t_srs EPSG:4326 -f PGDump /vsistdout/ Appellation.TAB -lco DROP_TABLE=IF_EXISTS -lco SRID=4326 -lco GEOMETRY_NAME=geom  | PGCLIENTENCODING=LATIN1 psql -U postgres -d apicarto -f -"
-  - wget http://osm13.openstreetmap.fr/~cquest/openfla/export/communes-20150101-5m-shp.zip
-  - unzip communes-20150101-5m-shp.zip
-  - "ogr2ogr --config PG_USE_COPY YES -f PGDump /vsistdout/ communes-20150101-5m.shp -lco DROP_TABLE=IF_EXISTS -lco SRID=4326 -lco GEOMETRY_NAME=geom  -nlt PROMOTE_TO_MULTI -nln communes -select insee,nom | psql -d apicarto -f -"
-  - cd ..
+  - npm config set apicarto:pgUser postgres
+  - npm config list
+  - npm run import
 
 script: "npm test"

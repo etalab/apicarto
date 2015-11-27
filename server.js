@@ -8,6 +8,7 @@ var onFinished = require('on-finished');
 var communesHelper = require('./helpers/communes');
 var aoc = require('./controllers/aoc');
 var codesPostaux = require('./controllers/codes-postaux');
+var qp = require('./controllers/quartiers-prioritaires');
 
 var app = express();
 var port = process.env.PORT || 8091;
@@ -31,6 +32,7 @@ function pgClient(req, res, next) {
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
 // app.get('/aoc/api/beta/aoc/bbox', pgClient, aoc.bbox);
 app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
+app.post('/quartiers-prioritaires/search', pgClient, qp.search);
 
 /* Ready! */
 app.listen(port, function () {
