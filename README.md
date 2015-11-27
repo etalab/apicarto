@@ -18,6 +18,15 @@ apt-get install gdal-bin
 apt-get postgresql postgis postgresql-9.4-postgis-2.1
 ```
 
+Sous Mac OS X :
+```bash
+# Installer ogr2ogr
+brew install gdal
+
+# Installer PostgreSQL et PostGIS
+brew install postgresql postgis
+```
+
 ## Installation
 
 ### Création de la base de donnée
