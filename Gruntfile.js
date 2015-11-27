@@ -12,7 +12,23 @@ module.exports = function (grunt) {
         qp: refDataDir + '/qp-politiquedelaville-shp.zip',
         'communes-ign-metrocorse': refDataDir + '/COMMUNE_PARCELLAIRE_METROCORSE.zip',
         'communes-ign-reunion': refDataDir + '/COMMUNE_PARCELLAIRE_REUNION.zip',
-        'communes-osm': refDataDir + '/communes-20150101-5m-shp.zip'
+        'communes-osm': refDataDir + '/communes-20150101-5m-shp.zip',
+        'appellations-viticoles': refDataDir + '/Appellation20151112.zip'
+    };
+
+    const rmdir = {
+        'appellations-viticoles': 'Appellation/'
+    };
+
+    const unzip = {
+        'appellations-viticoles': {
+            src: 'Appellation20151112.zip',
+            dest: 'Appellation'
+        }
+    };
+
+    const runpg = {
+        'appellations-viticoles': 'prepare-appellations.sql'
     };
 
     const importableLayers = {
@@ -39,6 +55,13 @@ module.exports = function (grunt) {
             dataSource: '/vsizip/communes-20150101-5m-shp.zip',
             layerName: 'communes',
             select: 'insee,nom'
+        },
+        'appellations-viticoles': {
+            dataSource: 'Appellation/Appellation.TAB',
+            layerName: 'appellation',
+            convertToWgs84: true,
+            spatialIndex: 'NO',
+            pgClientEncoding: 'LATIN1'
         }
     };
 
@@ -65,6 +88,7 @@ module.exports = function (grunt) {
                     if (config.append) ogrOptions.push('-append');
                     if (config.convertToWgs84) ogrOptions.push('-t_srs EPSG:4326');
                     if (config.select) ogrOptions.push('-select ' + config.select);
+                    if (config.spatialIndex) ogrOptions.push('-lco SPATIAL_INDEX=' + config.spatialIndex);
 
                     const psqlOptions = [
                         '-h localhost',
@@ -81,6 +105,26 @@ module.exports = function (grunt) {
                 options: {
                     failOnError: false
                 }
+            },
+            runpg: {
+                command: (scope) => {
+                    const psqlOptions = [
+                        '-h localhost',
+                        '-d ' + pgConfig.dbName
+                    ];
+                    if (pgConfig.user) psqlOptions.push('-U ' + pgConfig.user);
+
+                    const psqlEnvVars = [];
+                    if (pgConfig.password) psqlEnvVars.push('PGPASSWORD=' + pgConfig.password);
+
+                    return psqlEnvVars.join(' ') + ' psql ' + psqlOptions.join(' ') + ' --file=../sql/' + runpg[scope];
+                }
+            },
+            unzip: {
+                command: (scope) => 'unzip ' + unzip[scope].src + ' -d ' + unzip[scope].dest
+            },
+            rmdir: {
+                command: (scope) => 'rm -R ' + rmdir[scope]
             },
             options: {
                 execOptions: {
@@ -109,10 +153,19 @@ module.exports = function (grunt) {
         'shell:importpg:communes-osm'
     ]);
 
+    grunt.registerTask('import-appellations-viticoles', [
+        'shell:wget:appellations-viticoles',
+        'shell:unzip:appellations-viticoles',
+        'shell:importpg:appellations-viticoles',
+        'shell:runpg:appellations-viticoles',
+        'shell:rmdir:appellations-viticoles'
+    ]);
+
     grunt.registerTask('import', [
         'import-qp',
         'import-communes-ign',
-        'import-communes-osm'
+        'import-communes-osm',
+        'import-appellations-viticoles'
     ]);
 
 };
