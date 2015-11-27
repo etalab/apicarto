@@ -11,7 +11,8 @@ module.exports = function (grunt) {
     const sourceFiles = {
         qp: refDataDir + '/qp-politiquedelaville-shp.zip',
         'communes-ign-metrocorse': refDataDir + '/COMMUNE_PARCELLAIRE_METROCORSE.zip',
-        'communes-ign-reunion': refDataDir + '/COMMUNE_PARCELLAIRE_REUNION.zip'
+        'communes-ign-reunion': refDataDir + '/COMMUNE_PARCELLAIRE_REUNION.zip',
+        'communes-osm': refDataDir + '/communes-20150101-5m-shp.zip'
     };
 
     const importableLayers = {
@@ -33,6 +34,11 @@ module.exports = function (grunt) {
             convertToWgs84: true,
             createTable: 'NO',
             pgClientEncoding: 'LATIN1'
+        },
+        'communes-osm': {
+            dataSource: '/vsizip/communes-20150101-5m-shp.zip',
+            layerName: 'communes',
+            select: 'insee,nom'
         }
     };
 
@@ -58,6 +64,7 @@ module.exports = function (grunt) {
                     ];
                     if (config.append) ogrOptions.push('-append');
                     if (config.convertToWgs84) ogrOptions.push('-t_srs EPSG:4326');
+                    if (config.select) ogrOptions.push('-select ' + config.select);
 
                     const psqlOptions = [
                         '-h localhost',
@@ -97,9 +104,15 @@ module.exports = function (grunt) {
         'shell:importpg:communes-ign-reunion'
     ]);
 
+    grunt.registerTask('import-communes-osm', [
+        'shell:wget:communes-osm',
+        'shell:importpg:communes-osm'
+    ]);
+
     grunt.registerTask('import', [
         'import-qp',
-        'import-communes-ign'
+        'import-communes-ign',
+        'import-communes-osm'
     ]);
 
 };
