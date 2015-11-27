@@ -17,26 +17,11 @@ var inQuery = Handlebars.compile(`
         FROM
             (SELECT ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326) geom) input,
             appellation
-        WHERE appellation.insee IN (%L) AND (appellation.geom IS NULL OR ST_Intersects(appellation.geom, input.geom));
+        WHERE appellation.insee IN (%L);
 `);
 
 function buildSQLQuery(options) {
     return format(inQuery(options), options.geometry, options.inseeCodeList);
-}
-
-function bbox_aoc(bbox) {
-    return format(`
-        SELECT
-            ST_AsGeoJSON(Appellation.geom) AS geom,
-            id_uni,
-            appellation,
-            commune
-        FROM
-            Appellation,
-            (SELECT st_makeenvelope(%s, %s, %s, %s, 4326) geom) d
-        WHERE ST_Intersects(d.geom , Appellation.geom)
-        LIMIT 50;`
-    , bbox[0], bbox[1], bbox[2], bbox[3]);
 }
 
 exports.in = function(req, res, next) {
@@ -66,38 +51,18 @@ exports.in = function(req, res, next) {
         return res.send({
             type: 'FeatureCollection',
             features: result.rows.map(function (row) {
-                return {
+                const feature = {
                     type: 'Feature',
                     geometry: JSON.parse(row.geom),
                     properties: _.omit(row, 'geom')
                 };
-            })
-        });
-    });
-};
-
-exports.bbox = function (req, res, next) {
-    var bbox = req.query.bbox.split(',');
-    var sql = bbox_aoc(bbox);
-
-    req.pgClient.query(sql, function(err, result) {
-        if (err) {
-            req.pgEnd(err);
-            return next(err);
-        }
-
-        if (!result.rows) {
-            return res.status(404).send({ status: 'No Data' });
-        }
-
-        return res.send({
-            type: 'FeatureCollection',
-            features: result.rows.map(function (row) {
-                return {
-                    type: 'Feature',
-                    geometry: JSON.parse(row.geom),
-                    properties: _.pick(row, 'communes', 'appellation', 'id_uni')
-                };
+                if (row.granularite === 'commune' && !row.instruction_obligatoire) {
+                    const commune = _.find(req.intersectedCommunes, { insee: row.insee });
+                    feature.properties.area = commune.intersect_area;
+                    feature.properties.contains = commune.contains;
+                    feature.geometry = JSON.parse(commune.geom);
+                }
+                return feature;
             })
         });
     });

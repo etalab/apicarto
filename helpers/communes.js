@@ -7,7 +7,12 @@ function intersects(options) {
         'osm': {
             prepareQuery: function (geometry) {
                 return format(`
-                    SELECT nom, insee, ST_Area(ST_Intersection(input.geom, communes.geom)::geography) / 10000 AS intersect_area
+                    SELECT
+                        nom,
+                        insee,
+                        ST_Contains(input.geom, communes.geom) AS contains,
+                        ST_Area(ST_Intersection(input.geom, communes.geom)::geography) / 10000 AS intersect_area,
+                        ST_AsGeoJSON(communes.geom) AS geom,
                     FROM
                         communes,
                         (SELECT ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326) geom) input
@@ -18,7 +23,12 @@ function intersects(options) {
         'ign-parcellaire': {
             prepareQuery: function (geometry) {
                 return format(`
-                    SELECT NOM_COM as nom, CODE_INSEE as insee, ST_Area(ST_Intersection(input.geom, communes_ign.geom)::geography) / 10000 AS intersect_area
+                    SELECT
+                        NOM_COM as nom,
+                        CODE_INSEE as insee,
+                        ST_Contains(input.geom, communes_ign.geom) AS contains,
+                        ST_Area(ST_Intersection(input.geom, communes_ign.geom)::geography) / 10000 AS intersect_area,
+                        ST_AsGeoJSON(communes_ign.geom) AS geom
                     FROM
                         communes_ign,
                         (SELECT ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326) geom) input
