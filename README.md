@@ -29,7 +29,7 @@ brew install postgresql postgis
 
 ## Installation
 
-### Création de la base de donnée
+### Création de la base de données
 
 La base qui contiendra les données locales doit être créée au prélable.
 ```bash
