@@ -30,6 +30,9 @@ module.exports = function (options) {
      */
     router.get('/division', function (req,res) {
         var params = prepare_section_params(req.query);
+        if(params == "ErreurInsee") {
+			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
+		}
         cadastreClient.getDivisions(params,function(featureCollection){
             res.json(featureCollection);
         });
@@ -43,8 +46,10 @@ module.exports = function (options) {
      *
      */
     router.get('/parcelle', function (req,res) {
-        //TODO prepare_parcelle_params
         var params = prepare_section_params(req.query);
+        if(params == "ErreurInsee") {
+			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
+		}
         cadastreClient.getParcelles(params,function(featureCollection){
             res.json(featureCollection);
         });
@@ -57,19 +62,37 @@ module.exports = function (options) {
      *
      */
     router.get('/commune', function (req,res) {
-        //TODO prepare_parcelle_params
-        var params = prepare_section_params(req.query);
+        var params = prepare_section_params(req.query,'commune');
+        if(params == "ErreurInsee") {
+			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
+		}
         cadastreClient.getCommune(params,function(featureCollection){
             res.json(featureCollection);
         });
     });
 
+/**
+     * Récupération des localisants
+     *
+     * Paramètres : une feature avec pour nom "geom"...
+     *
+     */
+
+    router.get('/localisant', function (req,res) {
+        var params = prepare_section_params(req.query);
+        if(params == "ErreurInsee") {
+			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
+		}
+        cadastreClient.getLocalisant(params,function(featureCollection){
+            res.json(featureCollection);
+        });
+    });
 
  /**
      * Récupération des informations cadastre et commune
      *
-     * Paramètres : une feature avec pour nom "geom"...
-     *
+     * Paramètres : une feature avec pour nom "geom"... 
+     * Mode : GET ou POST
      */
 
     router.get('/geometrie', function (req,res) {
@@ -84,24 +107,11 @@ module.exports = function (options) {
     router.post('/geometrie', function (req, res) {
         if (!req.body.geom)
             return res.status(400).send({ code: 400, message: 'geom field is required'});
-
         cadastreClient.getCadastreFromGeom(req.body.geom, function (featureCollection) {
             res.json(featureCollection);
         });
     });
 
-/**
-     * Récupération des localisants
-     *
-     * Paramètres : une feature avec pour nom "geom"...
-     *
-     */
 
-    router.get('/localisant', function (req,res) {
-        var params = prepare_section_params(req.query);
-        cadastreClient.getLocalisant(params,function(featureCollection){
-            res.json(featureCollection);
-        });
-    });
     return router;
 };
