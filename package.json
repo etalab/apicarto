@@ -6,7 +6,7 @@
     "import": "grunt import",
     "test": "npm run test-unit && npm run lint",
     "test-unit": "mocha",
-    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js tests/**/*.js",
+    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js tests/**/*.js lib/**/*.js",
     "start": "node server"
   },
   "contributors": [
@@ -33,12 +33,15 @@
     "on-finished": "^2.3.0",
     "pg": "^4.4.3",
     "pg-format": "0.1.4",
+    "request": "2.65.0",
+    "terraformer-wkt-parser": "1.0.1",
     "turf": "^2.0.2"
   },
   "devDependencies": {
     "eslint": "^1.7.2",
     "expect.js": "^0.3.1",
     "mocha": "^2.3.4",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "unit.js": "^2.0.0"
   }
 }

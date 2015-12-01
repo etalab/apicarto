@@ -7,6 +7,8 @@
             "instances": 1,
             "env": {
                 "PG_URI": "postgres://localhost/apicarto",
+                "GEOPORTAIL_KEY": "",
+                "GEOPORTAIL_REFERER": "http://localhost",
                 "PORT": 8091
             }
         }
