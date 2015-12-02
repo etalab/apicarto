@@ -1,4 +1,4 @@
-# APICarto [![Build Status](https://travis-ci.org/sgmap/apicarto.svg)](https://travis-ci.org/sgmap/apicarto)
+# APICarto [![Build Status](https://travis-ci.org/sgmap/apicarto.svg?branch=master)](https://travis-ci.org/sgmap/apicarto)
 
 ## Prérequis
 
