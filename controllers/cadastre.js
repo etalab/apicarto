@@ -1,7 +1,8 @@
 var Router = require('express').Router;
-
-var prepare_section_params = require('../lib/prepare_section_params');
+var prepareParamsCadastre = require('../lib/prepare-params-cadastre.js');
+var parse_insee = require('../lib/parse_insee');
 var CadastreClient = require('../lib/CadastreClient.js');
+
 
 module.exports = function (options) {
     if (!options.key) {
@@ -29,13 +30,12 @@ module.exports = function (options) {
      *
      */
     router.get('/division', function (req,res) {
-        var params = prepare_section_params(req.query);
-        if(params == "ErreurInsee") {
-			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
-		}
-        cadastreClient.getDivisions(params,function(featureCollection){
-            res.json(featureCollection);
-        });
+       var params = prepareParamsCadastre(req, res);
+       if(!params.statusCode) {
+           cadastreClient.getDivisions(params,function(featureCollection){
+               res.json(featureCollection);
+           });
+      }
     });
 
 
@@ -46,13 +46,12 @@ module.exports = function (options) {
      *
      */
     router.get('/parcelle', function (req,res) {
-        var params = prepare_section_params(req.query);
-        if(params == "ErreurInsee") {
-			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
-		}
-        cadastreClient.getParcelles(params,function(featureCollection){
-            res.json(featureCollection);
-        });
+        var params = prepareParamsCadastre(req, res);
+        if(!params.statusCode) {
+            cadastreClient.getParcelles(params,function(featureCollection){
+                res.json(featureCollection);
+            });
+        }
     });
 
     /**
@@ -62,13 +61,12 @@ module.exports = function (options) {
      *
      */
     router.get('/commune', function (req,res) {
-        var params = prepare_section_params(req.query,'commune');
-        if(params == "ErreurInsee") {
-			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
-		}
-        cadastreClient.getCommune(params,function(featureCollection){
-            res.json(featureCollection);
-        });
+        var params = prepareParamsCadastre(req, res);
+        if(!params.statusCode) {
+            cadastreClient.getCommune(params,function(featureCollection){
+                res.json(featureCollection);
+            });
+        }    
     });
 
 /**
@@ -78,14 +76,13 @@ module.exports = function (options) {
      *
      */
 
-    router.get('/localisant', function (req,res) {
-        var params = prepare_section_params(req.query);
-        if(params == "ErreurInsee") {
-			return res.status(400).send({ code: 400, message:'Le code insee (champ obligatoire) est sur 5 caractères' });
-		}
-        cadastreClient.getLocalisant(params,function(featureCollection){
-            res.json(featureCollection);
-        });
+    router.get('/localisant',function (req,res) {
+		var params = prepareParamsCadastre(req, res);
+		if(!params.statusCode) {
+            cadastreClient.getLocalisant(params,function(featureCollection){
+                res.json(featureCollection);
+            });
+        }
     });
 
  /**
