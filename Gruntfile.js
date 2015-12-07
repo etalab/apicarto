@@ -13,19 +13,12 @@ module.exports = function (grunt) {
         'communes-ign-metrocorse': refDataDir + '/COMMUNE_PARCELLAIRE_METROCORSE.zip',
         'communes-ign-reunion': refDataDir + '/COMMUNE_PARCELLAIRE_REUNION.zip',
         'communes-osm': refDataDir + '/communes-20150101-5m-shp.zip',
-        'appellations-viticoles': refDataDir + '/Appellation20151112.zip'
+        'appellations-viticoles': refDataDir + '/Appellation_20151207.zip'
     };
 
-    const rmdir = {
-        'appellations-viticoles': 'Appellation/'
-    };
+    const rmdir = {};
 
-    const unzip = {
-        'appellations-viticoles': {
-            src: 'Appellation20151112.zip',
-            dest: 'Appellation'
-        }
-    };
+    const unzip = {};
 
     const runpg = {
         'appellations-viticoles': 'prepare-appellations.sql'
@@ -57,11 +50,12 @@ module.exports = function (grunt) {
             select: 'insee,nom'
         },
         'appellations-viticoles': {
-            dataSource: 'Appellation/Appellation.TAB',
+            dataSource: '/vsizip/Appellation_20151207.zip',
             layerName: 'appellation',
             convertToWgs84: true,
             spatialIndex: 'NO',
-            pgClientEncoding: 'LATIN1'
+            pgClientEncoding: 'LATIN1',
+            append: true
         }
     };
 
@@ -155,10 +149,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('import-appellations-viticoles', [
         'shell:wget:appellations-viticoles',
-        'shell:unzip:appellations-viticoles',
         'shell:importpg:appellations-viticoles',
-        'shell:runpg:appellations-viticoles',
-        'shell:rmdir:appellations-viticoles'
+        'shell:runpg:appellations-viticoles'
     ]);
 
     grunt.registerTask('import', [
