@@ -1,8 +1,5 @@
--- Suppression des géométries des segments 3 et 4
-UPDATE Appellation SET geom = NULL WHERE segment IN ('3', '4');
-
--- Correction des géométries incorrectes
-UPDATE Appellation SET geom = ST_Buffer(geom, 0) WHERE geom IS NOT NULL AND NOT ST_IsValid(geom);
+-- Renommage de la colonne dont le nom est tronqué
+ALTER TABLE Appellation RENAME appellatio TO appellation;
 
 -- Enrichissement du schéma de la table
 CREATE TYPE type_granularite_appellation AS ENUM('commune', 'exacte');
