@@ -32,6 +32,7 @@ function pgClient(req, res, next) {
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
 app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
 app.post('/quartiers-prioritaires/search', pgClient, qp.search);
+app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
 
 /* Ready! */
 app.listen(port, function () {

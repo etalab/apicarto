@@ -4,6 +4,8 @@ const geojsonhint = require('geojsonhint').hint;
 const request = require('supertest');
 const server = require('../server');
 const expect = require('expect.js');
+const fs = require('fs');
+const should = require('should');
 const _ = require('lodash');
 
 function returnValidGeoJSON(res) {
@@ -11,6 +13,28 @@ function returnValidGeoJSON(res) {
 }
 
 describe('/quartiers-prioritaires', () => {
+    describe('/layer', () => {
+      describe('no bbox precised, return all qpv', () => {
+          it('should reply with 200', done => {
+              request(server)
+                  .get('/quartiers-prioritaires/layer')
+                  .expect(200, done);
+          });
+      });
+      describe('with bbox around Avignon', () => {
+        it('should reply with 200', done => {
+          request(server)
+            .get('/quartiers-prioritaires/layer')
+            .query({bbox:"4.718971252441407,43.91458889820759,5.0435829162597665,43.98441605494321"})
+            .expect(200)
+            .end(function(err, res) {
+              console.log(JSON.parse(fs.readFileSync(__dirname + '/fixtures/qpvbbox.json')));
+              res.body.should.eql(JSON.parse(fs.readFileSync(__dirname + '/fixtures/qpvbbox.json')));
+              done();
+            });;
+        })
+      })
+    })
     describe('/search', () => {
         function makeRequestWithBbox(bbox) {
             return request(server)
