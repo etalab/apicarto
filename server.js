@@ -30,6 +30,7 @@ function pgClient(req, res, next) {
 }
 
 /* Routes */
+app.use('/static', express.static(__dirname + '/doc'));
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
 app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
 app.post('/quartiers-prioritaires/search', pgClient, qp.search);

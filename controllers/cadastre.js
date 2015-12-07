@@ -1,6 +1,5 @@
 var Router = require('express').Router;
 var prepareParamsCadastre = require('../lib/prepare-params-cadastre.js');
-var parse_insee = require('../lib/parse_insee');
 var CadastreClient = require('../lib/CadastreClient.js');
 
 
@@ -30,12 +29,12 @@ module.exports = function (options) {
      *
      */
     router.get('/division', function (req,res) {
-       var params = prepareParamsCadastre(req, res);
-       if(!params.statusCode) {
-           cadastreClient.getDivisions(params,function(featureCollection){
-               res.json(featureCollection);
-           });
-      }
+        var params = prepareParamsCadastre(req, res);
+        if(!params.statusCode) {
+            cadastreClient.getDivisions(params,function(featureCollection){
+                res.json(featureCollection);
+            });
+        }
     });
 
 
@@ -77,8 +76,8 @@ module.exports = function (options) {
      */
 
     router.get('/localisant',function (req,res) {
-		var params = prepareParamsCadastre(req, res);
-		if(!params.statusCode) {
+        var params = prepareParamsCadastre(req, res);
+        if(!params.statusCode) {
             cadastreClient.getLocalisant(params,function(featureCollection){
                 res.json(featureCollection);
             });
