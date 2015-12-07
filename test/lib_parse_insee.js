@@ -4,8 +4,13 @@ var test = require('unit.js');
 var parse_insee = require('../lib/parse_insee.js') ;
 
 describe('test du décode insee', function() {
-    it('returns null for invalid INSEE code', function(){
+    it('returns null for invalid INSEE code 5444', function(){
         var result = parse_insee('5444');
+        test.assert(null === result);
+    });
+    
+    it('returns null for invalid INSEE code 2E001', function(){
+        var result = parse_insee('2E001');
         test.assert(null === result);
     });
 
@@ -20,4 +25,11 @@ describe('test du décode insee', function() {
         test.value(result.code_dep).isEqualTo('971');
         test.value(result.code_com).isEqualTo('23');
     });
+    
+    it('returns {code_dep:2A, code_com:001} for 2A001', function(){
+        var result = parse_insee('2A001');
+        test.value(result.code_dep).isEqualTo('2A');
+        test.value(result.code_com).isEqualTo('001');
+    });
+    
 });
