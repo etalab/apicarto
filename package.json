@@ -17,6 +17,10 @@
   ],
   "repository": "sgmap/apicarto",
   "license": "AGPL-3.0",
+  "engines": {
+    "node": ">=4",
+    "npm": ">=2"
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "codes-postaux": "^1.0.1",
