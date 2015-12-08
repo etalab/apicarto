@@ -1,5 +1,7 @@
 # APICarto [![Build Status](https://travis-ci.org/sgmap/apicarto.svg?branch=master)](https://travis-ci.org/sgmap/apicarto)
 
+[![Join the chat at https://gitter.im/sgmap/apicarto](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sgmap/apicarto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Prérequis
 
 Pour faire fonctionner APICarto, vous avez besoin de :
@@ -51,7 +53,20 @@ npm config set apicarto:refDataDir http://###:###@apicarto-data.sgmap.fr/prod
 npm run import
 ```
 
+### Clé Géoportail IGN
+
+Pour accéder aux référentiels publiés sur le Géoportail de l'IGN, vous devez définir la clé d'accès et le compte associé.
+
+```bash
+npm config set apicarto:geoportailKey ****ma clé****
+npm config set apicarto:geoportailReferer ****mon referer****
+```
+
 ### Lancer le service
 ```
 npm start
 ```
+
+## Développement derrière un proxy
+
+En cas de nécessité, utiliser les [variables d'environnement standards](https://www.npmjs.com/package/request#controlling-proxy-behaviour-using-environment-variables).

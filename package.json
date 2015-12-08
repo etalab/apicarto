@@ -6,7 +6,7 @@
     "import": "grunt import",
     "test": "npm run test-unit && npm run lint",
     "test-unit": "mocha",
-    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js tests/**/*.js",
+    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js test/**/*.js lib/**/*.js",
     "start": "node server"
   },
   "contributors": [
@@ -17,6 +17,10 @@
   ],
   "repository": "sgmap/apicarto",
   "license": "AGPL-3.0",
+  "engines": {
+    "node": ">=4",
+    "npm": ">=2"
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "codes-postaux": "^1.0.1",
@@ -35,12 +39,16 @@
     "pg": "^4.4.3",
     "pg-format": "0.1.4",
     "turf": "^2.0.2",
-    "wkx": "^0.2.0"
+    "wkx": "^0.2.0",
+    "request": "2.65.0",
+    "terraformer-wkt-parser": "1.0.1",
+    "turf": "^2.0.2"
   },
   "devDependencies": {
     "eslint": "^1.7.2",
     "expect.js": "^0.3.1",
     "mocha": "^2.3.4",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "unit.js": "^2.0.0"
   }
 }

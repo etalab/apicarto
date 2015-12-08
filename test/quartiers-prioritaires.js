@@ -39,7 +39,7 @@ describe('/quartiers-prioritaires', () => {
         function makeRequestWithBbox(bbox) {
             return request(server)
                 .post('/quartiers-prioritaires/search')
-                .send({ geo: bboxPolygon(bbox).geometry })
+                .send({ geo: bboxPolygon(bbox).geometry });
         }
         describe('not valid input type', () => {
             it('should reply with 400', done => {
@@ -98,9 +98,9 @@ describe('/quartiers-prioritaires', () => {
                         const feature = res.body.features[0];
                         expect(feature.geometry.type).to.eql('MultiPolygon');
                         expect(feature.properties).to.eql({
-                          code: 'QP057020',
-                          nom: 'Borny',
-                          commune: 'Metz'
+                            code: 'QP057020',
+                            nom: 'Borny',
+                            commune: 'Metz'
                         });
                     })
                     .end(done);
