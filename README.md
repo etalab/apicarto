@@ -53,7 +53,20 @@ npm config set apicarto:refDataDir http://###:###@apicarto-data.sgmap.fr/prod
 npm run import
 ```
 
+### Clé Géoportail IGN
+
+Pour accéder aux référentiels publiés sur le Géoportail de l'IGN, vous devez définir la clé d'accès et le compte associé.
+
+```bash
+npm config set apicarto:geoportailKey ****ma clé****
+npm config set apicarto:geoportailReferer ****mon referer****
+```
+
 ### Lancer le service
 ```
 npm start
 ```
+
+## Développement derrière un proxy
+
+En cas de nécessité, utiliser les [variables d'environnement standards](https://www.npmjs.com/package/request#controlling-proxy-behaviour-using-environment-variables).
