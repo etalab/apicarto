@@ -1,21 +1,18 @@
 /*eslint-env node, mocha */
-//var test = require('unit.js');
-
-//const geojsonhint = require('geojsonhint').hint;
 const request = require('supertest');
 const server = require('../server');
 const expect = require('expect.js');
 
-
 describe('test du module divisions', function() {
-    
+
     describe('not valid input type', function() {
+        this.timeout(5000);
         it('should reply with 400 pour numero sur 2 caractères au lieu de 4', function(done){
             request(server)
                 .get('/cadastre/division?insee=94067&numero=02')
                 .expect(400,done);
         });
-        
+
         it('should reply with 400 pour chaine testapi', function(done){
             request(server)
                 .get('/cadastre/division?insee=testapi')
@@ -23,13 +20,14 @@ describe('test du module divisions', function() {
         });
     });
     describe('Test du module divisions avec valeur', function() {
-        it('should work for insee 94067 et section=0A', function(){
+        this.timeout(5000);
+        it('should work for insee 94067 et section=0A', done => {
             request(server)
                 .get('/cadastre/division?insee=94067&section=0A')
-                .expect(200);
+                .expect(200, done);
         });
         it('should reply a FeatureCollection containing a valid Feature', done => {
-            request(server)    
+            request(server)
                 .get('/cadastre/division?insee=94067&section=0A')
                 .expect(res => {
                     const feature = res.body.features[0];
@@ -43,12 +41,10 @@ describe('test du module divisions', function() {
                         com_abs: '000',
                         echelle: '500',
                         edition: 3,
-                        code_arr: '000' 
+                        code_arr: '000'
                     });
                 })
                 .end(done);
         });
     });
 });
-
-
