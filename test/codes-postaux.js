@@ -1,7 +1,6 @@
+/* eslint-env node, mocha */
 const request = require('supertest');
-
 const server = require('../server');
-
 
 describe('/codes-postaux', function() {
     describe('/communes', function() {
@@ -38,8 +37,8 @@ describe('/codes-postaux', function() {
         });
 
         describe('legit postal code', function() {
-            const POSTAL_CODE = '06650',
-                  PAYLOAD = [ {
+            const POSTAL_CODE = '06650';
+            const PAYLOAD = [ {
                 codeInsee: '06089',
                 nomCommune: 'OPIO',
                 codePostal: POSTAL_CODE,

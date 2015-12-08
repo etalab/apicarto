@@ -6,7 +6,7 @@
     "import": "grunt import",
     "test": "npm run test-unit && npm run lint",
     "test-unit": "mocha",
-    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js tests/**/*.js lib/**/*.js",
+    "lint": "eslint controllers/**/*.js helpers/**/*/js *.js test/**/*.js lib/**/*.js",
     "start": "node server"
   },
   "contributors": [
