@@ -1,12 +1,12 @@
 swagger: '2.0'
 info:
-  title: APICARTO AOC
+  title: APICarto AOC
   description: >
-    Le service d'interrogation du cadastre permet de faire le croisement entre un polygone et la couche des AOC/IGP. 
+    Le service d'interrogation du cadastre permet de faire le croisement entre un polygone et la couche des AOC/IGP.
     Les données proviennent de France Agrimer et de l'INAO.
     Possibilité d'utiliser les communes de l'IGN ou les communes OSM
-    
-    
+
+
      ```json
         {"type":"FeatureCollection",
          "features":
@@ -20,22 +20,18 @@ info:
           }
         ]}
        }
-  
+
     ```
 
 
 
-    
-  version: 1.0.0
-  contact:
-    name: Apicarto AOC
-  license:
-    name: AGPL-V3
-    url: https://www.gnu.org/licenses/agpl-3.0.html
+
+  version: '1.0'
 host: apicarto.sgmap.fr
-consumes: application/json
 schemes:
   - https
+consumes:
+  - application/json
 basePath: /
 produces:
   - application/json
@@ -44,16 +40,16 @@ paths:
     post:
       description: |
         Prends une geometrie de type GeoJSON en paramètre d'entrée geom
-        
-        Paramètres de sorties : Retourne un résultat de Type "FeatureCollection" 
+
+        Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       tags:
-        - Appelations
+        - Appellations
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/AOC'
-  
+            $ref: '#/definitions/AOCs'
+
 definitions:
   Geometry:
     type: object
@@ -104,11 +100,12 @@ definitions:
       type:
         type: string
         enum:
-        - Feature
+        - FeatureCollection
         description: Le type est FeatureCollection
       features:
         type: array
-        items: object
+        items:
+          $ref: '#/definitions/Feature'
 
   AOC:
     description: ''
@@ -122,18 +119,31 @@ definitions:
               type: number
               format: float
             idapp:
-                type: string
+              type: string
             id_uni:
-                type: string
-                description: corresponds à "segment-idapp-insee"
+              type: string
+              description: corresponds à "segment-idapp-insee"
             insee:
-                type: string
+              type: string
             segment:
-                type: string
+              type: string
             instruction_obligatoire:
-                 type: boolean
-            granularite: 
-                 type: string
+              type: boolean
+            granularite:
+              type: string
+              enum:
+              - commune
+              - exacte
             contains:
-                 type: boolean     
-                 
+              type: boolean
+
+  AOCs:
+    description: Une `FeatureCollection` contenant uniquement des features de type `AOC`
+    allOf:
+    - $ref: '#/definitions/FeatureCollection'
+    - type: object
+      properties:
+        features:
+          type: array
+          items:
+            $ref: '#/definitions/AOC'
