@@ -1,21 +1,18 @@
 var format = require('pg-format');
 var _ = require('lodash');
-var turf = require('turf');
-var geojsonhint = require('geojsonhint');
-var wkx = require('wkx');
 
 exports.layer = function(req, res, next) {
 
   if (req.query.bbox) {
-    var bbox = req.query.bbox.split(",");
+    var bbox = req.query.bbox.split(',');
   }
-  var sql = `SELECT qp.geom,
+  var sql = `SELECT ST_AsGeoJSON(qp.geom) as geom,
                       code_qp,
                       nom_qp,
                       commune_qp FROM quartiers_prioritaires as qp`;
   if (bbox) {
     sql += `,(select st_makeenvelope(${bbox.map(corner => corner)}, 4326) geom) b
-                        where b.geom && qp.geom`
+                        where b.geom && qp.geom`;
   }
   req.pgClient.query(sql, function(err, result) {
     if (err) {
@@ -32,16 +29,15 @@ exports.layer = function(req, res, next) {
     return res.send({
       type: 'FeatureCollection',
       features: result.rows.map(function(row) {
-        var buf = new Buffer(row.geom, 'hex');
         return {
           type: 'Feature',
-          geometry: wkx.Geometry.parse(buf).toGeoJSON(),
+          geometry: JSON.parse(row.geom),
           properties: _.omit(row, 'geom')
         };
       })
-    })
-  })
-}
+    });
+  });
+};
 
 exports.search = function(req, res, next) {
   if (!req.body.geo) {
