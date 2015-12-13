@@ -5,7 +5,7 @@
   "scripts": {
     "import": "grunt import",
     "test": "npm run test-unit && npm run lint",
-    "test-unit": "mocha",
+    "test-unit": "istanbul cover _mocha",
     "lint": "eslint controllers/**/*.js helpers/**/*/js *.js test/**/*.js lib/**/*.js",
     "start": "node server"
   },
@@ -44,6 +44,7 @@
   "devDependencies": {
     "eslint": "^1.7.2",
     "expect.js": "^0.3.1",
+    "istanbul": "^0.4.1",
     "mocha": "^2.3.4",
     "supertest": "^1.1.0",
     "unit.js": "^2.0.0"
