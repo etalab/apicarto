@@ -37,8 +37,6 @@
     "on-finished": "^2.3.0",
     "pg": "^4.4.3",
     "pg-format": "0.1.4",
-    "turf": "^2.0.2",
-    "wkx": "^0.2.0",
     "request": "2.65.0",
     "terraformer-wkt-parser": "1.0.1",
     "turf": "^2.0.2"
