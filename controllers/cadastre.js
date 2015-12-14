@@ -11,6 +11,8 @@ module.exports = function (options) {
     var router = new Router();
     var cadastreClient = new CadastreClient(options.key, options.referer || 'http://localhost');
 
+    router.use(require('../lib/extract-insee'));
+
     router.get('/capabilities', function(req, res) {
         cadastreClient.getCapabilities(function(body){
             if (body) {
@@ -65,7 +67,7 @@ module.exports = function (options) {
             cadastreClient.getCommune(params,function(featureCollection){
                 res.json(featureCollection);
             });
-        }    
+        }
     });
 
 /**
@@ -87,7 +89,7 @@ module.exports = function (options) {
  /**
      * Récupération des informations cadastre et commune
      *
-     * Paramètres : une feature avec pour nom "geom"... 
+     * Paramètres : une feature avec pour nom "geom"...
      * Mode : GET ou POST
      */
 
