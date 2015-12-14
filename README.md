@@ -1,5 +1,7 @@
-# APICarto [![Build Status](https://travis-ci.org/sgmap/apicarto.svg?branch=master)](https://travis-ci.org/sgmap/apicarto)
+# APICarto
 
+[![Build Status](https://travis-ci.org/sgmap/apicarto.svg?branch=master)](https://travis-ci.org/sgmap/apicarto)
+[![Coverage Status](https://coveralls.io/repos/sgmap/apicarto/badge.svg?branch=coverage&service=github)](https://coveralls.io/github/sgmap/apicarto?branch=coverage)
 [![Join the chat at https://gitter.im/sgmap/apicarto](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sgmap/apicarto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Prérequis

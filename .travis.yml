@@ -20,3 +20,7 @@ before_script:
   - npm run import
 
 script: "npm test"
+
+after_script:
+    - npm install coveralls
+    - cat ./coverage/lcov.info | coveralls
