@@ -16,7 +16,16 @@ var port = process.env.PORT || 8091;
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(morgan(process.env.NODE_ENV === 'production' ? 'short' : 'dev'));
+
+var env = process.env.NODE_ENV;
+
+if (env === 'production') {
+    app.use(morgan(':date[clf] :req[x-real-ip] :method :url HTTP/:http-version :status :res[content-length] - :response-time ms'));
+}
+
+if (env === 'development') {
+    app.use(morgan('dev'));
+}
 
 /* Middlewares */
 function pgClient(req, res, next) {
