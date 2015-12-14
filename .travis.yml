@@ -20,4 +20,7 @@ before_script:
   - npm run import
 
 script: "npm test"
-after_script: "npm install coveralls@2.11 && cat ./coverage/lcov.info | coveralls"
+
+after_script:
+    - npm install coveralls
+    - cat ./coverage/lcov.info | coveralls
