@@ -3,13 +3,13 @@ const expect = require('expect.js');
 const parseInseeCode = require('../lib/parse-insee-code.js') ;
 
 describe('#parseCodeInsee()', () => {
-    it('will throw an exception for invalid INSEE code (length)', () => {
+    it('should throw an exception for invalid INSEE code (length)', () => {
         expect(parseInseeCode)
             .withArgs('5444')
             .to.throwException('INSEE code must have 5 characters');
     });
 
-    it('will throw an exception for invalid INSEE code (content)', () => {
+    it('should throw an exception for invalid INSEE code (content)', () => {
         expect(parseInseeCode)
             .withArgs('2E001')
             .to.throwException('Invalid INSEE code');
