@@ -17,6 +17,13 @@ var port = process.env.PORT || 8091;
 app.use(bodyParser.json());
 app.use(cors());
 
+/* Static files (doc) */
+app.use('/apidoc',  express.static(__dirname + '/doc'));
+app.use(
+    '/apidoc/vendor/swagger-ui',
+    express.static(__dirname + '/node_modules/swagger-ui/dist')
+);
+
 var env = process.env.NODE_ENV;
 
 if (env === 'production') {
