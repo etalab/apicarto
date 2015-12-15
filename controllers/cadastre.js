@@ -11,7 +11,7 @@ module.exports = function (options) {
     var router = new Router();
     var cadastreClient = new CadastreClient(options.key, options.referer || 'http://localhost');
 
-    router.use(require('../lib/extract-insee'));
+    router.use(require('../helpers/extract-insee-code'));
 
     router.get('/capabilities', function(req, res) {
         cadastreClient.getCapabilities(function(body){
