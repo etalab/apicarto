@@ -34,6 +34,7 @@
     "handlebars": "^4.0.3",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
+    "node-is": "^0.5.3",
     "on-finished": "^2.3.0",
     "pg": "^4.4.3",
     "pg-format": "0.1.4",
