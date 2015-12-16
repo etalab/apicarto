@@ -1,18 +1,17 @@
 var format = require('pg-format');
 var _ = require('lodash');
-var is = require('node-is');
 
 exports.layer = function(req, res, next) {
 
     if (req.query.bbox) {
-        if (!is.String(req.query.bbox)){
+        if (! _.isString(req.query.bbox)){
             return res.status(400).send({
                 status : 'Invalid bbox'
             });
         }
         var bbox = req.query.bbox.split(',');
         //test si un array contient que des données numériques
-        if (bbox.length != 4 || bbox.every(elem => is.NaN(parseFloat(elem)))){
+        if (bbox.length != 4 || bbox.every(elem => _.isNaN(parseFloat(elem)))){
             return res.status(400).send({
                 status : 'Invalid bbox'
             });
