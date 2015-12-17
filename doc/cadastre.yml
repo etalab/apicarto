@@ -105,11 +105,11 @@ produces:
 paths:
   /cadastre/commune:
     get:
-      summary: Recherche de toutes les géométries d'une commune
+      summary: Récupération de la géométrie d'une commune
       description: |
         Retourne un résultat de Type "FeatureCollection".
       parameters:
-        - name: code_insee
+        - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
