@@ -1,7 +1,7 @@
 # APICarto
 
 [![Circle CI](https://circleci.com/gh/sgmap/apicarto/tree/master.svg?style=shield)](https://circleci.com/gh/sgmap/apicarto/tree/master)
-[![Coverage Status](https://coveralls.io/repos/sgmap/apicarto/badge.svg?branch=coverage&service=github)](https://coveralls.io/github/sgmap/apicarto?branch=coverage)
+[![Coverage Status](https://coveralls.io/repos/sgmap/apicarto/badge.svg?branch=master&service=github)](https://coveralls.io/github/sgmap/apicarto?branch=master)
 [![Join the chat at https://gitter.im/sgmap/apicarto](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sgmap/apicarto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Prérequis
