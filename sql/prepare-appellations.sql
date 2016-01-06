@@ -7,6 +7,9 @@ CREATE TYPE type_granularite_appellation AS ENUM('commune', 'exacte');
 ALTER TABLE Appellation ADD COLUMN instruction_obligatoire boolean;
 ALTER TABLE Appellation ADD COLUMN granularite type_granularite_appellation;
 
+-- Correction des géométries
+UPDATE Appellation SET geom = ST_MakeValid(geom) WHERE geom IS NOT NULL AND NOT ST_IsValid(geom);
+
 -- Enrichissement des données
 UPDATE Appellation SET instruction_obligatoire = FALSE;
 UPDATE Appellation SET granularite = 'exacte' WHERE segment = '1';
