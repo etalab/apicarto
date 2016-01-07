@@ -3,7 +3,6 @@ var _ = require('lodash');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var pg = require('pg');
-var morgan = require('morgan');
 var onFinished = require('on-finished');
 var communesHelper = require('./helpers/communes');
 var aoc = require('./controllers/aoc');
@@ -27,13 +26,10 @@ app.use(
 var env = process.env.NODE_ENV;
 
 if (env === 'production') {
-    morgan.token('real-ip', req => req.headers['x-forwarded-for'].split(',')[0]);
-    app.use(morgan(':date[clf] :real-ip :method :url HTTP/:http-version :status :res[content-length] - :response-time ms - :user-agent'));
+    app.enable('trust proxy');
 }
 
-if (env === 'development') {
-    app.use(morgan('dev'));
-}
+app.use(require('./lib/request-logger')());
 
 /* Middlewares */
 function pgClient(req, res, next) {
@@ -57,8 +53,6 @@ app.use('/cadastre', cadastre({
 }));
 
 /* Ready! */
-app.listen(port, function () {
-    console.log('Start listening on port %d', port);
-});
+app.listen(port);
 
 module.exports = app;
