@@ -40,6 +40,7 @@ describe('test du module geometrie  ', function() {
                             code_dep: '07',
                             nom_com: 'Andance',
                             code_com: '009',
+                            com_abs: '000',
                             code_arr: '000' 
                         });
                     })
