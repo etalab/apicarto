@@ -67,3 +67,35 @@ exports.in = function(req, res, next) {
         });
     });
 };
+
+exports.search = function (req, res, next) {
+    if (!req.query.commune) res.sendStatus(400);
+
+    req.pgClient.query(format(`
+        SELECT
+            ST_AsGeoJSON(appellation.geom) AS geom,
+            appellation AS nom,
+            idapp AS id,
+            id_uni AS id_geom,
+            insee AS commune,
+            segment,
+            instruction_obligatoire,
+            granularite
+        FROM appellation
+        WHERE insee = '%s';`
+    , req.query.commune), function (err, result) {
+        if (err) {
+            req.pgEnd(err);
+            return next(err);
+        }
+
+        return res.send({
+            type: 'FeatureCollection',
+            features: result.rows.map(row => ({
+                type: 'Feature',
+                geometry: JSON.parse(row.geom),
+                properties: _.omit(row, 'geom')
+            }))
+        });
+    });
+};
