@@ -77,7 +77,7 @@ info:
     
     ## Liste des urls à utiliser pour utiliser le service
   
-    1) Communes : http://apicarto.sgmap.fr/cadastre/commune?code_insee=xxxx
+    1) Communes : http://apicarto.sgmap.fr/cadastre/commune?insee=xxxx
     
     
     2) Divisions:  http://apicarto.sgmap.fr/cadastre/division?insee=xxxx (utilisable avec paramètre insee uniquement)
