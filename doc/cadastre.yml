@@ -77,16 +77,16 @@ info:
     
     ## Liste des urls à utiliser pour utiliser le service
   
-    1) Communes : http://apicarto.sgmap.fr/cadastre/commune?code_insee=xxxx
+    1) Communes : http://apicarto.sgmap.fr/cadastre/commune?insee=xxxx
     
     
-    2) Divisions:  http://apicarto.sgmap.fr/cadastre/divisions?insee=xxxx
+    2) Divisions:  http://apicarto.sgmap.fr/cadastre/division?insee=xxxx (utilisable avec paramètre insee uniquement)
     
     
-    3) Parcelles: http://apicarto.sgmap.fr/cadastre/commune?insee=xxxx&section=xxx
+    3) Parcelles: http://apicarto.sgmap.fr/cadastre/parcelle?insee=xxxx&section=xx&numero=xxxx
     
     
-    4) Localisants:  http://apicarto.sgmap.fr/cadastre/localisant?insee=xxxx
+    4) Localisants:  http://apicarto.sgmap.fr/cadastre/localisant?insee=xxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
     
     
     5) Géometrie:  http://apicarto.sgmap.fr/cadastre/geometrie?geom=(Geometrie au format JSON)
