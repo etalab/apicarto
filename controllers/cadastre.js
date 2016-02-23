@@ -13,14 +13,11 @@ module.exports = function (options) {
 
     router.use(require('../helpers/extract-insee-code'));
 
-    router.get('/capabilities', function(req, res) {
-        cadastreClient.getCapabilities(function(body){
-            if (body) {
-                res.set('Content-Type', 'text/xml');
-                res.send(body);
-            } else {
-                res.send('Le service distant n\'est pas disponible');
-            }
+    router.get('/capabilities', function(req, res, next) {
+        cadastreClient.getCapabilities(function (err, capabilities) {
+            if (err) return next(err);
+            res.set('Content-Type', 'text/xml');
+            res.send(capabilities);
         });
     });
 
@@ -30,13 +27,11 @@ module.exports = function (options) {
      * Paramètres : code_dep=25 et code_com=349
      *
      */
-    router.get('/division', function (req,res) {
-        var params = prepareParamsCadastre(req, res);
-        if(!params.statusCode) {
-            cadastreClient.getDivisions(params,function(featureCollection){
-                res.json(featureCollection);
-            });
-        }
+    router.get('/division', prepareParamsCadastre, function (req, res, next) {
+        cadastreClient.getDivisions(req.cadastreParams, function (err, featureCollection) {
+            if (err) return next(err);
+            res.json(featureCollection);
+        });
     });
 
 
@@ -46,13 +41,11 @@ module.exports = function (options) {
      * Paramètres : code_dep=25 et code_com=349
      *
      */
-    router.get('/parcelle', function (req,res) {
-        var params = prepareParamsCadastre(req, res);
-        if(!params.statusCode) {
-            cadastreClient.getParcelles(params,function(featureCollection){
-                res.json(featureCollection);
-            });
-        }
+    router.get('/parcelle', prepareParamsCadastre, function (req, res, next) {
+        cadastreClient.getParcelles(req.cadastreParams, function (err, featureCollection) {
+            if (err) return next(err);
+            res.json(featureCollection);
+        });
     });
 
     /**
@@ -61,13 +54,11 @@ module.exports = function (options) {
      * Paramètres : code_dep=25 et code_com=349
      *
      */
-    router.get('/commune', function (req,res) {
-        var params = prepareParamsCadastre(req, res);
-        if(!params.statusCode) {
-            cadastreClient.getCommune(params,function(featureCollection){
-                res.json(featureCollection);
-            });
-        }
+    router.get('/commune', prepareParamsCadastre, function (req, res, next) {
+        cadastreClient.getCommune(req.cadastreParams, function (err, featureCollection) {
+            if (err) return next(err);
+            res.json(featureCollection);
+        });
     });
 
 /**
@@ -77,13 +68,11 @@ module.exports = function (options) {
      *
      */
 
-    router.get('/localisant',function (req,res) {
-        var params = prepareParamsCadastre(req, res);
-        if(!params.statusCode) {
-            cadastreClient.getLocalisant(params,function(featureCollection){
-                res.json(featureCollection);
-            });
-        }
+    router.get('/localisant', prepareParamsCadastre, function (req, res, next) {
+        cadastreClient.getLocalisant(req.cadastreParams, function (err, featureCollection) {
+            if (err) return next(err);
+            res.json(featureCollection);
+        });
     });
 
  /**
@@ -93,19 +82,26 @@ module.exports = function (options) {
      * Mode : GET ou POST
      */
 
-    router.get('/geometrie', function (req,res) {
-        if (!req.query.geom)
-            return res.status(400).send({ code: 400, message: 'geom field is required'});
+    router.get('/geometrie', function (req, res, next) {
+        if (!req.query.geom) return res.status(400).send({
+            code: 400,
+            message: 'geom field is required'
+        });
 
-        cadastreClient.getCadastreFromGeom(JSON.parse(req.query.geom), function (featureCollection) {
+        cadastreClient.getCadastreFromGeom(JSON.parse(req.query.geom), function (err, featureCollection) {
+            if (err) return next(err);
             res.json(featureCollection);
         });
     });
 
-    router.post('/geometrie', function (req, res) {
-        if (!req.body.geom)
-            return res.status(400).send({ code: 400, message: 'geom field is required'});
-        cadastreClient.getCadastreFromGeom(req.body.geom, function (featureCollection) {
+    router.post('/geometrie', function (req, res, next) {
+        if (!req.body.geom) return res.status(400).send({
+            code: 400,
+            message: 'geom field is required'
+        });
+
+        cadastreClient.getCadastreFromGeom(req.body.geom, function (err, featureCollection) {
+            if (err) return next(err);
             res.json(featureCollection);
         });
     });
