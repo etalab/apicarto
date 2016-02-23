@@ -13,8 +13,8 @@ describe('CadastreClient', () => {
 
 describe('getCapabilities()', () => {
     describe('Call with invalid or expired API key', () => {
-        const client = new CadastreClient('bad_api_key');
-        nock('http://wxs.ign.fr/bad_api_key')
+        const client = new CadastreClient('bad_api_key', { serviceUrl: 'http://mock.wxs.ign.fr' });
+        nock('http://mock.wxs.ign.fr/bad_api_key')
             .get('/geoportail/wfs')
             .query({ request: 'GetCapabilities' })
             .reply(400);
@@ -26,8 +26,8 @@ describe('getCapabilities()', () => {
         });
     });
     describe('Call with valid API key', () => {
-        const client = new CadastreClient('valid_api_key');
-        nock('http://wxs.ign.fr/valid_api_key')
+        const client = new CadastreClient('valid_api_key', { serviceUrl: 'http://mock.wxs.ign.fr' });
+        nock('http://mock.wxs.ign.fr/valid_api_key')
             .get('/geoportail/wfs')
             .query({ request: 'GetCapabilities' })
             .reply(200, 'capabilities');

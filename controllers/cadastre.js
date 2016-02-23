@@ -9,7 +9,7 @@ module.exports = function (options) {
     }
 
     var router = new Router();
-    var cadastreClient = new CadastreClient(options.key, options.referer || 'http://localhost');
+    var cadastreClient = new CadastreClient(options.key, options);
 
     router.use(require('../helpers/extract-insee-code'));
 
