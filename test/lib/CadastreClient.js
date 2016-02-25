@@ -39,7 +39,7 @@ describe('CadastreClient', () => {
             const client = new CadastreClient('bad_api_key', { serviceUrl: 'http://mock.wxs.ign.fr' });
             nock('http://mock.wxs.ign.fr/bad_api_key')
                 .get('/geoportail/wfs')
-                .query({ request: 'GetCapabilities' })
+                .query({ request: 'GetCapabilities', version: '2.0.0' })
                 .reply(400);
             it('should throw an exception', done => {
                 client.getCapabilities(err => {
@@ -52,7 +52,7 @@ describe('CadastreClient', () => {
             const client = new CadastreClient('valid_api_key', { serviceUrl: 'http://mock.wxs.ign.fr' });
             nock('http://mock.wxs.ign.fr/valid_api_key')
                 .get('/geoportail/wfs')
-                .query({ request: 'GetCapabilities' })
+                .query({ request: 'GetCapabilities', version: '2.0.0' })
                 .reply(200, 'capabilities');
             it('should return capabilities', done => {
                 client.getCapabilities((err, capabilities) => {
