@@ -33,7 +33,7 @@ exports.in = function(req, res, next) {
     req.pgClient.query(buildSQLQuery({
         geometry: req.body.geom.geometry,
         withGeometries: req.body.geojson !== false,
-        inseeCodeList: _.pluck(req.intersectedCommunes, 'insee')
+        inseeCodeList: _.map(req.intersectedCommunes, 'insee')
     }), function(err, result) {
         if (err) {
             req.pgEnd(err);
