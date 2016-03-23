@@ -9,6 +9,7 @@ var aoc = require('./controllers/aoc');
 var codesPostaux = require('./controllers/codes-postaux');
 var qp = require('./controllers/quartiers-prioritaires');
 var cadastre = require('./controllers/cadastre');
+var dilaOrganisme = require('./controllers/dila-organisme');
 
 var app = express();
 var port = process.env.PORT || 8091;
@@ -51,6 +52,7 @@ app.use('/cadastre', cadastre({
     key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
     referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
 }));
+app.get('/dila/organisme/search', pgClient, dilaOrganisme.search);
 
 /* Ready! */
 app.listen(port);
