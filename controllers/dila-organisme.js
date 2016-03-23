@@ -12,7 +12,7 @@ exports.search = function(req, res, next) {
                   o.type,o.nom, o.insee,o.source,o.maj,o.url,o.telephone,o.telecopie,o.email,o.ouvertures,o.adresse,
                   ST_AsGeoJSON(o.geometry) as geom
               FROM 	dila.commune c LEFT JOIN dila.organisme o ON o.id = c.organisme_id 
-              WHERE c.insee="`+req.query.insee+`"`;
+              WHERE c.insee="${req.query.insee}"`;
     req.pgClient.query(sql, function(err, result) {
         if (err) {
             req.pgEnd(err);
