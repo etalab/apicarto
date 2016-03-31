@@ -114,7 +114,12 @@ paths:
           description: Code insee de la commune sur 5 caractères
           type: string
           pattern: '\d{5}'
-          required: true
+          required: false
+        - name: dep
+          in: query
+          description: Numéro département sur 2 ou 3 caractères(DOM)
+          type: string
+          required: false
       tags:
         - Commune
       responses:
@@ -141,6 +146,12 @@ paths:
           in: query
           description: Section de la parcelle sur 2 caractères
           pattern: '\w{2}'
+          type: string
+          required: false
+        - name: codearr
+          in: query
+          description: Code arrondisssement pour Paris, Lyon, Marseille
+          pattern: '\d{3}'
           type: string
           required: false
       tags:
@@ -175,6 +186,12 @@ paths:
           description: Numero de la parcelle sur 4 caractères
           type: string
           pattern: '\d{4}'
+          required: false
+        - name: codearr
+          in: query
+          description: Code arrondissement pour Paris, Lyon, Marseille
+          type: string
+          pattern: '\d{3}'
           required: false
       tags:
         - Parcelle
@@ -218,11 +235,18 @@ paths:
           description: Section de la parcelle
           type: string
           pattern: '\w{2}'
+          required: false
         - name: numero
           in: query
-          description: Numero de la parcelle sur 4 caractères
+          description: Numéro de la parcelle sur 4 caractères
           type: string
           pattern: '\d{4}'
+          required: false
+        - name: codearr
+          in: query
+          description: Code arrondissement pour Paris, Lyon, Marseille
+          type: string
+          pattern: '\d{3}'
           required: false
       responses:
         '200':
