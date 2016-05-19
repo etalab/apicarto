@@ -13,7 +13,7 @@ module.exports = function (grunt) {
         'communes-ign-metrocorse': refDataDir + '/COMMUNE_PARCELLAIRE_METROCORSE.zip',
         'communes-ign-reunion': refDataDir + '/COMMUNE_PARCELLAIRE_REUNION.zip',
         'communes-osm': refDataDir + '/communes-20150101-5m-shp.zip',
-        'appellations-viticoles': refDataDir + '/20160504_Appellation.zip'
+        'appellations-viticoles': refDataDir + '/20160519_Appellation.zip'
     };
 
     const rmdir = {};
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
             select: 'insee,nom'
         },
         'appellations-viticoles': {
-            dataSource: '/vsizip/20160504_Appellation.zip',
+            dataSource: '/vsizip/20160519_Appellation.zip',
             layerName: 'appellation',
             convertToWgs84: true,
             spatialIndex: 'NO',
