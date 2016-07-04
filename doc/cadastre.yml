@@ -193,6 +193,12 @@ paths:
           type: string
           pattern: '\d{3}'
           required: false
+        - name: com_abs
+          in: query
+          description: Code commune absorbée
+          type: string
+          pattern: '\d{3}'
+          required: false
       tags:
         - Parcelle
 
