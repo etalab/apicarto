@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
-  title: APICarto AOC
+  title: Module PPR
   description: >
-    Le service d'interrogation du cadastre permet de faire le croisement entre un polygone et la couche des AOC/IGP.
-    Les données proviennent de France Agrimer et de l'INAO.
+    Le service d'interrogation du cadastre permet de faire le croisement entre un polygone ou un point et les données PPR(Plans de prévention des risques).
+    L'api retourne des informations sur les risques par rapport à un polygone ou un point.
     Possibilité d'utiliser les communes de l'IGN ou les communes OSM
 
 
@@ -36,20 +36,40 @@ basePath: /
 produces:
   - application/json
 paths:
-  /aoc/api/beta/in:
+  /ppr/secteur:
+    get:
+      description: |
+        Prends une variable de type departement contenant le numéro de département
+
+        Paramètres de sorties : Retourne un résultat de Type "FeatureCollection" contenant toutes les informations PPR sur le département
+      
+      parameters:
+        - name: numDepartement
+          in: query
+          description: Numéro département sur 2 ou 3 caractères(DOM)
+          type: string
+          required: false
+      tags:
+        - PPR Secteur
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PPRs'
+
+  /ppr/in:
     post:
       description: |
         Prends une geometrie de type GeoJSON en paramètre d'entrée geom
 
         Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
-      tags:
-        - Appellations
+      tags: 
+        - PPR In Geometrie
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/AOCs'
-
+            $ref: '#/definitions/PPRs'
 definitions:
   Geometry:
     type: object
@@ -107,7 +127,7 @@ definitions:
         items:
           $ref: '#/definitions/Feature'
 
-  AOC:
+  PPR:
     description: ''
     allOf:
     - $ref: '#/definitions/Feature'
@@ -115,30 +135,32 @@ definitions:
         properties:
           type: object
           properties:
-            area :
-              type: number
-              format: float
-            idapp:
+            idmap:
               type: string
-            id_uni:
+            idgaspar:
               type: string
-              description: corresponds à "segment-idapp-insee"
-            insee:
+            nom:
               type: string
-            segment:
+              description: Information sur le type de PPR
+            etat:
               type: string
-            instruction_obligatoire:
-              type: boolean
-            granularite:
+            dateappro:
+              type: dateTime
+            datefinvall:
+              type: dateTime
+            multi-risq:
               type: string
-              enum:
-              - commune
-              - exacte
-            contains:
-              type: boolean
+            coderisque:
+              type: string
+            nomrisque:
+              type: string
+            site_web:
+              type: string
+            uri_gaspar:
+              type: string
 
-  AOCs:
-    description: Une `FeatureCollection` contenant uniquement des features de type `AOC`
+  PPRs:
+    description: Une `FeatureCollection` contenant uniquement des features de type `PPR`
     allOf:
     - $ref: '#/definitions/FeatureCollection'
     - type: object
@@ -146,4 +168,4 @@ definitions:
         features:
           type: array
           items:
-            $ref: '#/definitions/AOC'
+            $ref: '#/definitions/PPR'

@@ -39,12 +39,19 @@
             dom_id:"swagger-ui-container-aoc"
         });
         swaggerUiAoc.load();
+        
+        var swaggerUiPpr = new SwaggerUi({
+            url:"ppr.yml",
+            dom_id:"swagger-ui-container-ppr"
+        });
+        swaggerUiPpr.load();
     </script>
 </head>
 
 <body>
 
 <div class="swagger-section">
+    <div id="swagger-ui-container-ppr" class="swagger-ui-wrap"></div>
     <div id="swagger-ui-container-cadastre" class="swagger-ui-wrap"></div>
     <div id="swagger-ui-container-aoc" class="swagger-ui-wrap"></div>
 </div>
