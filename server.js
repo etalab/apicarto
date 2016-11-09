@@ -9,7 +9,7 @@ var aoc = require('./controllers/aoc');
 var codesPostaux = require('./controllers/codes-postaux');
 var qp = require('./controllers/quartiers-prioritaires');
 var cadastre = require('./controllers/cadastre');
-
+var zoneppr= require ('./controllers/ppr.js');
 var app = express();
 var port = process.env.PORT || 8091;
 
@@ -47,11 +47,15 @@ app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign
 app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
 app.post('/quartiers-prioritaires/search', pgClient, qp.search);
 app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
+/* ajout pour ial */
+app.post('/ppr/in',pgClient,zoneppr.in);
+app.get('/ppr/in',pgClient,zoneppr.in);
+app.get('/ppr/secteur', pgClient, zoneppr.secteur);
+app.post('ppr/secteur',pgClient,zoneppr.secteur);
 app.use('/cadastre', cadastre({
     key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
     referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
 }));
-
 /* Ready! */
 app.listen(port);
 
