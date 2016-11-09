@@ -14,9 +14,15 @@ info:
            "geometry":
            {"type":"MultiPolygon","coordinates":[...]},
           "properties":{
-             "area_inter":xxx,
-             "appellation":"XXX",
-             "id_uni":"X-XX-XXXX"
+            "idmap": xxx,
+            "idgaspar": "xxx",
+            "nom": "xxx",
+            "etat": "xxx",
+            "multi-risq": "xxx",
+            "coderisque": "xxx",
+            "nomrisque": "xxx",
+            "site_web": "xxx",
+            "uri_gaspar": "xxx"
           }
         ]}
        }
