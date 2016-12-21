@@ -27,11 +27,8 @@ module.exports = function (grunt) {
 
     const importableLayers = {
         qp: {
-            dataSource: '/vsizip/qp-politiquedelaville-shp.zip',
-            layerName: 'quartiers_prioritaires',
-            convertToWgs84: true,
-            append: true,
-            spatialIndex: 'NO'
+            dataSource: '/vsizip/qp-politiquedelaville-shp.zip QP_METROPOLEOUTREMER_WGS84_EPSG4326',
+            layerName: 'quartiers_prioritaires'
         },
         'communes-ign-metrocorse': {
             dataSource: '/vsizip/COMMUNE_PARCELLAIRE_METROCORSE.zip',
