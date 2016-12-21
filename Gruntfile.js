@@ -21,14 +21,17 @@ module.exports = function (grunt) {
     const unzip = {};
 
     const runpg = {
-        'appellations-viticoles': 'prepare-appellations.sql'
+        'appellations-viticoles': 'prepare-appellations.sql',
+        'qp': 'prepare-qp.sql'
     };
 
     const importableLayers = {
         qp: {
             dataSource: '/vsizip/qp-politiquedelaville-shp.zip',
             layerName: 'quartiers_prioritaires',
-            append: true
+            convertToWgs84: true,
+            append: true,
+            spatialIndex: 'NO'
         },
         'communes-ign-metrocorse': {
             dataSource: '/vsizip/COMMUNE_PARCELLAIRE_METROCORSE.zip',
@@ -132,7 +135,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('import-qp', [
         'shell:wget:qp',
-        'shell:importpg:qp'
+        'shell:importpg:qp',
+        'shell:runpg:qp'
     ]);
 
     grunt.registerTask('import-communes-ign', [
