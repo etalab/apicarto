@@ -13,7 +13,7 @@ module.exports = function (grunt) {
         'communes-ign-metrocorse': refDataDir + '/COMMUNE_PARCELLAIRE_METROCORSE.zip',
         'communes-ign-reunion': refDataDir + '/COMMUNE_PARCELLAIRE_REUNION.zip',
         'communes-osm': refDataDir + '/communes-20150101-5m-shp.zip',
-        'appellations-viticoles': refDataDir + '/20160720_Appellation.zip'
+        'appellations-viticoles': refDataDir + '/20161214_Appellation.zip'
     };
 
     const rmdir = {};
@@ -21,14 +21,14 @@ module.exports = function (grunt) {
     const unzip = {};
 
     const runpg = {
-        'appellations-viticoles': 'prepare-appellations.sql'
+        'appellations-viticoles': 'prepare-appellations.sql',
+        'qp': 'prepare-qp.sql'
     };
 
     const importableLayers = {
         qp: {
-            dataSource: '/vsizip/qp-politiquedelaville-shp.zip',
-            layerName: 'quartiers_prioritaires',
-            append: true
+            dataSource: '/vsizip/qp-politiquedelaville-shp.zip QP_METROPOLEOUTREMER_WGS84_EPSG4326',
+            layerName: 'quartiers_prioritaires'
         },
         'communes-ign-metrocorse': {
             dataSource: '/vsizip/COMMUNE_PARCELLAIRE_METROCORSE.zip',
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
             select: 'insee,nom'
         },
         'appellations-viticoles': {
-            dataSource: '/vsizip/20160720_Appellation.zip',
+            dataSource: '/vsizip/20161214_Appellation.zip',
             layerName: 'appellation',
             convertToWgs84: true,
             spatialIndex: 'NO',
@@ -132,7 +132,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('import-qp', [
         'shell:wget:qp',
-        'shell:importpg:qp'
+        'shell:importpg:qp',
+        'shell:runpg:qp'
     ]);
 
     grunt.registerTask('import-communes-ign', [

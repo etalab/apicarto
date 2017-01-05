@@ -1,12 +1,14 @@
 /* eslint-env node, mocha */
-const bboxPolygon = require('turf').bboxPolygon;
-const geojsonhint = require('geojsonhint').hint;
+const bboxPolygon = require('@turf/turf').bboxPolygon;
+const geojsonhint = require('@mapbox/geojsonhint').hint;
 const request = require('supertest');
 const server = require('../server');
 const expect = require('expect.js');
 
 function returnValidGeoJSON(res) {
-    expect(geojsonhint(res.body)).to.eql([]);
+    expect(geojsonhint(res.body).filter(function (hint) {
+        return hint.level === 'error';
+    })).to.eql([]);
 }
 
 describe('/quartiers-prioritaires', () => {

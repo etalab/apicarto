@@ -18,36 +18,35 @@
   "repository": "sgmap/apicarto",
   "license": "AGPL-3.0",
   "engines": {
-    "node": ">=4",
-    "npm": ">=2"
+    "node": ">=6"
   },
   "dependencies": {
+    "@turf/turf": "^3.7.0",
     "body-parser": "^1.14.1",
     "bunyan": "^1.5.1",
     "codes-postaux": "^1.0.1",
     "cors": "^2.7.1",
     "debug": "^2.2.0",
     "express": "^4.13.3",
-    "geojsonhint": "^1.2.0",
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
     "grunt-shell": "^1.1.2",
     "handlebars": "^4.0.3",
     "lodash": "^4.0",
-    "node-uuid": "^1.4.7",
     "on-finished": "^2.3.0",
     "pg": "^4.4.3",
     "pg-format": "^1.0.1",
     "request": "^2.65.0",
     "swagger-ui": "2.1.3",
     "terraformer-wkt-parser": "^1.0.1",
-    "turf": "^2.0.2"
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "@mapbox/geojsonhint": "^2.0.0",
     "eslint": "^2.2.0",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.1",
-    "mocha": "^2.3.4",
+    "mocha": "^3.2.0",
     "nock": "^7.2.2",
     "supertest": "^1.1.0",
     "unit.js": "^2.0.0"
