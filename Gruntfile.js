@@ -8,12 +8,14 @@ module.exports = function (grunt) {
         password: process.env.PGPASSWORD || process.env.npm_package_config_pgPassword
     };
 
+    const appellationRelease = '20170216';
+
     const sourceFiles = {
         qp: refDataDir + '/qp-politiquedelaville-shp.zip',
         'communes-ign-metrocorse': refDataDir + '/COMMUNE_PARCELLAIRE_METROCORSE.zip',
         'communes-ign-reunion': refDataDir + '/COMMUNE_PARCELLAIRE_REUNION.zip',
         'communes-osm': refDataDir + '/communes-20150101-5m-shp.zip',
-        'appellations-viticoles': refDataDir + '/20161214_Appellation.zip'
+        'appellations-viticoles': refDataDir + '/' + appellationRelease + '_Appellation.zip'
     };
 
     const rmdir = {};
@@ -50,7 +52,7 @@ module.exports = function (grunt) {
             select: 'insee,nom'
         },
         'appellations-viticoles': {
-            dataSource: '/vsizip/20161214_Appellation.zip',
+            dataSource: '/vsizip/' + appellationRelease + '_Appellation.zip',
             layerName: 'appellation',
             convertToWgs84: true,
             spatialIndex: 'NO',
