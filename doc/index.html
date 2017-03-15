@@ -40,20 +40,27 @@
         });
         swaggerUiAoc.load();
         
-        var swaggerUiPpr = new SwaggerUi({
-            url:"ppr.yml",
-            dom_id:"swagger-ui-container-ppr"
+        var swaggerUiRisques = new SwaggerUi({
+            url:"risques.yml",
+            dom_id:"swagger-ui-container-risques"
         });
-        swaggerUiPpr.load();
+        swaggerUiRisques.load();
+        
+        var swaggerUiNature = new SwaggerUi({
+            url:"nature.yml",
+            dom_id:"swagger-ui-container-nature"
+        });
+        swaggerUiNature.load();
     </script>
 </head>
 
 <body>
 
 <div class="swagger-section">
-    <div id="swagger-ui-container-ppr" class="swagger-ui-wrap"></div>
+    <div id="swagger-ui-container-risques" class="swagger-ui-wrap"></div>
     <div id="swagger-ui-container-cadastre" class="swagger-ui-wrap"></div>
     <div id="swagger-ui-container-aoc" class="swagger-ui-wrap"></div>
+    <div id="swagger-ui-container-nature" class="swagger-ui-wrap"></div>
 </div>
 
 </body>
