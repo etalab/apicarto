@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Module PPR
+  title: Module Risques
   description: >
     Le service d'interrogation du cadastre permet de faire le croisement entre un polygone ou un point et les données PPR(Plans de prévention des risques).
     L'api retourne des informations sur les risques par rapport à un polygone ou un point.

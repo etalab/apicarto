@@ -10,7 +10,9 @@ var codesPostaux = require('./controllers/codes-postaux');
 var qp = require('./controllers/quartiers-prioritaires');
 var cadastre = require('./controllers/cadastre');
 var zoneppr= require ('./controllers/ppr.js');
+var dilaOrganisme = require('./controllers/dila');
 var app = express();
+var nature = require('./controllers/nature');
 var port = process.env.PORT || 8091;
 
 app.use(bodyParser.json());
@@ -49,14 +51,18 @@ app.post('/quartiers-prioritaires/search', pgClient, qp.search);
 app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
 /* ajout pour ial */
 app.post('/ppr/in',pgClient,zoneppr.in);
-app.get('/ppr/in',pgClient,zoneppr.in);
 app.get('/ppr/secteur', pgClient, zoneppr.secteur);
-app.post('ppr/secteur',pgClient,zoneppr.secteur);
 app.use('/cadastre', cadastre({
     key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
     referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
 }));
-/* Ready! */
+app.get('/dila/organisme/search', pgClient, dilaOrganisme.search);
+app.get('/dila/organisme/searchtype',pgClient,dilaOrganisme.searchType);
+
+app.use('/nature', nature({
+    key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
+    referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
+}));
 app.listen(port);
 
 module.exports = app;

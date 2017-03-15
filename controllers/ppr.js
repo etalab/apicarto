@@ -68,7 +68,7 @@ exports.in = function(req, res, next) {
             req.pgEnd(err);
             return next(err);
         }
-
+        
         if (!result.rows) {
             return res.status(404).send({ status: 'No Data' });
         }
@@ -102,9 +102,8 @@ exports.secteur = function(req, res, next) {
             req.pgEnd(err);
             return next(err);
         }
-
-        if (!result.rows) {
-            return res.status(404).send({ status: 'No Data' });
+        if (!result.rows[0]) {
+            return res.status(404).send({ status: 'Aucune donnée disponible sur le département '+departement });
         }
 
         if (req.body.geojson === false) {
