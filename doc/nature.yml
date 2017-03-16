@@ -5,6 +5,9 @@ info:
     Le service module environnement permet de vérifier si des géométries se trouvent dans des zones protégées type parcs naturels, zones de réserves humides...
     Pour utiliser cette fonctionnalité, il faut avoir des droits sur les couches WFS Geoportail du type "PROTECTEDAREAS".
     
+    L'accès à ce type de couche se fait sur demande
+    à l'IGN via l'interface professionnelle après avoir créé votre clé IGN.
+    
     
     ```json
 
