@@ -8,7 +8,7 @@ module.exports = function (grunt) {
         password: process.env.PGPASSWORD || process.env.npm_package_config_pgPassword
     };
 
-    const appellationRelease = '20170607_Appellation';
+    const appellationRelease = '20171127_Appellation';
 
     const sourceFiles = {
         qp: refDataDir + '/qp-politiquedelaville-shp.zip',
