@@ -13,10 +13,36 @@ var zoneppr= require ('./controllers/ppr.js');
 var dilaOrganisme = require('./controllers/dila');
 var app = express();
 var nature = require('./controllers/nature');
+var gpu = require('./controllers/gpu');
 var port = process.env.PORT || 8091;
+
+var Client = require('geoportal-wfs-client');
 
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use(function(req,res,next) {
+	console.log(req.method, ' ', req.path,' ', JSON.stringify(req.query));
+    next();
+});
+
+
+app.use(function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next();
+});
+
+var buildClient = function (req, res, next) {
+    var referer = req.get('Referrer') || 'http://localhost' ;
+    console.log("referer : "+referer);
+    var headers = {
+        'referer': referer
+    };
+    req.client = new Client(req.params.apiKey,headers);
+    next();
+};
 
 /* Static files (doc) */
 app.use('/apidoc',  express.static(__dirname + '/doc'));
@@ -27,7 +53,7 @@ app.use(
 
 var env = process.env.NODE_ENV;
 
-if (env === 'production') {
+if (env === 'production') {htt
     app.enable('trust proxy');
 }
 
@@ -43,8 +69,11 @@ function pgClient(req, res, next) {
         next();
     });
 }
+/*
+
 
 /* Routes */
+
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
 app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
 app.post('/quartiers-prioritaires/search', pgClient, qp.search);
@@ -52,17 +81,22 @@ app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
 /* ajout pour ial */
 app.post('/ppr/in',pgClient,zoneppr.in);
 app.get('/ppr/secteur', pgClient, zoneppr.secteur);
-app.use('/cadastre', cadastre({
-    key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
+/*app.use('/cadastre', cadastre({
+	key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
     referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
-}));
+}));*/
+
+//app.get('/gpu/geometrie',gpu.gpu);
+app.use('/gpu/',gpu);
+app.use('/cadastre',cadastre);
 app.get('/dila/organisme/search', pgClient, dilaOrganisme.search);
 app.get('/dila/organisme/searchtype',pgClient,dilaOrganisme.searchType);
 
-app.use('/nature', nature({
+/*app.use('/nature', nature({
     key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
     referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
-}));
+}));*/
+app.use('/nature',nature);
 app.listen(port);
 
 module.exports = app;
