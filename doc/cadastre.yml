@@ -58,7 +58,8 @@ info:
 
     ## Obtenir une clé géoportail
     
-    Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ ou http://api.ign.fr/accueil(pour une clé de développement)
+    Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ ou http://api.ign.fr/accueil(pour une clé de développement).
+    Pour utiliser cette api, il faut absolument une clé IGN comme celle-ci est passée en paramètre de l'url.
     
     ## Notes techniques
     
@@ -88,19 +89,19 @@ info:
     
     ## Exemple d'urls à utiliser pour tester le service :
   
-    1) Communes : https://apicarto-dev.ign.fr/cadastre/commune?insee=xxxxx
+    1) Communes : https://apicarto-dev.ign.fr/cadastre/commune/[apiKey]/?insee=xxxxx
     
     
-    2) Divisions:  https://apicarto-dev.ign.fr/cadastre/division?insee=xxxxx (utilisable avec paramètre insee uniquement)
+    2) Divisions:  https://apicarto-dev.ign.fr/cadastre/division/[apiKey]/?insee=xxxxx (utilisable avec paramètre insee uniquement)
     
     
-    3) Parcelles: https://apicarto-dev.ign.fr/cadastre/parcelle?insee=xxxxx&section=xx&numero=xxxx
+    3) Parcelles: https://apicarto-dev.ign.fr/cadastre/parcelle/[apiKey]/?insee=xxxxx&section=xx&numero=xxxx
     
     
-    4) Localisants:  https://apicarto-dev.ign.fr/cadastre/localisant?insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
+    4) Localisants:  https://apicarto-dev.ign.fr/cadastre/localisant?[apiKey]/insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
     
     
-    5) Géometrie:  https://apicarto-dev.ign.fr/cadastre/geometrie?geom=(Geometrie au format JSON)
+    5) Géometrie:  https://apicarto-dev.ign.fr/cadastre/geometrie/[apiKey]?geom=(Geometrie au format JSON)
   version: 1.0.0
   contact:
     name: Apicarto Cadastre
@@ -114,7 +115,7 @@ basePath: /
 produces:
   - application/json
 paths:
-  /cadastre/commune:
+  /cadastre/commune/[apiKey]/:
     get:
       summary: Récupération de la géométrie d'une commune
       description: |
@@ -139,7 +140,7 @@ paths:
           schema:
             $ref: '#/definitions/Communes'
 
-  /cadastre/division:
+  /cadastre/division/[apiKey]:
     get:
       summary: Recherche d'informations sur les divisions parcellaires d'une commune
       description: |
@@ -174,7 +175,7 @@ paths:
             $ref: '#/definitions/Divisions'
 
 
-  /cadastre/parcelle:
+  /cadastre/parcelle/[apiKey]:
     get:
       summary: Recherche d'informations sur les parcelles cadastrales d'une commune
       description: |
@@ -220,7 +221,7 @@ paths:
             $ref: '#/definitions/Parcelles'
 
 
-  /cadastre/geometrie:
+  /cadastre/geometrie/[apiKey]:
     get:
       summary: Informations cadastrales sur l'intersection d'une géométrie avec des parcelles cadastrales
       description: |
@@ -234,7 +235,7 @@ paths:
           schema:
             $ref: '#/definitions/Geometries'
 
-  /cadastre/localisant:
+  /cadastre/localisant/[apiKey]:
     get:
       summary: Informations sur les parcelles non vectorisées.
       description: Renvoie une featureCollection de type Point pour centrer le point sur une carte
@@ -472,10 +473,6 @@ definitions:
         properties:
           type: object
           properties:
-            surface_intersection:
-              type: string
-            surface_parcelle:
-              type: float
             numero:
               type: string
             feuille:
@@ -484,14 +481,18 @@ definitions:
               type: string
             code_dep:
               type: string
+            nom_com:
+              type: string
             code_com:
               type: string
             com_abs:
               type: string
-            echelle:
-              type: string
             code_arr:
               type: string
+            surface_intersection:
+              type: string
+            surface_parcelle:
+              type: float
 
   Geometries:
     description: Une `FeatureCollection` contenant uniquement des features de type `Geometrie`
