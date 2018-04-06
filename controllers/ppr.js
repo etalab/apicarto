@@ -31,7 +31,7 @@ var inQuery = Handlebars.compile(`
 
 function buildSQLQueryDepartement(departement) {
 	
-	var query = "SELECT t.id_map as idmap,\
+    var query = "SELECT t.id_map as idmap,\
 		t.id_gaspar as idgaspar,\
 		t.nom as nom,\
 		t.etat as etat,\
@@ -45,7 +45,7 @@ function buildSQLQueryDepartement(departement) {
 		ST_AsGeoJSON(ST_Transform(geom, 4326)) as geom \
 		FROM ial_document t \
 		WHERE t.id_gaspar like '"+departement+"%'";
-  return query;
+    return query;
 }
 
 
@@ -55,13 +55,12 @@ function buildSQLQuery(options) {
     return queryResult;
 }
 exports.in = function(req, res, next) {
-   if (!req.body.geom) {
+    if (!req.body.geom) {
         res.sendStatus(400);
         return next();
     }
-	var geometryItem = JSON.stringify(req.body.geom.geometry);
     req.pgClient.query(buildSQLQuery({
-       geometry: req.body.geom.geometry,
+        geometry: req.body.geom.geometry,
         withGeometries: req.body.geojson !== false
     }), function(err, result) {
         if (err) {

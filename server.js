@@ -16,13 +16,11 @@ var nature = require('./controllers/nature');
 var gpu = require('./controllers/gpu');
 var port = process.env.PORT || 8091;
 
-var Client = require('geoportal-wfs-client');
-
 app.use(bodyParser.json());
 app.use(cors());
 
 app.use(function(req,res,next) {
-	console.log(req.method, ' ', req.path,' ', JSON.stringify(req.query));
+    console.log(req.method, ' ', req.path,' ', JSON.stringify(req.query));
     next();
 });
 
@@ -34,16 +32,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-var buildClient = function (req, res, next) {
-    var referer = req.get('Referrer') || 'http://localhost' ;
-    console.log("referer : "+referer);
-    var headers = {
-        'referer': referer
-    };
-    req.client = new Client(req.params.apiKey,headers);
-    next();
-};
-
 /* Static files (doc) */
 app.use('/apidoc',  express.static(__dirname + '/doc'));
 app.use(
@@ -53,7 +41,7 @@ app.use(
 
 var env = process.env.NODE_ENV;
 
-if (env === 'production') {htt
+if (env === 'production') {
     app.enable('trust proxy');
 }
 
@@ -81,10 +69,7 @@ app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
 /* ajout pour ial */
 app.post('/ppr/in',pgClient,zoneppr.in);
 app.get('/ppr/secteur', pgClient, zoneppr.secteur);
-/*app.use('/cadastre', cadastre({
-	key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
-    referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
-}));*/
+
 
 //app.get('/gpu/geometrie',gpu.gpu);
 app.use('/gpu/',gpu);
