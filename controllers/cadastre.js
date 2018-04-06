@@ -145,6 +145,4 @@ router.post('/geometrie/:apiKey', function (req, res, next) {
         });
     });
 
-
-
 module.exports=router;
