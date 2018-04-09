@@ -12,7 +12,6 @@ var cadastre = require('./controllers/cadastre');
 var zoneppr= require ('./controllers/ppr.js');
 var dilaOrganisme = require('./controllers/dila');
 var app = express();
-var nature = require('./controllers/nature');
 var gpu = require('./controllers/gpu');
 var port = process.env.PORT || 8091;
 
@@ -70,18 +69,11 @@ app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
 app.post('/ppr/in',pgClient,zoneppr.in);
 app.get('/ppr/secteur', pgClient, zoneppr.secteur);
 
-
-//app.get('/gpu/geometrie',gpu.gpu);
 app.use('/gpu/',gpu);
 app.use('/cadastre',cadastre);
 app.get('/dila/organisme/search', pgClient, dilaOrganisme.search);
 app.get('/dila/organisme/searchtype',pgClient,dilaOrganisme.searchType);
 
-/*app.use('/nature', nature({
-    key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
-    referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
-}));*/
-app.use('/nature',nature);
 app.listen(port);
 
 module.exports = app;
