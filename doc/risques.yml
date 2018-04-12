@@ -33,12 +33,12 @@ info:
 
 
   version: '1.0'
-host: apicarto-dev.ign.fr
+host: apicarto.ign.fr
 schemes:
   - https
 consumes:
   - application/json
-basePath: /
+basePath: /api
 produces:
   - application/json
 paths:

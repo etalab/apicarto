@@ -89,49 +89,49 @@ info:
     
     ## Exemple d'urls à utiliser pour tester le service :
   
-    1) Communes : https://apicarto-dev.ign.fr/cadastre/commune/[apiKey]/?insee=xxxxx
+    1) Communes :https://apicarto.ign.fr/api/cadastre/commune/?apikey=xxxxxxx&insee=xxxxx
     
     
-    2) Divisions:  https://apicarto-dev.ign.fr/cadastre/division/[apiKey]/?insee=xxxxx (utilisable avec paramètre insee uniquement)
+    2) Divisions:  https://apicarto.ign.fr/api/cadastre/division/?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètre insee uniquement)
     
     
-    3) Parcelles: https://apicarto-dev.ign.fr/cadastre/parcelle/[apiKey]/?insee=xxxxx&section=xx&numero=xxxx
+    3) Parcelles: https://apicarto.ign.fr/api/cadastre/parcelle/?apikey=xxxxxxx&insee=xxxxx&section=xx&numero=xxxx
     
     
-    4) Localisants:  https://apicarto-dev.ign.fr/cadastre/localisant?[apiKey]/insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
+    4) Localisants:  https://apicarto.ign.fr/api/cadastre/localisant?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
     
     
-    5) Géometrie:  https://apicarto-dev.ign.fr/cadastre/geometrie/[apiKey]?geom=(Geometrie au format JSON)
-  version: 1.0.0
+    5) Géometrie:  https://apicarto.ign.fr/api/cadastre/geometrie/?apikey=xxxxxxx&geom=(Geometrie au format JSON)
+  version: 2.0.0
   contact:
     name: Apicarto Cadastre
   license:
     name: AGPL-V3
     url: https://www.gnu.org/licenses/agpl-3.0.html
-host: apicarto-dev.ign.fr
+host: apicarto.ign.fr
 schemes:
   - https
-basePath: /
+basePath: /api
 produces:
   - application/json
 paths:
-  /cadastre/commune/[apiKey]/:
+  /cadastre/commune:
     get:
       summary: Récupération de la géométrie d'une commune
       description: |
         Retourne un résultat de Type "FeatureCollection".
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
           pattern: '\d{5}'
-          required: false
-        - name: dep
-          in: query
-          description: Numéro département sur 2 ou 3 caractères(DOM)
-          type: string
-          required: false
+          required: true
       tags:
         - Commune
       responses:
@@ -140,7 +140,7 @@ paths:
           schema:
             $ref: '#/definitions/Communes'
 
-  /cadastre/division/[apiKey]:
+  /cadastre/division:
     get:
       summary: Recherche d'informations sur les divisions parcellaires d'une commune
       description: |
@@ -148,6 +148,11 @@ paths:
         * Paramètre insee => Retour des divisions parcellaires d'une commune
         * Paramètre Insee + section => Retour des divisions parcellaires d'une section dans une commune
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -175,12 +180,17 @@ paths:
             $ref: '#/definitions/Divisions'
 
 
-  /cadastre/parcelle/[apiKey]:
+  /cadastre/parcelle:
     get:
       summary: Recherche d'informations sur les parcelles cadastrales d'une commune
       description: |
         Retourne un résultat de Type "FeatureCollection" avec différentes informations sur les parcelles cadastrales.
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -221,7 +231,7 @@ paths:
             $ref: '#/definitions/Parcelles'
 
 
-  /cadastre/geometrie/[apiKey]:
+  /cadastre/geometrie:
     get:
       summary: Informations cadastrales sur l'intersection d'une géométrie avec des parcelles cadastrales
       description: |
@@ -235,13 +245,18 @@ paths:
           schema:
             $ref: '#/definitions/Geometries'
 
-  /cadastre/localisant/[apiKey]:
+  /cadastre/localisant:
     get:
       summary: Informations sur les parcelles non vectorisées.
       description: Renvoie une featureCollection de type Point pour centrer le point sur une carte
       tags:
         - Localisant
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -492,7 +507,8 @@ definitions:
             surface_intersection:
               type: string
             surface_parcelle:
-              type: float
+              type: number
+              format: float
 
   Geometries:
     description: Une `FeatureCollection` contenant uniquement des features de type `Geometrie`

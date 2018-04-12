@@ -46,21 +46,30 @@
         });
         swaggerUiRisques.load();
         
-        var swaggerUiNature = new SwaggerUi({
-            url:"nature.yml",
-            dom_id:"swagger-ui-container-nature"
+      //  var swaggerUiNature = new SwaggerUi({
+        //    url:"nature.yml",
+          //  dom_id:"swagger-ui-container-nature"
+        //});
+        //swaggerUiNature.load();
+        
+         var swaggerUiGpu = new SwaggerUi({
+            url:"gpu.yml",
+            dom_id:"swagger-ui-container-gpu"
         });
-        swaggerUiNature.load();
+        swaggerUiGpu.load();
+        
     </script>
 </head>
 
 <body>
 
 <div class="swagger-section">
-    <div id="swagger-ui-container-risques" class="swagger-ui-wrap"></div>
-    <div id="swagger-ui-container-cadastre" class="swagger-ui-wrap"></div>
+    
+   <div id="swagger-ui-container-cadastre" class="swagger-ui-wrap"></div>
+   <div id="swagger-ui-container-gpu" class="swagger-ui-wrap"></div>
+   <div id="swagger-ui-container-risques" class="swagger-ui-wrap"></div>
     <div id="swagger-ui-container-aoc" class="swagger-ui-wrap"></div>
-    <div id="swagger-ui-container-nature" class="swagger-ui-wrap"></div>
+     <!--<div id="swagger-ui-container-nature" class="swagger-ui-wrap"></div>-->
 </div>
 
 </body>
