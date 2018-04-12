@@ -49,7 +49,7 @@ router.get('/all',function (req, res, next) {
         message: 'geom field is required'
     });
     var search1 = searchAllFields(options,params,'wfs_du:municipality','municipality');
-    var search2 = searchAllFields(options,params,'wfs_du:doc_urba','doc_urba');
+   // var search2 = searchAllFields(options,params,'wfs_du:document','document');
     var search3 = searchAllFields(options,params,'wfs_du:zone_urba','zone_urba');
     var search4 = searchAllFields(options,params,'wfs_sup:acte_sup','acte_sup');
     var search5 = searchAllFields(options,params,'wfs_du:secteur_cc','secteur_cc');
@@ -63,7 +63,9 @@ router.get('/all',function (req, res, next) {
     var search13 = searchAllFields(options,params,'wfs_du:info_lin','info_lin');
     var search14 = searchAllFields(options,params,'wfs_du:info_pct','info_pct');
    
-    Promise.all([search1,search2,search3,search4,search5,search6,search7,search8,search9,search11,search12,search13,search14])
+    Promise.all([search1,search3,search4,search5,search6,search7,search8,search9,search11,search12,search13,search14])
+    //Ligne avec assiette_sup_p et document à activer dés que ça marche et désactiver la ligne au dessus
+    //Promise.all([search1,search2,search3,search4,search5,search6,search7,search8,search9,search10,search11,search12,search13,search14])
         .then(function(result){
             res.json(result);   
         })
@@ -74,11 +76,15 @@ router.get('/all',function (req, res, next) {
 	
 router.get('/municipality',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
     };
-
+   
     var client = new GeoportalWfsClient(options);
     client.getFeatures('wfs_du:municipality', params)
         .then(function(featureCollection) {
@@ -89,15 +95,19 @@ router.get('/municipality',function (req, res, next) {
         });
 });
 
-router.get('/docurba',function (req, res, next) {
+router.get('/document',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
     };
 
     var client = new GeoportalWfsClient(options);
-    client.getFeatures('wfs_du:doc_urba', params)
+    client.getFeatures('=wfs_du:document', params)
         .then(function(featureCollection) {
             res.json(featureCollection);
         })
@@ -106,7 +116,11 @@ router.get('/docurba',function (req, res, next) {
         });
 });
 router.get('/zoneurba',function (req, res, next) {
-	
+	 
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -124,6 +138,10 @@ router.get('/zoneurba',function (req, res, next) {
 
 router.get('/actesup',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -140,6 +158,10 @@ router.get('/actesup',function (req, res, next) {
 });
 router.get('/secteurcc',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -156,6 +178,10 @@ router.get('/secteurcc',function (req, res, next) {
 });
 router.get('/prescription-lin',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -172,6 +198,10 @@ router.get('/prescription-lin',function (req, res, next) {
 });
 router.get('/prescription-pct',function (req, res, next) {
 	
+	if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -188,6 +218,10 @@ router.get('/prescription-pct',function (req, res, next) {
 });
 router.get('/prescription-surf',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -204,6 +238,10 @@ router.get('/prescription-surf',function (req, res, next) {
 });
 router.get('/assiette-sup-l',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -221,6 +259,10 @@ router.get('/assiette-sup-l',function (req, res, next) {
 
 router.get('/assiette-sup-p',function (req, res, next) {
 
+    if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -239,6 +281,10 @@ router.get('/assiette-sup-p',function (req, res, next) {
 
 router.get('/assiette-sup-s',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -256,6 +302,10 @@ router.get('/assiette-sup-s',function (req, res, next) {
 
 router.get('/info-surf',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -272,6 +322,10 @@ router.get('/info-surf',function (req, res, next) {
 });
 router.get('/info-lin',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -288,6 +342,10 @@ router.get('/info-lin',function (req, res, next) {
 });
 router.get('/info-pct',function (req, res, next) {
 	
+	 if (!req.query.geom) return res.status(400).send({
+        code: 400,
+        message: 'geom field is required'
+    });
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
