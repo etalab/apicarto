@@ -237,6 +237,17 @@ paths:
       description: |
         Prends en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations sur les parcelles qui intersectent la géométrie.
+      parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
+        - name: geom
+          in: query
+          description: geometrie au format json
+          type: string
+          required: true
       tags:
         - Geometrie
       responses:

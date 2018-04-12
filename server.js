@@ -32,9 +32,9 @@ app.use(function (req, res, next) {
 });
 
 /* Static files (doc) */
-app.use('/apidoc',  express.static(__dirname + '/doc'));
+app.use('/api/doc',  express.static(__dirname + '/doc'));
 app.use(
-    '/apidoc/vendor/swagger-ui',
+    '/api/doc/vendor/swagger-ui',
     express.static(__dirname + '/node_modules/swagger-ui/dist')
 );
 
@@ -62,17 +62,17 @@ function pgClient(req, res, next) {
 /* Routes */
 
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
-app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
-app.post('/quartiers-prioritaires/search', pgClient, qp.search);
-app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
+app.get('//api/codes-postaux/communes/:codePostal', codesPostaux.communes);
+app.post('/api/quartiers-prioritaires/search', pgClient, qp.search);
+app.get('/api/quartiers-prioritaires/layer', pgClient, qp.layer);
 /* ajout pour ial */
-app.post('/ppr/in',pgClient,zoneppr.in);
-app.get('/ppr/secteur', pgClient, zoneppr.secteur);
+app.post('/api/ppr/in',pgClient,zoneppr.in);
+app.get('/api/ppr/secteur', pgClient, zoneppr.secteur);
 
-app.use('/gpu/',gpu);
-app.use('/cadastre',cadastre);
-app.get('/dila/organisme/search', pgClient, dilaOrganisme.search);
-app.get('/dila/organisme/searchtype',pgClient,dilaOrganisme.searchType);
+app.use('/api/gpu/',gpu);
+app.use('/api/cadastre',cadastre);
+app.get('/api/dila/organisme/search', pgClient, dilaOrganisme.search);
+app.get('/api/dila/organisme/searchtype',pgClient,dilaOrganisme.searchType);
 
 app.listen(port);
 
