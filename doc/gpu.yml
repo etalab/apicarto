@@ -1,0 +1,279 @@
+swagger: '2.0'
+info:
+  title: Module GPU
+  description: >
+    Le service d’interrogation du GPU permet d’obtenir des informations d’urbanisme intersectant une géométrie (ponctuelle ou surfacique).
+    
+    Toutes les structures de réponse sont  de type FeatureCollection au format JSON.
+    
+  version: 1.0.0
+  contact:
+    name: Apicarto GPU
+  license:
+    name: AGPL-V3
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+host: apicarto.ign.fr
+schemes:
+  - https
+basePath: /api
+produces:
+  - application/json
+paths:
+
+  /gpu/all:
+    get:
+      summary:  Récupération de l’ensemble des couches décrites ci-dessous en un appel
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection contenant toutes les couches du gpu qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          
+  /gpu/document:
+    get:
+      summary: Récupération de l'emprise d'un document
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec l'emprise d'un document qui intersecte la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'      
+
+  /gpu/zoneurba:
+    get:
+      summary: Récupération des zonages d’un document d’urbanisme
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+
+  /gpu/secteurcc:
+    get:
+      summary: Récupération des secteurs d’une carte communale
+      description: >
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+            
+            
+  /gpu/prescription-surf:
+    get:
+      summary: Récupération des prescriptions surfaciques d’un document d’urbanisme
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+                  
+  /gpu/prescription-lin:
+    get:
+      summary: Récupération des prescriptions linéaires d’un document d’urbanisme
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+            
+  /gpu/prescription-pct:
+    get:
+      summary: Récupération des prescriptions ponctuelles d’un document d’urbanisme
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+  /gpu/info-surf:
+    get:
+      summary: Récupération des informations surfaciques d’un document d’urbanisme
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+  /gpu/info-lin:
+    get:
+      summary: Récupération des informations linéaires d’un document d’urbanisme
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+
+  /gpu/info-pct:
+    get:
+      summary: Récupération des informations ponctuelles d’un document d’urbanisme
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+
+  /gpu/assiette-sup-s:
+    get:
+      summary: Récupération des assiettes surfaciques de servitudes d’utilité publique
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+  /gpu/assiette-sup-l:
+    get:
+      summary: Récupération des assiettes linéaires de servitudes d’utilité publique
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+  /gpu/assiette-sup-p:
+    get:
+      summary:  Récupération des assiettes ponctuelles de servitudes d’utilité publique
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - Geometrie
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+  
+definitions:
+  Geometry:
+    type: object
+    description: Une `Geometry` au sens GeoJSON
+    externalDocs:
+      url: http://geojson.org/geojson-spec.html#geometry-objects
+      description: La documentation officielle du type `Geometry` de GeoJSON
+    properties:
+      type:
+        type: string
+        enum:
+        - MultiPolygon
+        - Point
+        description: Le type corresponds au type de Géométrie(MultiPolygon ou Point)
+      coordinates:
+        type: array
+        items:
+          type: array
+          items:
+            type: number
+
+  Feature:
+    type: object
+    description: Une `Feature` au sens GeoJSON
+    externalDocs:
+      url: http://geojson.org/geojson-spec.html#feature-objects
+      description: La documentation officielle du type `Feature` de GeoJSON
+    properties:
+      type:
+        type: string
+        enum:
+        - Feature
+        description: La valeur de type est "Feature"
+      id:
+        type: string
+      geometry:
+        $ref: '#/definitions/Geometry'
+      properties:
+        type: object
+
+  FeatureCollection:
+    type: object
+    description: Une `FeatureCollection` au sens GeoJSON
+    externalDocs:
+      url: http://geojson.org/geojson-spec.html#feature-collection-objects
+      description: La documentation officielle du type `FeatureCollection` de GeoJSON
+    properties:
+      type:
+        type: string
+        enum:
+        - Feature
+        description: Le type est FeatureCollection
+      features:
+        type: array
+        items: object
+
+
+  Geometrie:
+    description: ''
+    allOf:
+    - $ref: '#/definitions/Feature'
+    - type: object
+      properties:
+        properties:
+          type: object
+          properties:
+            Liste proprietes: 
+              type: string
+
+  Geometries:
+    description: Une `FeatureCollection` contenant uniquement des features de type `Geometrie`
+    allOf:
+    - $ref: '#/definitions/FeatureCollection'
+    - type: object
+      properties:
+        features:
+          type: array
+          items:
+            $ref: '#/definitions/Geometrie'
+
+
