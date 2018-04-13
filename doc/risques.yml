@@ -4,7 +4,7 @@ info:
   description: >
     Le service d'interrogation du cadastre permet de faire le croisement entre un polygone ou un point et les données PPR(Plans de prévention des risques).
     L'api retourne des informations sur les risques par rapport à un polygone ou un point.
-    Possibilité d'utiliser les communes de l'IGN ou les communes OSM
+    Les contours des communes utilisés sont ceux de la BD TOPO de l'IGN en date XX/XX/2017.
 
 
      ```json
