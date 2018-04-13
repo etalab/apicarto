@@ -9,17 +9,31 @@ var aoc = require('./controllers/aoc');
 var codesPostaux = require('./controllers/codes-postaux');
 var qp = require('./controllers/quartiers-prioritaires');
 var cadastre = require('./controllers/cadastre');
-
+var zoneppr= require ('./controllers/ppr.js');
 var app = express();
+var gpu = require('./controllers/gpu');
 var port = process.env.PORT || 8091;
 
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(function(req,res,next) {
+    console.log(req.method, ' ', req.path,' ', JSON.stringify(req.query));
+    next();
+});
+
+
+app.use(function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next();
+});
+
 /* Static files (doc) */
-app.use('/apidoc',  express.static(__dirname + '/doc'));
+app.use('/api/doc',  express.static(__dirname + '/doc'));
 app.use(
-    '/apidoc/vendor/swagger-ui',
+    '/api/doc/vendor/swagger-ui',
     express.static(__dirname + '/node_modules/swagger-ui/dist')
 );
 
@@ -41,18 +55,23 @@ function pgClient(req, res, next) {
         next();
     });
 }
+/*
+
 
 /* Routes */
-app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
-app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
-app.post('/quartiers-prioritaires/search', pgClient, qp.search);
-app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
-app.use('/cadastre', cadastre({
-    key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
-    referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
-}));
 
-/* Ready! */
+app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
+app.get('//api/codes-postaux/communes/:codePostal', codesPostaux.communes);
+app.post('/api/quartiers-prioritaires/search', pgClient, qp.search);
+app.get('/api/quartiers-prioritaires/layer', pgClient, qp.layer);
+/* ajout pour ial */
+app.post('/api/ppr/in',pgClient,zoneppr.in);
+app.get('/api/ppr/secteur', pgClient, zoneppr.secteur);
+
+app.use('/api/gpu/',gpu);
+app.use('/api/cadastre',cadastre);
+
+
 app.listen(port);
 
 module.exports = app;

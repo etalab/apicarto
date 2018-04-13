@@ -39,14 +39,37 @@
             dom_id:"swagger-ui-container-aoc"
         });
         swaggerUiAoc.load();
+        
+        var swaggerUiRisques = new SwaggerUi({
+            url:"risques.yml",
+            dom_id:"swagger-ui-container-risques"
+        });
+        swaggerUiRisques.load();
+        
+      //  var swaggerUiNature = new SwaggerUi({
+        //    url:"nature.yml",
+          //  dom_id:"swagger-ui-container-nature"
+        //});
+        //swaggerUiNature.load();
+        
+         var swaggerUiGpu = new SwaggerUi({
+            url:"gpu.yml",
+            dom_id:"swagger-ui-container-gpu"
+        });
+        swaggerUiGpu.load();
+        
     </script>
 </head>
 
 <body>
 
 <div class="swagger-section">
-    <div id="swagger-ui-container-cadastre" class="swagger-ui-wrap"></div>
+    
+   <div id="swagger-ui-container-cadastre" class="swagger-ui-wrap"></div>
+   <div id="swagger-ui-container-gpu" class="swagger-ui-wrap"></div>
+   <div id="swagger-ui-container-risques" class="swagger-ui-wrap"></div>
     <div id="swagger-ui-container-aoc" class="swagger-ui-wrap"></div>
+     <!--<div id="swagger-ui-container-nature" class="swagger-ui-wrap"></div>-->
 </div>
 
 </body>

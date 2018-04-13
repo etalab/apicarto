@@ -1,8 +1,9 @@
 swagger: '2.0'
 info:
-  title: APICARTO Cadastre
+  title: Module Cadastre
   description: >
     Le service d'interrogation du cadastre permet d'obtenir les informations suivantes :
+    
     * Obtenir les géométries pour une commune
     
     * Obtenir les divisions parcellaires d'une commune
@@ -57,11 +58,22 @@ info:
 
     ## Obtenir une clé géoportail
     
-    Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ ou http://api.ign.fr/accueil(pour une clé de développement)
+    Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ ou http://api.ign.fr/accueil(pour une clé de développement).
+    Pour utiliser cette api, il faut absolument une clé IGN comme celle-ci est passée en paramètre de l'url.
     
     ## Notes techniques
     
-    Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN
+    Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. 
+    
+    Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - BD PARCELLAIRE®"  ci-dessous:
+        
+        1) bdpv_COMMUNE
+        
+        2) bdpv_DIVCAD
+        
+        3) bdpv_LOCALISANT
+        
+        4) bdpv_PARCELLE
     
     ## Service WFS
     
@@ -75,31 +87,30 @@ info:
    
       http://wxs.ign.fr/[API_KEY]/geoportail/wfs?request=GetFeature&version=2.0.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle&CountDefault=100&outputFormat=application/json&cql_filter=code_dep=25%20and%20code_com=349
     
-    ## Liste des urls à utiliser pour utiliser le service
+    ## Exemple d'urls à utiliser pour tester le service :
   
-    1) Communes : http://apicarto.sgmap.fr/cadastre/commune?insee=xxxx
+    1) Communes :https://apicarto.ign.fr/api/cadastre/commune/?apikey=xxxxxxx&insee=xxxxx
     
     
-    2) Divisions:  http://apicarto.sgmap.fr/cadastre/division?insee=xxxx (utilisable avec paramètre insee uniquement)
+    2) Divisions:  https://apicarto.ign.fr/api/cadastre/division/?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètre insee uniquement)
     
     
-    3) Parcelles: http://apicarto.sgmap.fr/cadastre/parcelle?insee=xxxx&section=xx&numero=xxxx
+    3) Parcelles: https://apicarto.ign.fr/api/cadastre/parcelle/?apikey=xxxxxxx&insee=xxxxx&section=xx&numero=xxxx
     
     
-    4) Localisants:  http://apicarto.sgmap.fr/cadastre/localisant?insee=xxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
+    4) Localisants:  https://apicarto.ign.fr/api/cadastre/localisant?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
     
     
-    5) Géometrie:  http://apicarto.sgmap.fr/cadastre/geometrie?geom=(Geometrie au format JSON)
-  version: 1.0.0
+    5) Géometrie:  https://apicarto.ign.fr/api/cadastre/geometrie/?apikey=xxxxxxx&geom=(Geometrie au format JSON)
+  version: 2.0.0
   contact:
     name: Apicarto Cadastre
   license:
     name: AGPL-V3
     url: https://www.gnu.org/licenses/agpl-3.0.html
-host: apicarto.sgmap.fr
 schemes:
   - https
-basePath: /
+basePath: /api
 produces:
   - application/json
 paths:
@@ -109,17 +120,17 @@ paths:
       description: |
         Retourne un résultat de Type "FeatureCollection".
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
           pattern: '\d{5}'
-          required: false
-        - name: dep
-          in: query
-          description: Numéro département sur 2 ou 3 caractères(DOM)
-          type: string
-          required: false
+          required: true
       tags:
         - Commune
       responses:
@@ -136,6 +147,11 @@ paths:
         * Paramètre insee => Retour des divisions parcellaires d'une commune
         * Paramètre Insee + section => Retour des divisions parcellaires d'une section dans une commune
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -169,6 +185,11 @@ paths:
       description: |
         Retourne un résultat de Type "FeatureCollection" avec différentes informations sur les parcelles cadastrales.
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -215,6 +236,17 @@ paths:
       description: |
         Prends en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations sur les parcelles qui intersectent la géométrie.
+      parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
+        - name: geom
+          in: query
+          description: geometrie au format json
+          type: string
+          required: true
       tags:
         - Geometrie
       responses:
@@ -230,6 +262,11 @@ paths:
       tags:
         - Localisant
       parameters:
+        - name: apikey
+          in: query
+          description: apikey fourni par l'IGN
+          type: string
+          required: true
         - name: insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -461,10 +498,6 @@ definitions:
         properties:
           type: object
           properties:
-            surface_intersection:
-              type: string
-            surface_parcelle:
-              type: float
             numero:
               type: string
             feuille:
@@ -473,14 +506,19 @@ definitions:
               type: string
             code_dep:
               type: string
+            nom_com:
+              type: string
             code_com:
               type: string
             com_abs:
               type: string
-            echelle:
-              type: string
             code_arr:
               type: string
+            surface_intersection:
+              type: string
+            surface_parcelle:
+              type: number
+              format: float
 
   Geometries:
     description: Une `FeatureCollection` contenant uniquement des features de type `Geometrie`

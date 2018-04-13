@@ -59,6 +59,7 @@ npm run import
 ### Clé Géoportail IGN
 
 Pour accéder aux référentiels publiés sur le Géoportail de l'IGN, vous devez définir la clé d'accès et le compte associé.
+Certaines couches de données WFS sont en accès restreint, veuillez contacter l'IGN via l'espace professionnel pour avoir accès aux couches spécifiques.
 
 ```bash
 npm config set apicarto:geoportailKey ****ma clé****
