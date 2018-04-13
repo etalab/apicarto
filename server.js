@@ -10,7 +10,6 @@ var codesPostaux = require('./controllers/codes-postaux');
 var qp = require('./controllers/quartiers-prioritaires');
 var cadastre = require('./controllers/cadastre');
 var zoneppr= require ('./controllers/ppr.js');
-var dilaOrganisme = require('./controllers/dila');
 var app = express();
 var gpu = require('./controllers/gpu');
 var port = process.env.PORT || 8091;
@@ -71,8 +70,7 @@ app.get('/api/ppr/secteur', pgClient, zoneppr.secteur);
 
 app.use('/api/gpu/',gpu);
 app.use('/api/cadastre',cadastre);
-app.get('/api/dila/organisme/search', pgClient, dilaOrganisme.search);
-app.get('/api/dila/organisme/searchtype',pgClient,dilaOrganisme.searchType);
+
 
 app.listen(port);
 
