@@ -45,7 +45,7 @@ paths:
           schema:
             $ref: '#/definitions/Geometries'      
 
-  /gpu/zoneurba:
+  /gpu/zone-urba:
     get:
       summary: Récupération des zonages d’un document d’urbanisme
       description: |
@@ -59,7 +59,7 @@ paths:
           schema:
             $ref: '#/definitions/Geometries'
 
-  /gpu/secteurcc:
+  /gpu/secteur-cc:
     get:
       summary: Récupération des secteurs d’une carte communale
       description: >
