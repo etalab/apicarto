@@ -48,7 +48,7 @@ router.get('/commune',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            next(err);
+            res.status(500).json(err);
 		})
     ;
 });
@@ -69,7 +69,7 @@ router.get('/localisant',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
 		})
         .catch(function(err) {
-            next(err);
+            res.status(500).json(err);
 		})
     ;
 });
@@ -90,7 +90,7 @@ router.get('/division',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            next(err);
+            res.status(500).json(err);
 		})
     ;
 });
@@ -109,7 +109,7 @@ router.get('/parcelle',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            next(err);
+            res.status(500).json(err);
 		})
     ;
 });
@@ -128,7 +128,7 @@ router.get('/geometrie', function (req, res, next) {
         message: 'geom field is required'
     });
     cadastreClient.getCadastreFromGeom(JSON.parse(req.query.geom), function (err, featureCollection) {
-        if (err) return next(err);
+        if (err) return res.status(500).json(err);;
         res.json(featureCollection);
     });
 });
@@ -140,7 +140,7 @@ router.post('/geometrie', function (req, res, next) {
         message: 'geom field is required'
     });
     cadastreClient.getCadastreFromGeom(req.body.geom, function (err, featureCollection) {
-        if (err) return next(err);
+        if (err) return res.status(500).json(err);;
         res.json(featureCollection);
     });
 });

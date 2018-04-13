@@ -30,7 +30,7 @@
     "debug": "^2.2.0",
     "express": "^4.13.3",
     "geojsonhint": "^1.2.0",
-    "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#master",
+    "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#v0.1.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-shell": "^1.1.2",
