@@ -50,18 +50,18 @@ router.get('/all',function (req, res, next) {
     });
     var search1 = searchAllFields(options,params,'wfs_du:municipality','municipality');
    // var search2 = searchAllFields(options,params,'wfs_du:document','document');
-    var search3 = searchAllFields(options,params,'wfs_du:zone_urba','zone_urba');
-    var search4 = searchAllFields(options,params,'wfs_sup:acte_sup','acte_sup');
-    var search5 = searchAllFields(options,params,'wfs_du:secteur_cc','secteur_cc');
-    var search6 =  searchAllFields(options,params,'wfs_du:prescription_lin','prescription_lin');
-    var search7 = searchAllFields(options,params,'wfs_du:prescription_pct','prescription_pct');
-    var search8 = searchAllFields(options,params,'wfs_du:prescription_surf','prescription_surf');
-    var search9 = searchAllFields(options,params,'wfs_sup:assiette_sup_l','assiette_sup_l');
-    //  var search10 = searchAllFields(options,params,'wfs_sup:assiette_sup_p','assiette_sup_p');
-    var search11 = searchAllFields(options,params,'wfs_sup:assiette_sup_s','assiette_sup_s');
-    var search12 = searchAllFields(options,params,'wfs_du:info_surf','info_surf');
-    var search13 = searchAllFields(options,params,'wfs_du:info_lin','info_lin');
-    var search14 = searchAllFields(options,params,'wfs_du:info_pct','info_pct');
+    var search3 = searchAllFields(options,params,'wfs_du:zone_urba','zone-urba');
+    var search4 = searchAllFields(options,params,'wfs_sup:acte_sup','acte-sup');
+    var search5 = searchAllFields(options,params,'wfs_du:secteur_cc','secteur-cc');
+    var search6 =  searchAllFields(options,params,'wfs_du:prescription_lin','prescription-lin');
+    var search7 = searchAllFields(options,params,'wfs_du:prescription_pct','prescription-pct');
+    var search8 = searchAllFields(options,params,'wfs_du:prescription_surf','prescription-surf');
+    var search9 = searchAllFields(options,params,'wfs_sup:assiette_sup_l','assiette-sup-l');
+    //  var search10 = searchAllFields(options,params,'wfs_sup:assiette_sup_p','assiette-sup-p');
+    var search11 = searchAllFields(options,params,'wfs_sup:assiette_sup_s','assiette-sup-s');
+    var search12 = searchAllFields(options,params,'wfs_du:info_surf','info-surf');
+    var search13 = searchAllFields(options,params,'wfs_du:info_lin','info-lin');
+    var search14 = searchAllFields(options,params,'wfs_du:info_pct','info-pct');
    
     Promise.all([search1,search3,search4,search5,search6,search7,search8,search9,search11,search12,search13,search14])
     //Ligne avec assiette_sup_p et document à activer dés que ça marche et désactiver la ligne au dessus
@@ -115,7 +115,7 @@ router.get('/document',function (req, res, next) {
             console.log(err);
         });
 });
-router.get('/zoneurba',function (req, res, next) {
+router.get('/zone-urba',function (req, res, next) {
 	 
 	 if (!req.query.geom) return res.status(400).send({
         code: 400,
@@ -136,7 +136,7 @@ router.get('/zoneurba',function (req, res, next) {
         });
 });
 
-router.get('/actesup',function (req, res, next) {
+router.get('/acte-sup',function (req, res, next) {
 	
 	 if (!req.query.geom) return res.status(400).send({
         code: 400,
@@ -156,7 +156,7 @@ router.get('/actesup',function (req, res, next) {
             console.log(err);
         });
 });
-router.get('/secteurcc',function (req, res, next) {
+router.get('/secteur-cc',function (req, res, next) {
 	
 	 if (!req.query.geom) return res.status(400).send({
         code: 400,
