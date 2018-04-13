@@ -27,7 +27,6 @@ info:
 
 
   version: '1.0'
-host: apicarto.ign.fr
 schemes:
   - https
 consumes:
