@@ -28,12 +28,12 @@ function searchAllFields(options, params,typeName,typeInfo) {
                 resolve(featureCollection);
             })
             .catch(function(err) {
-                console.log(err);
+                res.status(500).json(err);
             });
     })
     .catch(function(err){
         //return error;
-        return err;
+        res.status(500).json(err);
     });
    
 }
@@ -91,8 +91,10 @@ router.get('/municipality',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+             res.status(500).json(err);
+            
+		})
+    ;
 });
 
 router.get('/document',function (req, res, next) {
@@ -112,8 +114,10 @@ router.get('/document',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+             res.status(500).json(err);
+            
+		})
+    ;
 });
 router.get('/zone-urba',function (req, res, next) {
 	 
@@ -132,8 +136,9 @@ router.get('/zone-urba',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            res.status(500).json(err);
+		})
+    ;
 });
 
 router.get('/acte-sup',function (req, res, next) {
@@ -153,8 +158,9 @@ router.get('/acte-sup',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            res.status(500).json(err);
+		})
+    ;
 });
 router.get('/secteur-cc',function (req, res, next) {
 	
@@ -173,8 +179,9 @@ router.get('/secteur-cc',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            res.status(500).json(err);
+		})
+    ;
 });
 router.get('/prescription-lin',function (req, res, next) {
 	
@@ -193,8 +200,9 @@ router.get('/prescription-lin',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            res.status(500).json(err);
+		})
+    ;
 });
 router.get('/prescription-pct',function (req, res, next) {
 	
@@ -213,8 +221,9 @@ router.get('/prescription-pct',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+           res.status(500).json(err);
+		})
+    ;
 });
 router.get('/prescription-surf',function (req, res, next) {
 	
@@ -232,9 +241,11 @@ router.get('/prescription-surf',function (req, res, next) {
         .then(function(featureCollection) {
             res.json(featureCollection);
         })
-        .catch(function(err) {
-            console.log(err);
-        });
+         .catch(function(err) {
+             res.status(500).json(err);
+            
+		})
+    ;
 });
 router.get('/assiette-sup-l',function (req, res, next) {
 	
@@ -252,9 +263,11 @@ router.get('/assiette-sup-l',function (req, res, next) {
         .then(function(featureCollection) {
             res.json(featureCollection);
         })
-        .catch(function(err) {
-            console.log(err);
-        });
+         .catch(function(err) {
+             res.status(500).json(err);
+            
+		})
+    ;
 });
 
 router.get('/assiette-sup-p',function (req, res, next) {
@@ -273,9 +286,11 @@ router.get('/assiette-sup-p',function (req, res, next) {
         .then(function(featureCollection) {
             res.json(featureCollection);
         })
-        .catch(function(err) {
-            console.log(err);
-        });
+         .catch(function(err) {
+             res.status(500).json(err);
+            
+		})
+    ;
 });
 
 
@@ -296,8 +311,9 @@ router.get('/assiette-sup-s',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+           res.status(500).json(err);
+		})
+    ;
 });
 
 router.get('/info-surf',function (req, res, next) {
@@ -316,9 +332,10 @@ router.get('/info-surf',function (req, res, next) {
         .then(function(featureCollection) {
             res.json(featureCollection);
         })
-        .catch(function(err) {
-            console.log(err);
-        });
+         .catch(function(err) {
+            res.status(500).json(err);
+		})
+    ;
 });
 router.get('/info-lin',function (req, res, next) {
 	
@@ -337,8 +354,9 @@ router.get('/info-lin',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            res.status(500).json(err);
+		})
+    ;
 });
 router.get('/info-pct',function (req, res, next) {
 	
@@ -357,8 +375,9 @@ router.get('/info-pct',function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            res.status(500).json(err);
+		})
+    ;
 });
 
 
