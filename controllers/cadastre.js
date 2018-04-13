@@ -11,6 +11,7 @@ function buildOptions(reqOptions) {
     var referer = reqOptions.headers.referer || 'http://localhost';
     var optionsInit = {
         "apiKey":  reqOptions.query.apikey,
+        "url": 'http://wxs.ign.fr/{apiKey}/geoportail/wfs',
         "headers":{
             Referer: referer
         }
@@ -47,8 +48,9 @@ router.get('/commune',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            next(err);
+		})
+    ;
 });
 
 /**
@@ -67,8 +69,9 @@ router.get('/localisant',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
 		})
         .catch(function(err) {
-            console.log(err);
-		});
+            next(err);
+		})
+    ;
 });
 
 /**
@@ -87,8 +90,9 @@ router.get('/division',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-    });
+            next(err);
+		})
+    ;
 });
 /**
 * Récupération des parcelles pour une commune.
@@ -105,17 +109,17 @@ router.get('/parcelle',prepareParamsCadastre, function (req, res, next) {
             res.json(featureCollection);
         })
         .catch(function(err) {
-            console.log(err);
-        });
+            next(err);
+		})
+    ;
 });
 
 /**
-     * Récupération des informations cadastre et commune
-     *
-     * Paramètres : une feature avec pour nom "geom"...
-     * Mode : GET ou POST
-     */
-
+ * Récupération des informations cadastre et commune
+ *
+ * Paramètres : une feature avec pour nom "geom"...
+ * Mode : GET ou POST
+ */
 router.get('/geometrie', function (req, res, next) {
     var cadastreClient = new CadastreClient(req.query.apikey, req.headers);
 	
