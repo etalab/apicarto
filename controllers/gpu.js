@@ -109,7 +109,7 @@ router.get('/document',function (req, res, next) {
     };
 
     var client = new GeoportalWfsClient(options);
-    client.getFeatures('=wfs_du:document', params)
+    client.getFeatures('wfs_du:document', params)
         .then(function(featureCollection) {
             res.json(featureCollection);
         })
