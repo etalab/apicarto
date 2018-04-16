@@ -1,0 +1,52 @@
+swagger: '2.0'
+info:
+  title: APICarto - codes-postaux
+  description: >
+    API de récupération des communes associées à un code postal donné. Voir https://github.com/etalab/codes-postaux#codes-postaux pour plus d'information sur les sources de données.
+  version: '1.0'
+
+consumes:
+  - application/json
+
+basePath: /
+
+produces:
+  - application/json
+
+paths:
+  /api/codes-postaux/communes/{codePostal}:
+    get:
+      description: Renvoie les communes correspondant à un code postal
+      parameters:
+        - in: path
+          name: codePostal
+          type: string
+          required: true
+          description: Code postal de la commune.
+      tags:
+        - codes-postaux
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Commune'
+
+definitions:
+  Commune:
+    type: object
+    description: Commune correspondant au code postal
+    properties:
+      codeInsee:
+        type: string
+        description: Le code INSEE de la commune
+      nomCommune:
+        type: string
+        description: Le nom de la commune
+      codePostal:
+        type: string
+        description: Le code postal
+      libelleAcheminement:
+        type: string
+        description: Le libellé d'acheminement

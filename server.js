@@ -30,7 +30,9 @@ app.use(function (req, res, next) {
     next();
 });
 
-/* Static files (doc) */
+/*------------------------------------------------------------------------------
+ * /api/doc - exposition de la documentation
+ -----------------------------------------------------------------------------*/
 app.use('/api/doc',  express.static(__dirname + '/doc'));
 app.use(
     '/api/doc/vendor/swagger-ui',
@@ -58,19 +60,29 @@ function pgClient(req, res, next) {
 /*
 
 
-/* Routes */
+/* -----------------------------------------------------------------------------
+ * Routes
+ -----------------------------------------------------------------------------*/
 
+ /* Module cadastre */
+ app.use('/api/cadastre',cadastre);
+
+/* Module AOC */
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
-app.get('//api/codes-postaux/communes/:codePostal', codesPostaux.communes);
-app.post('/api/quartiers-prioritaires/search', pgClient, qp.search);
+
+/* Module code postaux */
+app.get('/api/codes-postaux/communes/:codePostal', codesPostaux.communes);
+
+/* Module quartiers prioritaires */
 app.get('/api/quartiers-prioritaires/layer', pgClient, qp.layer);
-/* ajout pour ial */
+app.post('/api/quartiers-prioritaires/search', pgClient, qp.search);
+
+/* Module risque (ppr) */
 app.post('/api/ppr/in',pgClient,zoneppr.in);
 app.get('/api/ppr/secteur', pgClient, zoneppr.secteur);
 
+/* Module GPU */
 app.use('/api/gpu/',gpu);
-app.use('/api/cadastre',cadastre);
-
 
 app.listen(port);
 

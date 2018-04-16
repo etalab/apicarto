@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Module GPU
+  title: Module urbanisme (GpU)
   description: >
     Le service d’interrogation du GPU permet d’obtenir des informations d’urbanisme intersectant une géométrie (ponctuelle ou surfacique).
     
@@ -275,5 +275,3 @@ definitions:
           type: array
           items:
             $ref: '#/definitions/Geometrie'
-
-

@@ -8,7 +8,8 @@
 ## Prérequis
 
 Pour faire fonctionner APICarto, vous avez besoin de :
-* [Node.js](https://nodejs.org) v4.2+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
+
+* [Node.js](https://nodejs.org) v6+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
 * PostgreSQL v9.4+
 * PostGIS v2.1+
 * [ogr2ogr](http://www.gdal.org/ogr2ogr.html) v1.11+
@@ -37,17 +38,22 @@ brew install postgresql postgis
 ### Création de la base de données
 
 La base qui contiendra les données locales doit être créée au prélable.
+
 ```bash
 createdb "apicarto"
 psql -d "apicarto" -c "CREATE EXTENSION postgis"
 ```
 
 ### Installation du package
+
 ```
 npm install
 ```
 
 ### Chargement des données
+
+TODO : mettre à jour
+
 ```bash
 # Définir le répertoire distant contenant les données sources
 npm config set apicarto:refDataDir http://###:###@apicarto-data.sgmap.fr/prod
@@ -58,15 +64,10 @@ npm run import
 
 ### Clé Géoportail IGN
 
-Pour accéder aux référentiels publiés sur le Géoportail de l'IGN, vous devez définir la clé d'accès et le compte associé.
-Certaines couches de données WFS sont en accès restreint, veuillez contacter l'IGN via l'espace professionnel pour avoir accès aux couches spécifiques.
-
-```bash
-npm config set apicarto:geoportailKey ****ma clé****
-npm config set apicarto:geoportailReferer ****mon referer****
-```
+Certaines couches de données WFS utilisées par l'API sont en accès restreint (paramètre `apikey`). Veuillez contacter l'IGN via l'espace professionnel pour avoir accès à ces couches via une clé géoportail.
 
 ### Lancer le service
+
 ```
 npm start
 ```
