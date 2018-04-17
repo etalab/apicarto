@@ -17,7 +17,7 @@ info:
     Pour les différentes requêtes possible ci-dessus, le résultat renvoyé sera sous la forme:
     
     
-    ( Toutes les structures de réponse sont  de type FeatureCollection avec la liste des champs properties qui sera détaillée dans chaque module.)
+    ( Toutes les structures de réponse sont de type FeatureCollection avec la liste des champs properties qui sera détaillée dans chaque module.)
     
     
     ```json
