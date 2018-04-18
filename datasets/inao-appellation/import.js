@@ -21,7 +21,7 @@ if (!shell.which('unzip')) {
 /* Download AOC file */
 var url = "https://www.data.gouv.fr/s/resources/delimitation-parcellaire-des-aoc-viticoles-de-linao/20180319-085833/delimitation_inao_EPSG2154.zip";
 
-var dataDir = __dirname+'/../data/aoc';
+var dataDir = __dirname+'/../data/inao-appellation';
 if (shell.exec('mkdir -p '+dataDir).code !== 0) {
 	shell.echo('Fail to create data directory : '+dataDir)
 	shell.exit(1);
@@ -44,10 +44,10 @@ if (shell.exec('unzip -j -o delimitation_inao_EPSG2154.zip').code !== 0) {
 	shell.exit(1);
 }
 
-
 /* Convert shapefile to sql */
 var command = 'ogr2ogr --config PG_USE_COPY YES -f PGDump /vsistdout/ ';
 command += '-a_srs EPSG:2154 -t_srs EPSG:4326 -lco GEOMETRY_NAME=geom -lco DROP_TABLE=ON ';
+command += '-lco SCHEMA=inao ';
 command += '-nlt PROMOTE_TO_MULTI -nln appellation ';
 command += 'delimitation_parcellaire_aoc_viticoles_inao.shp | psql --quiet';
 if (shell.exec(command).code !== 0) {
@@ -55,11 +55,7 @@ if (shell.exec(command).code !== 0) {
 	shell.exit(1);
 }
 
-
-
-/* post-traitement */
-var sqlPath = __dirname+'/../sql/prepare-appellations.sql';
-if (shell.exec('psql -f '+sqlPath).code !== 0) {
-	shell.echo('Error: psql failed');
+if (shell.exec('psql -f '+__dirname+'/sql/post-process.sql').code !== 0) {
+	shell.echo('Error: post-process.sql failed');
 	shell.exit(1);
 }

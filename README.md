@@ -33,6 +33,30 @@ brew install gdal
 brew install postgresql postgis
 ```
 
+
+## Variables d'environnements
+
+L'intégration des données dans postgis s'appuie sur l'exécutable `psql` qui utilise les variables suivantes :
+
+| Variable   | Description                   |
+|------------|-------------------------------|
+| PGHOST     | Host du serveur postgresql    |
+| PGDATABASE | Nom de la base de données     |
+| PGUSER     | Nom de l'utilisateur          |
+| PGPASSWORD | Mot de passe de l'utilisateur |
+
+
+## Sources de données
+
+| Nom              | Description                                                        | Source                                                                                      |
+|------------------|--------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| bdparcellaire    | Base de données cadastrale                                         | http://professionnels.ign.fr/bdparcellaire                                                  |
+| adminexpress     | Découpage administratif du territoire métropolitain et ultra-marin | http://professionnels.ign.fr/adminexpress                                                   |
+| inao-appellation | Appellation viticoles INAO                                         | https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/#_ |
+| codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/etalab/codes-postaux#sources                                        |
+
+
+
 ## Installation
 
 ### Création de la base de données
@@ -52,14 +76,8 @@ npm install
 
 ### Chargement des données
 
-TODO : mettre à jour
-
 ```bash
-# Définir le répertoire distant contenant les données sources
-npm config set apicarto:refDataDir http://###:###@apicarto-data.sgmap.fr/prod
-
-# Lancer le script d'import
-npm run import
+PGDATABASE=apicarto npm run import
 ```
 
 ### Clé Géoportail IGN

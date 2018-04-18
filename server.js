@@ -1,18 +1,19 @@
 var express = require('express');
-var _ = require('lodash');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var pg = require('pg');
-var onFinished = require('on-finished');
+
 var communesHelper = require('./helpers/communes');
+
 var aoc = require('./controllers/aoc');
 var codesPostaux = require('./controllers/codes-postaux');
-var qp = require('./controllers/quartiers-prioritaires');
 var cadastre = require('./controllers/cadastre');
-var zoneppr= require ('./controllers/ppr.js');
+
 var app = express();
 var gpu = require('./controllers/gpu');
 var port = process.env.PORT || 8091;
+
+/* middlewares */
+var pgClient = require('./middlewares/pgClient');
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -47,17 +48,6 @@ if (env === 'production') {
 
 app.use(require('./lib/request-logger')());
 
-/* Middlewares */
-function pgClient(req, res, next) {
-    pg.connect(process.env.PG_URI || 'postgres://localhost/apicarto', function (err, client, done) {
-        if (err) return next(err);
-        req.pgClient = client;
-        req.pgEnd = _.once(done);
-        onFinished(res, req.pgEnd);
-        next();
-    });
-}
-/*
 
 
 /* -----------------------------------------------------------------------------
@@ -72,14 +62,6 @@ app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign
 
 /* Module code postaux */
 app.get('/api/codes-postaux/communes/:codePostal', codesPostaux.communes);
-
-/* Module quartiers prioritaires */
-app.get('/api/quartiers-prioritaires/layer', pgClient, qp.layer);
-app.post('/api/quartiers-prioritaires/search', pgClient, qp.search);
-
-/* Module risque (ppr) */
-app.post('/api/ppr/in',pgClient,zoneppr.in);
-app.get('/api/ppr/secteur', pgClient, zoneppr.secteur);
 
 /* Module GPU */
 app.use('/api/gpu/',gpu);

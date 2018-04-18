@@ -5,25 +5,27 @@ const request = require('supertest');
 const server = require('../server');
 const expect = require('expect.js');
 
+var API_KEY = "znn6hmrtw8lurrssimca4qtg";
 
 describe('test du module commune  ', function() {
     
     describe('not valid input type', function() {
         it('should reply with 400', function(done){
             request(server)
-                .get('/cadastre/commune?insee=testapi')
+                .get('/cadastre/commune?insee=testapi&apikey='+API_KEY)
                 .expect(400,done);
         });
     });
+
     describe('Test du module commune avec valeur', function() {
         it('should work for insee 94067', function(){
             request(server)
-                .get('/cadastre/commune?insee=94067')
+                .get('/cadastre/commune?insee=94067&apikey='+API_KEY)
                 .expect(200);
         });
         it('should reply a FeatureCollection containing a valid Feature', done => {
             request(server)    
-                .get('/cadastre/commune?insee=55001')
+                .get('/cadastre/commune?insee=55001&apikey='+API_KEY)
                 .expect(res => {
                     const feature = res.body.features[0];
                     expect(feature.geometry.type).to.eql('MultiPolygon');
@@ -41,12 +43,12 @@ describe('test du module commune  ', function() {
 describe('Test du module commune avec valeur', function() {
         it('should work for insee 94067', function(){
             request(server)
-                .get('/cadastre/commune?insee=94067')
+                .get('/cadastre/commune?insee=94067&apikey='+API_KEY)
                 .expect(200);
         });
         it('should reply a FeatureCollection containing a valid Feature', done => {
             request(server)    
-                .get('/cadastre/commune?insee=55001')
+                .get('/cadastre/commune?insee=55001&apikey='+API_KEY)
                 .expect(res => {
                     const feature = res.body.features[0];
                     expect(feature.geometry.type).to.eql('MultiPolygon');
@@ -65,7 +67,7 @@ describe('Test du module commune avec valeur', function() {
         });
         it('should work for dep 94 and nom_com Vincennes : Return FeatureCollection', done => {
             request(server)    
-                .get('/cadastre/commune?dep=94&nom_com=Vincennes')
+                .get('/cadastre/commune?dep=94&nom_com=Vincennes&apikey='+API_KEY)
                .expect(res => {
                     const feature = res.body.features[0];
                     expect(feature.geometry.type).to.eql('MultiPolygon');
