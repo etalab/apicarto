@@ -2,15 +2,15 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var communesHelper = require('./helpers/communes');
+var app = express();
 
+var port = process.env.PORT || 8091;
+
+var communesHelper = require('./helpers/communes');
 var aoc = require('./controllers/aoc');
 var codesPostaux = require('./controllers/codes-postaux');
 var cadastre = require('./controllers/cadastre');
-
-var app = express();
 var gpu = require('./controllers/gpu');
-var port = process.env.PORT || 8091;
 
 /* middlewares */
 var pgClient = require('./middlewares/pgClient');

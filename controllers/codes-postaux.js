@@ -1,6 +1,5 @@
 var codesPostaux = require('codes-postaux');
 
-
 exports.communes = function handleCommuneRequest(req, res) {
     if (! req.params.codePostal.match(/^\d{5}$/))
         return res.sendStatus(400);
