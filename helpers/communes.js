@@ -49,7 +49,7 @@ function intersects(options) {
 
         req.pgClient.query(sqlQuery, (err, result) => {
             if (err) {
-                req.pgEnd(err);
+                //req.pgEnd(err);
                 return next(err);
             }
 

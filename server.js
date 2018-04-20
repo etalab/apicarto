@@ -6,14 +6,10 @@ var app = express();
 
 var port = process.env.PORT || 8091;
 
-var communesHelper = require('./helpers/communes');
-var aoc = require('./controllers/aoc');
-var codesPostaux = require('./controllers/codes-postaux');
-var cadastre = require('./controllers/cadastre');
-var gpu = require('./controllers/gpu');
 
-/* middlewares */
-var pgClient = require('./middlewares/pgClient');
+/*------------------------------------------------------------------------------
+ * common middlewares
+ ------------------------------------------------------------------------------*/
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -23,7 +19,6 @@ app.use(function(req,res,next) {
     next();
 });
 
-
 app.use(function (req, res, next) {
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     res.header('Expires', '-1');
@@ -32,7 +27,7 @@ app.use(function (req, res, next) {
 });
 
 /*------------------------------------------------------------------------------
- * /api/doc - exposition de la documentation
+ * /api/doc - expose documentation
  -----------------------------------------------------------------------------*/
 app.use('/api/doc',  express.static(__dirname + '/doc'));
 app.use(
@@ -49,22 +44,24 @@ if (env === 'production') {
 app.use(require('./lib/request-logger')());
 
 
-
 /* -----------------------------------------------------------------------------
  * Routes
  -----------------------------------------------------------------------------*/
 
- /* Module cadastre */
- app.use('/api/cadastre',cadastre);
+/* Module cadastre */
+app.use('/api/cadastre',require('./controllers/cadastre'));
 
 /* Module AOC */
+var aoc = require('./controllers/aoc');
+var communesHelper = require('./helpers/communes');
+var pgClient = require('./middlewares/pgClient');
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
 
 /* Module code postaux */
-app.get('/api/codes-postaux/communes/:codePostal', codesPostaux.communes);
+app.use('/api/codes-postaux', require('./controllers/codes-postaux'));
 
 /* Module GPU */
-app.use('/api/gpu/',gpu);
+app.use('/api/gpu',require('./controllers/gpu'));
 
 app.listen(port);
 

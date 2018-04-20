@@ -2,20 +2,20 @@ var shell = require('shelljs');
 var path = require('path');
 
 if (!shell.which('wget')) {
-	shell.echo('Sorry, this script requires wget');
-	shell.exit(1);
+    shell.echo('Sorry, this script requires wget');
+    shell.exit(1);
 }
 if (!shell.which('psql')) {
-	shell.echo('Sorry, this script requires psql');
-	shell.exit(1);
+    shell.echo('Sorry, this script requires psql');
+    shell.exit(1);
 }
 if (!shell.which('ogr2ogr')) {
-	shell.echo('Sorry, this script requires shp2pgsql');
-	shell.exit(1);
+    shell.echo('Sorry, this script requires shp2pgsql');
+    shell.exit(1);
 }
 if (!shell.which('unzip')) {
-	shell.echo('Sorry, this script requires unzip');
-	shell.exit(1);
+    shell.echo('Sorry, this script requires unzip');
+    shell.exit(1);
 }
 
 /* Download AOC file */
@@ -23,8 +23,8 @@ var url = "https://www.data.gouv.fr/s/resources/delimitation-parcellaire-des-aoc
 
 var dataDir = __dirname+'/../data/inao-appellation';
 if (shell.exec('mkdir -p '+dataDir).code !== 0) {
-	shell.echo('Fail to create data directory : '+dataDir)
-	shell.exit(1);
+    shell.echo('Fail to create data directory : '+dataDir)
+    shell.exit(1);
 }
 
 /* Change directory to data directory */
@@ -32,16 +32,16 @@ shell.cd(dataDir);
 
 /* Download zip file if not exists */
 if ( ! shell.test('-e', 'delimitation_inao_EPSG2154.zip') ){ 
-	if (shell.exec('wget --progress=bar:force -O delimitation_inao_EPSG2154.zip '+url).code !== 0) {
-		shell.echo('Error: wget failed');
-		shell.exit(1);
-	}
+    if (shell.exec('wget --progress=bar:force -O delimitation_inao_EPSG2154.zip '+url).code !== 0) {
+        shell.echo('Error: wget failed');
+        shell.exit(1);
+    }
 }
 
 /* Extract zip file */
 if (shell.exec('unzip -j -o delimitation_inao_EPSG2154.zip').code !== 0) {
-	shell.echo('Error: unzip failed');
-	shell.exit(1);
+    shell.echo('Error: unzip failed');
+    shell.exit(1);
 }
 
 /* Convert shapefile to sql */
@@ -51,11 +51,11 @@ command += '-lco SCHEMA=inao ';
 command += '-nlt PROMOTE_TO_MULTI -nln appellation ';
 command += 'delimitation_parcellaire_aoc_viticoles_inao.shp | psql --quiet';
 if (shell.exec(command).code !== 0) {
-	shell.echo('Error: import failed');
-	shell.exit(1);
+    shell.echo('Error: import failed');
+    shell.exit(1);
 }
 
 if (shell.exec('psql -f '+__dirname+'/sql/post-process.sql').code !== 0) {
-	shell.echo('Error: post-process.sql failed');
-	shell.exit(1);
+    shell.echo('Error: post-process.sql failed');
+    shell.exit(1);
 }

@@ -2,7 +2,7 @@ var Router = require('express').Router;
 var router = new Router();
 
 var prepareParamsCadastre = require('../../lib/prepare-params-cadastre');
-var gppWfsClient = require('../../middlewares/gppWfsClient')
+var gppWfsClient = require('../../middlewares/gppWfsClient');
 
 /**
 * Récupération Géometrie  pour une commune.

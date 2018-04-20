@@ -36,7 +36,7 @@ exports.in = function(req, res, next) {
         inseeCodeList: _.map(req.intersectedCommunes, 'insee')
     }), function(err, result) {
         if (err) {
-            req.pgEnd(err);
+            //req.pgEnd(err);
             return next(err);
         }
 

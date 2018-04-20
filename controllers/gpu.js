@@ -38,7 +38,7 @@ function searchAllFields(options, params,typeName,typeInfo) {
    
 }
 router.get('/all',function (req, res, next) {
-	
+    
     var options = buildOptions(req);
     var params = {
         geom:req.query.geom
@@ -73,10 +73,10 @@ router.get('/all',function (req, res, next) {
             console.error('err', err);
         });
 });
-	
+    
 router.get('/municipality',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -93,13 +93,13 @@ router.get('/municipality',function (req, res, next) {
         .catch(function(err) {
              res.status(500).json(err);
             
-		})
+        })
     ;
 });
 
 router.get('/document',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -116,12 +116,12 @@ router.get('/document',function (req, res, next) {
         .catch(function(err) {
              res.status(500).json(err);
             
-		})
+        })
     ;
 });
 router.get('/zone-urba',function (req, res, next) {
-	 
-	 if (!req.query.geom) return res.status(400).send({
+     
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -137,13 +137,13 @@ router.get('/zone-urba',function (req, res, next) {
         })
         .catch(function(err) {
             res.status(500).json(err);
-		})
+        })
     ;
 });
 
 router.get('/acte-sup',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -159,12 +159,12 @@ router.get('/acte-sup',function (req, res, next) {
         })
         .catch(function(err) {
             res.status(500).json(err);
-		})
+        })
     ;
 });
 router.get('/secteur-cc',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -180,12 +180,12 @@ router.get('/secteur-cc',function (req, res, next) {
         })
         .catch(function(err) {
             res.status(500).json(err);
-		})
+        })
     ;
 });
 router.get('/prescription-lin',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -201,12 +201,12 @@ router.get('/prescription-lin',function (req, res, next) {
         })
         .catch(function(err) {
             res.status(500).json(err);
-		})
+        })
     ;
 });
 router.get('/prescription-pct',function (req, res, next) {
-	
-	if (!req.query.geom) return res.status(400).send({
+    
+    if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -222,12 +222,12 @@ router.get('/prescription-pct',function (req, res, next) {
         })
         .catch(function(err) {
            res.status(500).json(err);
-		})
+        })
     ;
 });
 router.get('/prescription-surf',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -244,12 +244,12 @@ router.get('/prescription-surf',function (req, res, next) {
          .catch(function(err) {
              res.status(500).json(err);
             
-		})
+        })
     ;
 });
 router.get('/assiette-sup-l',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -266,7 +266,7 @@ router.get('/assiette-sup-l',function (req, res, next) {
          .catch(function(err) {
              res.status(500).json(err);
             
-		})
+        })
     ;
 });
 
@@ -289,14 +289,14 @@ router.get('/assiette-sup-p',function (req, res, next) {
          .catch(function(err) {
              res.status(500).json(err);
             
-		})
+        })
     ;
 });
 
 
 router.get('/assiette-sup-s',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -312,13 +312,13 @@ router.get('/assiette-sup-s',function (req, res, next) {
         })
         .catch(function(err) {
            res.status(500).json(err);
-		})
+        })
     ;
 });
 
 router.get('/info-surf',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -334,12 +334,12 @@ router.get('/info-surf',function (req, res, next) {
         })
          .catch(function(err) {
             res.status(500).json(err);
-		})
+        })
     ;
 });
 router.get('/info-lin',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -355,12 +355,12 @@ router.get('/info-lin',function (req, res, next) {
         })
         .catch(function(err) {
             res.status(500).json(err);
-		})
+        })
     ;
 });
 router.get('/info-pct',function (req, res, next) {
-	
-	 if (!req.query.geom) return res.status(400).send({
+    
+     if (!req.query.geom) return res.status(400).send({
         code: 400,
         message: 'geom field is required'
     });
@@ -376,7 +376,7 @@ router.get('/info-pct',function (req, res, next) {
         })
         .catch(function(err) {
             res.status(500).json(err);
-		})
+        })
     ;
 });
 

@@ -1,6 +1,10 @@
+var Router = require('express').Router;
+var router = new Router();
+
+/* import data package */
 var codesPostaux = require('codes-postaux');
 
-exports.communes = function handleCommuneRequest(req, res) {
+router.get('/communes/:codePostal', function (req, res) {
     if (! req.params.codePostal.match(/^\d{5}$/))
         return res.sendStatus(400);
 
@@ -9,5 +13,7 @@ exports.communes = function handleCommuneRequest(req, res) {
     if (! result.length)
         return res.sendStatus(404);
 
-    res.send(result);
-};
+    res.json(result);
+});
+
+module.exports=router;
