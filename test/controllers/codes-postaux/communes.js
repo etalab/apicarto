@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
 const request = require('supertest');
-const server = require('../../server');
+const server = require('../../../server');
 
 describe('/codes-postaux', function() {
     describe('/communes', function() {
