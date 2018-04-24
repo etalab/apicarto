@@ -21,7 +21,8 @@ if (!shell.which('7z')) {
 // TODO resolve latest 
 var url = "https://wxs-telechargement.ign.fr/x02uy2aiwjo9bm8ce5plwqmr/telechargement/prepackage/ADMINEXPRESS-PACK_2018-03-14\\$ADMIN-EXPRESS_1-1__SHP__FRA_2018-03-14/file/ADMIN-EXPRESS_1-1__SHP__FRA_2018-03-14.7z";
 
-var dataDir = __dirname+'/../data/adminexpress';
+var dataDir = __dirname+'/data/';
+shell.rm('-rf', dataDir);
 if (shell.exec('mkdir -p '+dataDir).code !== 0) {
     shell.echo('Fail to create data directory : '+dataDir)
     shell.exit(1);
@@ -32,11 +33,9 @@ if (shell.exec('mkdir -p '+dataDir).code !== 0) {
 shell.cd(dataDir);
 
 /* Download zip file if not exists */
-if ( ! shell.test('-e', 'ADMIN-EXPRESS.7z') ){ 
-    if (shell.exec('wget --progress=bar:force -O ADMIN-EXPRESS.7z "'+url+'"').code !== 0) {
-        shell.echo('Error: wget failed');
-        shell.exit(1);
-    }
+if (shell.exec('wget --progress=bar:force -O ADMIN-EXPRESS.7z "'+url+'"').code !== 0) {
+    shell.echo('Error: wget failed');
+    shell.exit(1);
 }
 
 /* Extract zip file */

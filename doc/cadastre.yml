@@ -2,117 +2,55 @@ swagger: '2.0'
 info:
   title: Module Cadastre
   description: >
+
     Le service d'interrogation du cadastre permet d'obtenir les informations suivantes :
     
-    * Obtenir les géométries pour une commune
-    
-    * Obtenir les divisions parcellaires d'une commune
-    
-    * Obtenir la géométrie d'une parcelle cadastrale
-    
-    * Obtenir les parcelles cadastrales avec les surfaces d'intersection à partir d'une géométrie
-    
-    * Obtenir le centroid d'une parcelle ou d'une commune(localisants)
-    
-    Pour les différentes requêtes possible ci-dessus, le résultat renvoyé sera sous la forme:
-    
-    
-    ( Toutes les structures de réponse sont de type FeatureCollection avec la liste des champs properties qui sera détaillée dans chaque module.)
-    
-    
-    ```json
-
-    {
-      "type": "FeatureCollection",
-     
-       "features":
-       [
+        * Obtenir les géométries pour une commune
       
-      {"type": "Feature",
-      "geometry":
+        * Obtenir les divisions parcellaires d'une commune
         
-         {
-           "type":"MultiPolygon",
-           "coordinates":[...]
-        },
+        * Obtenir la géométrie d'une parcelle cadastrale
         
-        "geometry_name": "the_geom",
-        "properties": {
-          "surface_intersection":"...",
-          "surface_parcelle":...,
-          "numero":"XXXX",
-          "feuille":X,
-          "section":"XX",
-          "code_dep":"XX",
-          "nom_com":"X",
-          "code_com":"XXX",
-          "code_arr":"XXX"
-       }
-      }
-    ]
-    }
-  
-    ```
+        * Obtenir les parcelles cadastrales avec les surfaces d'intersection à partir d'une géométrie
+        
+        * Obtenir le centroid d'une parcelle ou d'une commune(localisants)
 
+    Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
+    ## Exemple d'urls à utiliser pour tester le service
 
-    ## Obtenir une clé géoportail
+        1) Communes : https://apicarto.ign.fr/api/cadastre/commune?apikey=xxxxxxx&insee=40055
+        2) Divisions: https://apicarto.ign.fr/api/cadastre/division?apikey=xxxxxxx&insee=40055
+        3) Parcelles: https://apicarto.ign.fr/api/cadastre/parcelle?apikey=xxxxxxx&insee=xxxxx&section=xx&numero=xxxx
+        4) Localisants: https://apicarto.ign.fr/api/cadastre/localisant?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
+        5) Géometrie: https://apicarto.ign.fr/api/cadastre/geometrie/?apikey=xxxxxxx&geom=(Geometrie au format JSON)
+
+    ## Obtenir une clé géoportail (apikey)
     
-    Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ ou http://api.ign.fr/accueil(pour une clé de développement).
-    Pour utiliser cette api, il faut absolument une clé IGN comme celle-ci est passée en paramètre de l'url.
-    
-    ## Notes techniques
-    
-    Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. 
-    
-    Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - BD PARCELLAIRE®"  ci-dessous:
-        
-        1) bdpv_COMMUNE
-        
-        2) bdpv_DIVCAD
-        
-        3) bdpv_LOCALISANT
-        
-        4) bdpv_PARCELLE
-    
-    ## Service WFS
-    
-    * Récupérer les divisions cadastrales (couple=> autocomplétion sur section et commune absorbée)
-    
-    http://wxs.ign.fr/[API_KEY]/geoportail/wfs?request=GetFeature&version=2.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad&outputFormat=application/json&cql_filter=code_dep=25%20and%20code_com=349
-     
-     
-    * Recherche d'une parcelle précise
-    
-   
-      http://wxs.ign.fr/[API_KEY]/geoportail/wfs?request=GetFeature&version=2.0.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle&CountDefault=100&outputFormat=application/json&cql_filter=code_dep=25%20and%20code_com=349
-    
-    ## Exemple d'urls à utiliser pour tester le service :
-  
-    1) Communes :https://apicarto.ign.fr/api/cadastre/commune/?apikey=xxxxxxx&insee=xxxxx
-    
-    
-    2) Divisions:  https://apicarto.ign.fr/api/cadastre/division/?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètre insee uniquement)
-    
-    
-    3) Parcelles: https://apicarto.ign.fr/api/cadastre/parcelle/?apikey=xxxxxxx&insee=xxxxx&section=xx&numero=xxxx
-    
-    
-    4) Localisants:  https://apicarto.ign.fr/api/cadastre/localisant?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
-    
-    
-    5) Géometrie:  https://apicarto.ign.fr/api/cadastre/geometrie/?apikey=xxxxxxx&geom=(Geometrie au format JSON)
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Pour utiliser cette api, il faut absolument une clé IGN passée en paramètre de l'url sous le nom `apikey`.
+
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/
+      
+      Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - BD PARCELLAIRE®"  ci-dessous:
+          
+          1) bdpv_COMMUNE
+          
+          2) bdpv_DIVCAD
+          
+          3) bdpv_LOCALISANT
+          
+          4) bdpv_PARCELLE
+
   version: 2.0.0
+  
   contact:
     name: Apicarto Cadastre
-  license:
-    name: AGPL-V3
-    url: https://www.gnu.org/licenses/agpl-3.0.html
-schemes:
-  - https
-basePath: /api
+
 produces:
   - application/json
+
+basePath: /api
+
 paths:
   /cadastre/commune:
     get:

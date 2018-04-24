@@ -52,10 +52,7 @@ app.use(require('./lib/request-logger')());
 app.use('/api/cadastre',require('./controllers/cadastre'));
 
 /* Module AOC */
-var aoc = require('./controllers/aoc');
-var communesHelper = require('./helpers/communes');
-var pgClient = require('./middlewares/pgClient');
-app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
+app.use('/api/aoc',require('./controllers/aoc'));
 
 /* Module code postaux */
 app.use('/api/codes-postaux', require('./controllers/codes-postaux'));

@@ -1,5 +1,5 @@
 var shell = require('shelljs');
-var path = require('path');
+
 
 if (!shell.which('wget')) {
     shell.echo('Sorry, this script requires wget');
@@ -18,8 +18,9 @@ if (!shell.which('unzip')) {
     shell.exit(1);
 }
 
-/* Download AOC file */
-var url = "https://www.data.gouv.fr/s/resources/delimitation-parcellaire-des-aoc-viticoles-de-linao/20180319-085833/delimitation_inao_EPSG2154.zip";
+// https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/#_
+var url = "http://osm13.openstreetmap.fr/~cquest/openfla/export/communes-20180101-shp.zip";
+
 
 var dataDir = __dirname+'/data/';
 shell.rm('-rf', dataDir);
@@ -32,15 +33,13 @@ if (shell.exec('mkdir -p '+dataDir).code !== 0) {
 shell.cd(dataDir);
 
 /* Download zip file if not exists */
-if ( ! shell.test('-e', 'delimitation_inao_EPSG2154.zip') ){ 
-    if (shell.exec('wget --progress=bar:force -O delimitation_inao_EPSG2154.zip '+url).code !== 0) {
-        shell.echo('Error: wget failed');
-        shell.exit(1);
-    }
+if (shell.exec('wget --progress=bar:force -O osm-commune.zip '+url).code !== 0) {
+    shell.echo('Error: wget failed');
+    shell.exit(1);
 }
 
 /* Extract zip file */
-if (shell.exec('unzip -j -o delimitation_inao_EPSG2154.zip').code !== 0) {
+if (shell.exec('unzip -j -o osm-commune.zip').code !== 0) {
     shell.echo('Error: unzip failed');
     shell.exit(1);
 }
@@ -48,15 +47,10 @@ if (shell.exec('unzip -j -o delimitation_inao_EPSG2154.zip').code !== 0) {
 /* Convert shapefile to sql */
 var command = 'ogr2ogr --config PG_USE_COPY YES -f PGDump /vsistdout/ ';
 command += '-a_srs EPSG:2154 -t_srs EPSG:4326 -lco GEOMETRY_NAME=geom -lco DROP_TABLE=ON ';
-command += '-lco SCHEMA=inao ';
-command += '-nlt PROMOTE_TO_MULTI -nln appellation ';
-command += 'delimitation_parcellaire_aoc_viticoles_inao.shp | psql --quiet';
+command += '-lco SCHEMA=osm ';
+command += '-nlt PROMOTE_TO_MULTI -nln commune ';
+command += 'communes-*.shp | psql --quiet';
 if (shell.exec(command).code !== 0) {
     shell.echo('Error: import failed');
-    shell.exit(1);
-}
-
-if (shell.exec('psql -f '+__dirname+'/sql/post-process.sql').code !== 0) {
-    shell.echo('Error: post-process.sql failed');
     shell.exit(1);
 }

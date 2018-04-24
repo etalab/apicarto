@@ -48,16 +48,23 @@ L'intégration des données dans postgis s'appuie sur l'exécutable `psql` qui u
 
 ## Sources de données
 
-| Nom              | Description                                                        | Source                                                                                      |
-|------------------|--------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| bdparcellaire    | Base de données cadastrale                                         | http://professionnels.ign.fr/bdparcellaire                                                  |
-| adminexpress     | Découpage administratif du territoire métropolitain et ultra-marin | http://professionnels.ign.fr/adminexpress                                                   |
-| inao-appellation | Appellation viticoles INAO                                         | https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/#_ |
-| codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/etalab/codes-postaux#sources                                        |
+| Nom              | Description                                                        | Source                                                                                                 |
+|------------------|--------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| bdparcellaire    | Base de données cadastrale                                         | http://professionnels.ign.fr/bdparcellaire                                                             |
+| adminexpress     | Découpage administratif du territoire métropolitain et ultra-marin | http://professionnels.ign.fr/adminexpress                                                              |
+| osm-commune      | Découpage administratif issu de openstreetmap                      | https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/#  |
+| inao-appellation | Appellation viticoles INAO                                         | https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/#_            |
+| codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/etalab/codes-postaux#sources                                                   |
 
 
 
 ## Installation
+
+### Installation du package
+
+```
+npm install
+```
 
 ### Création de la base de données
 
@@ -68,11 +75,6 @@ createdb "apicarto"
 psql -d "apicarto" -c "CREATE EXTENSION postgis"
 ```
 
-### Installation du package
-
-```
-npm install
-```
 
 ### Chargement des données
 
