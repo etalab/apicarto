@@ -24,6 +24,7 @@
     "node": ">=6"
   },
   "dependencies": {
+    "@mapbox/geojsonhint": "^2.1.0",
     "@turf/turf": "^3.7.0",
     "async": "^2.6.0",
     "body-parser": "^1.14.1",
@@ -32,6 +33,7 @@
     "cors": "^2.7.1",
     "debug": "^2.2.0",
     "express": "^4.13.3",
+    "express-validator": "^5.1.2",
     "geojsonhint": "^1.2.0",
     "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#v0.1.0",
     "grunt": "^1.0.1",

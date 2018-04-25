@@ -1,20 +1,24 @@
 var Router = require('express').Router;
 var router = new Router();
 
+const { check } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
+const isGeometry = require('../../checker/isGeometry');
+const validateParams = require('../../middlewares/validateParams');
+
 var pgClient = require('../../middlewares/pgClient');
 
 var format = require('pg-format');
 var _ = require('lodash');
 
-
-router.post('/appellation-viticole', pgClient, function(req, res, next) {
-
-    if (!req.body.geom) {
-        return res.status(400).json({
-            code: 400,
-            message: 'Paramètre "geom" manquant'
-        });
-    }
+/**
+ * Récupération des AOC viticoles par géométrie
+ */
+router.post('/appellation-viticole', [
+    check('geom').exists().withMessage('Le paramètre geom est obligatoire'),
+    check('geom').custom(isGeometry)
+], validateParams, pgClient, function(req, res, next) {
+    var params = matchedData(req);
 
     var sql = format(`
         SELECT 
@@ -37,7 +41,7 @@ router.post('/appellation-viticole', pgClient, function(req, res, next) {
             ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326)
         )        
         LIMIT 1000
-    `,req.body.geom);
+    `, params.geom );
 
     req.pgClient.query(sql,function(err,result){
         if (err)

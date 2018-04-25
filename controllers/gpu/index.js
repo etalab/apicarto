@@ -1,101 +1,174 @@
 var Router = require('express').Router;
 var router = new Router();
 
+const { check } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
+const isGeometry = require('../../checker/isGeometry');
+const validateParams = require('../../middlewares/validateParams');
+
 var gpuWfsClient = require('../../middlewares/gpuWfsClient');
 
-function searchAllFields(req, params,typeName,typeInfo) {
-    return new Promise(function(resolve, reject) {
-        req.gpuWfsClient.getFeatures(typeName, params)
-            .then(function(featureCollection) {
-                featureCollection.featureType = typeInfo;
-                resolve(featureCollection);
-            })
-            .catch(function(err) {
-                reject(err);
-            });
-    });
+
+/**
+ * Creation d'une chaîne de proxy sur le GPU
+ * @param {Object} typeName 
+ */
+function createGpuProxy(typeName){
+    return [
+        validateParams,
+        gpuWfsClient,
+        function(req,res){
+            var params = matchedData(req);
+            params._limit = 100;
+            req.gpuWfsClient.getFeatures(typeName, params)
+                .then(function(featureCollection) {
+                    res.json(featureCollection);
+                })
+                .catch(function(err) {
+                    res.status(500).json(err);
+                })
+            ;
+        }
+    ];
 }
 
-router.get('/all', gpuWfsClient, function (req, res) {
-    var params = {
-        geom:req.query.geom
-    };
- 
-    if (!req.query.geom) return res.status(400).send({
-        code: 400,
-        message: 'geom field is required'
-    });
-    var search1 = searchAllFields(req,params,'wfs_du:municipality','municipality');
-   // var search2 = searchAllFields(req,params,'wfs_du:document','document');
-    var search3 = searchAllFields(req,params,'wfs_du:zone_urba','zone-urba');
-    var search4 = searchAllFields(req,params,'wfs_sup:acte_sup','acte-sup');
-    var search5 = searchAllFields(req,params,'wfs_du:secteur_cc','secteur-cc');
-    var search6 =  searchAllFields(req,params,'wfs_du:prescription_lin','prescription-lin');
-    var search7 = searchAllFields(req,params,'wfs_du:prescription_pct','prescription-pct');
-    var search8 = searchAllFields(req,params,'wfs_du:prescription_surf','prescription-surf');
-    var search9 = searchAllFields(req,params,'wfs_sup:assiette_sup_l','assiette-sup-l');
-    //  var search10 = searchAllFields(req,params,'wfs_sup:assiette_sup_p','assiette-sup-p');
-    var search11 = searchAllFields(req,params,'wfs_sup:assiette_sup_s','assiette-sup-s');
-    var search12 = searchAllFields(req,params,'wfs_du:info_surf','info-surf');
-    var search13 = searchAllFields(req,params,'wfs_du:info_lin','info-lin');
-    var search14 = searchAllFields(req,params,'wfs_du:info_pct','info-pct');
-   
-    Promise.all([search1,search3,search4,search5,search6,search7,search8,search9,search11,search12,search13,search14])
-    //Ligne avec assiette_sup_p et document à activer dés que ça marche et désactiver la ligne au dessus
-    //Promise.all([search1,search2,search3,search4,search5,search6,search7,search8,search9,search10,search11,search12,search13,search14])
-        .then(function(result){
-            res.json(result);   
-        })
-        .catch(function(err){
-            res.status(500).json(err);
+/*--------------------------------------------------------------------------------------------
+ * DU
+ -------------------------------------------------------------------------------------------*/
+
+const mapping = {
+    'municipality': 'wfs_du:municipality',
+    'document': 'wfs_du:document',
+    'zone-urba': 'wfs_du:zone_urba',
+    'secteur-cc': 'wfs_du:secteur_cc',
+    'prescription-pct': 'wfs_du:prescription_pct',
+    'prescription-lin': 'wfs_du:prescription_lin',
+    'prescription-surf': 'wfs_du:prescription_surf',
+    'info-pct': 'wfs_du:info_pct',
+
+    'acte-sup': 'wfs_sup:acte_sup',
+    'assiette-sup-p': 'wfs_sup:assiette_sup_p',
+    'assiette-sup-l': 'wfs_sup:assiette_sup_l',
+    'assiette-sup-s': 'wfs_sup:assiette_sup_s'
+};
+
+router.get('/municipality', [
+    check('geom').custom(isGeometry),
+    check('insee').isAlphanumeric().optional()
+], createGpuProxy(mapping['municipality']));
+
+
+router.get('/document', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['document']));
+
+
+router.get('/zone-urba', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['zone-urba']));
+
+router.get('/secteur-cc', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['secteur-cc']));
+
+
+router.get('/prescription-pct', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['prescription-pct']));
+
+router.get('/prescription-lin', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy('wfs_du:prescription_lin'));
+
+router.get('/prescription-surf', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy('wfs_du:prescription_surf'));
+
+router.get('/info-pct', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['info-pct']));
+
+router.get('/info-lin', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['info-lin']));
+
+router.get('/info-surf', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['info_surf']));
+
+/*--------------------------------------------------------------------------------------------
+ * SUP
+ -------------------------------------------------------------------------------------------*/
+
+router.get('/acte-sup', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['acte-sup']));
+
+router.get('/assiette-sup-p', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['assiette-sup-p']));
+
+router.get('/assiette-sup-l', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['assiette-sup-l']));
+
+router.get('/assiette-sup-s', [
+    check('geom').exists().custom(isGeometry)
+], createGpuProxy(mapping['assiette-sup-s']));
+
+
+/*--------------------------------------------------------------------------------------------
+ * Recherche dans toutes les tables par geom...
+ -------------------------------------------------------------------------------------------*/
+router.get('/all', [
+    check('geom').exists().withMessage('Le paramètre geom est obligatoire'),
+    check('geom').custom(isGeometry)
+], validateParams, gpuWfsClient, function(req,res){
+    /**
+     * Récupération des paramètres
+     */
+    var params = matchedData(req);
+    // Limite de 500 par type
+    params._limit = 500;
+
+    /**
+     * Préparation d'une série de sous-requêtes
+     */
+    var promises = [];
+    for ( var name in mapping ){
+        var typeName = mapping[name];
+
+        /* debugguée : skip temporaire */
+        if ( name === 'assiette-sup-p'  ){
+            continue;
+        }
+
+        var promise = new Promise(function(resolve, reject) {
+            req.gpuWfsClient.getFeatures(typeName, params)
+                .then(function(featureCollection) {
+                    featureCollection.featureType = name;
+                    resolve(featureCollection);
+                })
+                .catch(function(err) {
+                    err.featureType = typeName;
+                    reject(err);
+                })
+            ;
         });
+
+        promises.push(promise);
+    }
+
+    /**
+     * Exécution des sous-requêtes et renvoi du résultat
+     */
+    Promise.all(promises).then(function(result){
+        res.json(result);   
+    })
+    .catch(function(err){
+        res.status(500).json(err);
+    });
 });
-
-
-function createFeatureTypeHandler(typeName){
-    var handler = function(req,res){
-        if (!req.query.geom)return res.status(400).send({
-            code: 400,
-            message: 'geom field is required'
-        });
-        var params = {
-            geom:req.query.geom
-        };
-       
-        req.gpuWfsClient.getFeatures(typeName, params)
-            .then(function(featureCollection) {
-                res.json(featureCollection);
-            })
-            .catch(function(err) {
-                res.status(500).json(err);
-            })
-        ;
-    };
-    return handler;
-}
-
-
-router.get('/municipality', gpuWfsClient, createFeatureTypeHandler('wfs_du:municipality'));
-
-router.get('/document', gpuWfsClient, createFeatureTypeHandler('wfs_du:document'));
-
-router.get('/zone-urba', gpuWfsClient, createFeatureTypeHandler('wfs_du:zone_urba'));
-router.get('/secteur-cc', gpuWfsClient, createFeatureTypeHandler('wfs_du:secteur_cc'));
-
-router.get('/prescription-pct', gpuWfsClient, createFeatureTypeHandler('wfs_du:prescription_pct'));
-router.get('/prescription-lin', gpuWfsClient, createFeatureTypeHandler('wfs_du:prescription_lin'));
-router.get('/prescription-surf', gpuWfsClient, createFeatureTypeHandler('wfs_du:prescription_surf'));
-
-router.get('/info-pct', gpuWfsClient, createFeatureTypeHandler('wfs_du:info_pct'));
-router.get('/info-lin', gpuWfsClient, createFeatureTypeHandler('wfs_du:info_lin'));
-router.get('/info-surf', gpuWfsClient, createFeatureTypeHandler('wfs_du:info_surf'));
-
-
-router.get('/acte-sup', gpuWfsClient, createFeatureTypeHandler('wfs_sup:acte_sup'));
-
-router.get('/assiette-sup-p', gpuWfsClient, createFeatureTypeHandler('wfs_sup:assiette_sup_p'));
-router.get('/assiette-sup-l', gpuWfsClient, createFeatureTypeHandler('wfs_sup:assiette_sup_l'));
-router.get('/assiette-sup-s', gpuWfsClient, createFeatureTypeHandler('wfs_sup:assiette_sup_s'));
 
 
 module.exports=router;
