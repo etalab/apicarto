@@ -138,11 +138,6 @@ router.get('/all', [
     for ( var name in mapping ){
         var typeName = mapping[name];
 
-        /* debugguée : skip temporaire */
-        if ( name === 'assiette-sup-p'  ){
-            continue;
-        }
-
         var promise = new Promise(function(resolve, reject) {
             req.gpuWfsClient.getFeatures(typeName, params)
                 .then(function(featureCollection) {

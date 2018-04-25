@@ -119,6 +119,7 @@ router.post('/localisant', parcelleValidators, createCadastreProxy('BDPARCELLAIR
  * 
  * TODO : à rendre générique avec un paramètre _area=true/false?
  */
+const prepareParamsCadastre = require('../../lib/prepare-params-cadastre');
 router.get('/geometrie', gppWfsClient, prepareParamsCadastre, require('./geometrie'));
 router.post('/geometrie', gppWfsClient, prepareParamsCadastre, require('./geometrie'));
 
