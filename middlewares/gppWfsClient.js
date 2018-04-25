@@ -2,7 +2,9 @@ const debug = require('debug')('apicarto');
 const GeoportalWfsClient = require('geoportal-wfs-client');
 
 /*
- * middleware pour la création du client geoportail
+ * Middleware pour la création du client WFS geoportail
+ * 
+ * TODO permettre la définition de la clé au niveau du serveur
  */
 module.exports = function(req, res, next) {
     var requestParams = ( req.method === 'GET' ) ? req.query : req.body ;

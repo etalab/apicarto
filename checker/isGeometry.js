@@ -1,7 +1,7 @@
 const geojsonhint = require('@mapbox/geojsonhint').hint;
 
 /**
- * 
+ * Validation des géométries geojson
  * @param {Object} value 
  */
 module.exports = function(value){
