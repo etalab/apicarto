@@ -32,6 +32,7 @@
     "codes-postaux": "^2.1.0",
     "cors": "^2.7.1",
     "debug": "^3.1.0",
+    "ejs": "^2.5.9",
     "express": "^4.13.3",
     "express-validator": "^5.1.2",
     "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#v0.1.0",

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>emprise-purl-api - documentation</title>
+    <link href="vendor/swagger-ui/swagger-ui.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/api/doc/css/style.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <% include partial/menu.ejs %>
+
+    <div class="container">
+        <div id="swagger-ui"></div>
+    </div>
+
+    <script src="vendor/swagger-ui/swagger-ui-bundle.js" type="text/javascript"></script>
+    <script src="vendor/swagger-ui/swagger-ui-standalone-preset.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var moduleName = "<%= moduleName %>";
+        var ui = SwaggerUIBundle({
+            url: moduleName+".yml",
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+                SwaggerUIBundle.presets.apis
+            ]
+        });
+    </script>
+</body>
+
+</html>

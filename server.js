@@ -1,6 +1,8 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+const path = require('path');
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 var app = express();
 
@@ -34,12 +36,20 @@ if ( env !== 'test' ){
 /*------------------------------------------------------------------------------
  * /api/doc - expose documentation
  -----------------------------------------------------------------------------*/
-app.use('/api/doc',  express.static(__dirname + '/doc'));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/doc/views'));
 app.use(
     '/api/doc/vendor/swagger-ui',
     express.static(__dirname + '/node_modules/swagger-ui-dist')
 );
-
+app.use('/api/doc',  express.static(__dirname + '/doc'));
+app.get('/api/doc',function(req,res){
+    res.render('index');
+});
+app.get('/api/doc/:moduleName', function(req,res){
+    res.render('module',{moduleName: req.params.moduleName});
+});
 
 /* -----------------------------------------------------------------------------
  * Routes
