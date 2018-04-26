@@ -54,8 +54,8 @@ const mapping = {
 };
 
 router.get('/municipality', [
-    check('geom').custom(isGeometry),
-    check('insee').isAlphanumeric().optional()
+    check('geom').optional().custom(isGeometry),
+    check('insee').optional().isAlphanumeric()
 ], createGpuProxy(mapping['municipality']));
 
 

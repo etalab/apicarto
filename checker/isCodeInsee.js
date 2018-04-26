@@ -1,4 +1,4 @@
-const parseInseeCode = require('../lib/parse-insee-code');
+const parseInseeCode = require('../helper/parseInseeCode');
 
 /**
  * Validation des codes insee

@@ -6,7 +6,7 @@ const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
-const parseInseeCode = require('../../lib/parse-insee-code');
+const parseInseeCode = require('../../helper/parseInseeCode');
 
 const gppWfsClient = require('../../middlewares/gppWfsClient');
 
@@ -112,5 +112,8 @@ router.post('/parcelle', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-
 */
 router.get('/localisant', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
 router.post('/localisant', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
+
+
+//TODO clarifier la restoration ou non de geometrie <=> parcelle?geom=... avec surface & surface d'intersection
 
 module.exports=router;

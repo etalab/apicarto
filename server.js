@@ -11,13 +11,15 @@ var port = process.env.PORT || 8091;
  * common middlewares
  ------------------------------------------------------------------------------*/
 
+var env = process.env.NODE_ENV;
+
+if (env === 'production') {
+    // see http://expressjs.com/fr/guide/behind-proxies.html
+    app.enable('trust proxy');
+}
+
 app.use(bodyParser.json());
 app.use(cors());
-
-app.use(function(req,res,next) {
-    console.log(req.method, ' ', req.path,' ', JSON.stringify(req.query));
-    next();
-});
 
 app.use(function (req, res, next) {
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -25,6 +27,8 @@ app.use(function (req, res, next) {
     res.header('Pragma', 'no-cache');
     next();
 });
+
+app.use(require('./middlewares/request-logger')());
 
 /*------------------------------------------------------------------------------
  * /api/doc - expose documentation
@@ -34,14 +38,6 @@ app.use(
     '/api/doc/vendor/swagger-ui',
     express.static(__dirname + '/node_modules/swagger-ui/dist')
 );
-
-var env = process.env.NODE_ENV;
-
-if (env === 'production') {
-    app.enable('trust proxy');
-}
-
-//app.use(require('./lib/request-logger')());
 
 
 /* -----------------------------------------------------------------------------

@@ -14,7 +14,7 @@ describe('Testing /api/cadastre/localisant', function() {
         describe('With invalid code_insee', function() {
             it('should reply with 400 for insee=testapi', function(done){
                 request(server)
-                    .get('/api/cadastre/localisant?code_insee=testapi&apikey=fake')
+                    .get('/api/cadastre/localisant?code_insee=testapi')
                     .expect(400,done);
             });
         });
@@ -22,7 +22,7 @@ describe('Testing /api/cadastre/localisant', function() {
         describe('With invalid section', function() {
             it('should reply with 400', function(done){
                 request(server)
-                    .get('/api/cadastre/localisant?code_insee=94067&section=invalid&apikey=fake')
+                    .get('/api/cadastre/localisant?code_insee=94067&section=invalid')
                     .expect(400,done);
             });
         });
@@ -30,7 +30,7 @@ describe('Testing /api/cadastre/localisant', function() {
         describe('With invalid code_arr', function() {
             it('should reply with 400', function(done){
                 request(server)
-                    .get('/api/cadastre/localisant?code_insee=94067&code_arr=invalid&apikey=fake')
+                    .get('/api/cadastre/localisant?code_insee=94067&code_arr=invalid')
                     .expect(400,done);
             });
         });
@@ -38,7 +38,7 @@ describe('Testing /api/cadastre/localisant', function() {
         describe('With invalid com_abs', function() {
             it('should reply with 400', function(done){
                 request(server)
-                    .get('/api/cadastre/localisant?code_insee=94067&com_abs=invalid&apikey=fake')
+                    .get('/api/cadastre/localisant?code_insee=94067&com_abs=invalid')
                     .expect(400,done);
             });
         });
@@ -50,13 +50,13 @@ if ( typeof API_KEY !== 'undefined' ){
 
     it('/api/cadastre/localisant?code_insee=94067', function(){
         request(server)
-            .get('/api/cadastre/localisant?code_insee=94067&apikey='+API_KEY)
+            .get('/api/cadastre/localisant?code_insee=94067')
             .expect(200);
     });
 
     it('/api/cadastre/localisant?code_insee=55001&section=ZK&numero=0141', done => {
         request(server)    
-            .get('/api/cadastre/localisant?code_insee=55001&section=ZK&numero=0141&apikey='+API_KEY)
+            .get('/api/cadastre/localisant?code_insee=55001&section=ZK&numero=0141')
             .expect(res => {
                 const feature = res.body.features[0];
                 expect(feature.geometry.type).to.eql('Point');

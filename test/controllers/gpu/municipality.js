@@ -9,7 +9,26 @@ describe('/api/gpu/municipality', function() {
         it('should reply with 400', function(done) {
             request(server)
                 .get('/api/gpu/municipality')
-                .expect(400, done);
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.features.length).to.be.greaterThan(10);
+                })
+                .end(done);
+        });
+    });
+
+    describe('with insee=25349', function() {
+        it('should reply with a valid feature', function(done) {
+            request(server)
+                .get('/api/gpu/municipality?insee=25349')
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.features.length).to.eql(1);
+                    const feature = res.body.features[0];
+                    expect(feature.properties.name).to.eql('LORAY');
+                })
+                .end(done);
+            ;
         });
     });
 

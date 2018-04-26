@@ -1,7 +1,7 @@
 /*eslint-env node, mocha */
 const expect = require('expect.js');
 
-const parseInseeCode = require('../../lib/parse-insee-code.js') ;
+const parseInseeCode = require('../../helper/parseInseeCode') ;
 
 describe('#parseCodeInsee()', () => {
     describe('with invalid INSEE codes', () => {

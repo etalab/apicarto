@@ -1,10 +1,15 @@
-/* En parametre nous avons :
- * GeomInit : Correspondant à la geométrie passé en paramètre
- * Parcelle : Resultat de la recherche avec Géométrie
- *
- */
 var turf = require('@turf/turf');
 
+/**
+ * Ajout de surface_parcelle et surface_intersection
+ * 
+ * @deprecated anciennement utilisée sur POST /cadastre/geometrie
+ * 
+ * TODO : A réintegrer ou supprimer (c'est assez trivial à faire côté client et assez métier)
+ * 
+ * @param {Object} featureCollection la FeatureCollection en entrée
+ * @param {Object} filterGeom la géométrie GeoJSON servant de test
+ */
 var computeSurfaces = function(featureCollection, filterGeom){
     featureCollection.features.forEach(function(feature){
         /*
