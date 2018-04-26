@@ -5,41 +5,26 @@ info:
 
     Le service d'interrogation du cadastre permet d'obtenir les informations suivantes :
     
-        * Obtenir les géométries pour une commune
-      
-        * Obtenir les divisions parcellaires d'une commune
-        
-        * Obtenir la géométrie d'une parcelle cadastrale
-        
-        * Obtenir les parcelles cadastrales avec les surfaces d'intersection à partir d'une géométrie
-        
-        * Obtenir le centroid d'une parcelle ou d'une commune(localisants)
+      * Obtenir les géométries pour une commune
+      * Obtenir les divisions parcellaires d'une commune
+      * Obtenir la géométrie d'une parcelle cadastrale
+      * Obtenir les parcelles cadastrales avec les surfaces d'intersection à partir d'une géométrie
+      * Obtenir le centroid d'une parcelle ou d'une commune(localisants)
 
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
-    ## Exemple d'urls à utiliser pour tester le service
-
-        1) Communes : https://apicarto.ign.fr/api/cadastre/commune?apikey=xxxxxxx&insee=40055
-        2) Divisions: https://apicarto.ign.fr/api/cadastre/division?apikey=xxxxxxx&insee=40055
-        3) Parcelles: https://apicarto.ign.fr/api/cadastre/parcelle?apikey=xxxxxxx&insee=xxxxx&section=xx&numero=xxxx
-        4) Localisants: https://apicarto.ign.fr/api/cadastre/localisant?apikey=xxxxxxx&insee=xxxxx (utilisable avec paramètres section et/ou numéro en plus de l'insee)
-        5) Géometrie: https://apicarto.ign.fr/api/cadastre/geometrie/?apikey=xxxxxxx&geom=(Geometrie au format JSON)
-
-    ## Obtenir une clé géoportail (apikey)
+    ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Pour utiliser cette api, il faut absolument une clé IGN passée en paramètre de l'url sous le nom `apikey`.
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
 
-      Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ .
       
-      Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - BD PARCELLAIRE®"  ci-dessous:
+      Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - BD PARCELLAIRE®" ci-dessous:
           
-          1) bdpv_COMMUNE
-          
-          2) bdpv_DIVCAD
-          
-          3) bdpv_LOCALISANT
-          
-          4) bdpv_PARCELLE
+      * bdpv_COMMUNE
+      * bdpv_DIVCAD
+      * bdpv_LOCALISANT
+      * bdpv_PARCELLE
 
   version: 2.0.0
   
@@ -60,10 +45,10 @@ paths:
       parameters:
         - name: apikey
           in: query
-          description: apikey fourni par l'IGN
+          description: Clé WFS géoportail
           type: string
           required: true
-        - name: insee
+        - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
@@ -87,10 +72,10 @@ paths:
       parameters:
         - name: apikey
           in: query
-          description: apikey fourni par l'IGN
+          description: Clé WFS géoportail
           type: string
           required: true
-        - name: insee
+        - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
@@ -102,7 +87,7 @@ paths:
           pattern: '\w{2}'
           type: string
           required: false
-        - name: codearr
+        - name: code_arr
           in: query
           description: Code arrondisssement pour Paris, Lyon, Marseille
           pattern: '\d{3}'
@@ -125,10 +110,10 @@ paths:
       parameters:
         - name: apikey
           in: query
-          description: apikey fourni par l'IGN
+          description: Clé WFS géoportail
           type: string
           required: true
-        - name: insee
+        - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
@@ -146,7 +131,7 @@ paths:
           type: string
           pattern: '\d{4}'
           required: false
-        - name: codearr
+        - name: code_arr
           in: query
           description: Code arrondissement pour Paris, Lyon, Marseille
           type: string
@@ -177,7 +162,7 @@ paths:
       parameters:
         - name: apikey
           in: query
-          description: apikey fourni par l'IGN
+          description: Clé WFS géoportail
           type: string
           required: true
         - name: geom
@@ -202,10 +187,10 @@ paths:
       parameters:
         - name: apikey
           in: query
-          description: apikey fourni par l'IGN
+          description: Clé WFS géoportail
           type: string
           required: true
-        - name: insee
+        - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
@@ -223,7 +208,7 @@ paths:
           type: string
           pattern: '\d{4}'
           required: false
-        - name: codearr
+        - name: code_arr
           in: query
           description: Code arrondissement pour Paris, Lyon, Marseille
           type: string

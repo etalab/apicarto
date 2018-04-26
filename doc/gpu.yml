@@ -19,6 +19,31 @@ basePath: /api
 
 paths:
 
+  /gpu/municipality:
+    get:
+      summary: Récupération des informations sur une commune (est au RNU? est supprimée?)
+      description: |
+        Retourne un résultat de Type "FeatureCollection" avec des communes correspondant aux paramètres
+      tags:
+        - Communes
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
+        - in: query
+          name: insee
+          type: string
+          required: false
+          description: Code insee de la commune
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Geometries'
+
+
   /gpu/document:
     get:
       summary: Récupération de l'emprise d'un document
@@ -27,6 +52,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec l'emprise d'un document qui intersecte la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
@@ -41,6 +72,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
@@ -55,6 +92,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
@@ -70,6 +113,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche     
       responses:
         '200':
           description: Success
@@ -84,6 +133,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
@@ -98,6 +153,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche  
       responses:
         '200':
           description: Success
@@ -112,6 +173,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche    
       responses:
         '200':
           description: Success
@@ -126,6 +193,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
@@ -140,6 +213,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche      
       responses:
         '200':
           description: Success
@@ -155,6 +234,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche       
       responses:
         '200':
           description: Success
@@ -169,6 +254,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche   
       responses:
         '200':
           description: Success
@@ -183,6 +274,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche    
       responses:
         '200':
           description: Success
@@ -197,6 +294,12 @@ paths:
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
         - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche    
       responses:
         '200':
           description: Success
@@ -210,6 +313,12 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection contenant toutes les couches du gpu qui intersectent la géométrie.
       tags:
         - All
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success

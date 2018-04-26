@@ -28,15 +28,16 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(require('./middlewares/request-logger')());
-
+if ( env !== 'test' ){
+    app.use(require('./middlewares/request-logger')());
+}
 /*------------------------------------------------------------------------------
  * /api/doc - expose documentation
  -----------------------------------------------------------------------------*/
 app.use('/api/doc',  express.static(__dirname + '/doc'));
 app.use(
     '/api/doc/vendor/swagger-ui',
-    express.static(__dirname + '/node_modules/swagger-ui/dist')
+    express.static(__dirname + '/node_modules/swagger-ui-dist')
 );
 
 

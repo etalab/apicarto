@@ -160,8 +160,7 @@ router.get('/all', [
      */
     Promise.all(promises).then(function(result){
         res.json(result);   
-    })
-    .catch(function(err){
+    }).catch(function(err){
         res.status(500).json(err);
     });
 });

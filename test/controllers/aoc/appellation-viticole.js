@@ -23,7 +23,6 @@ function makeRequest() {
 
 function makeRequestWithBbox(bbox) {
     var geom = bboxPolygon(bbox).geometry;
-    console.log(JSON.stringify(geom));
     return makeRequest()
         .send({ geom: geom });
 }

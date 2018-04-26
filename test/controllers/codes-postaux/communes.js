@@ -39,13 +39,13 @@ describe('/codes-postaux', function() {
         describe('legit postal code', function() {
             const POSTAL_CODE = '06650';
             const PAYLOAD = [ {
-                codeInsee: '06089',
-                nomCommune: 'OPIO',
+                codeCommune: '06089',
+                nomCommune: 'Opio',
                 codePostal: POSTAL_CODE,
                 libelleAcheminement: 'OPIO'
             }, {
-                codeInsee: '06112',
-                nomCommune: 'LE ROURET',
+                codeCommune: '06112',
+                nomCommune: 'Le Rouret',
                 codePostal: POSTAL_CODE,
                 libelleAcheminement: 'LE ROURET'
             } ];
