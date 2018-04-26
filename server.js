@@ -41,7 +41,7 @@ if (env === 'production') {
     app.enable('trust proxy');
 }
 
-app.use(require('./lib/request-logger')());
+//app.use(require('./lib/request-logger')());
 
 
 /* -----------------------------------------------------------------------------

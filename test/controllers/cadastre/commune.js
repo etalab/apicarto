@@ -7,23 +7,27 @@ const server = require('../../../server');
 var API_KEY = process.env.GEOPORTAL_API_KEY;
 
 describe('Testing /api/cadastre/commune', function() {
-    
-    describe('With invalid insee code', function() {
-        it('should reply with 400', function(done){
-            request(server)
-                .get('/api/cadastre/commune?insee=not_valid&apikey=fake')
-                .expect(400,done)
-            ;
+
+    describe('With invalid inputs', function() {
+
+        describe('With invalid code_insee', function() {
+            it('should reply with 400', function(done){
+                request(server)
+                    .get('/api/cadastre/commune?code_insee=not_valid&apikey=fake')
+                    .expect(400,done)
+                ;
+            });
         });
+
     });
 
 if ( typeof API_KEY !== 'undefined' ){
 
     /* filtrage par code insee */
-    describe('/api/cadastre/commune?insee=55001',function(){
+    describe('/api/cadastre/commune?code_insee=55001',function(){
         it('should reply a FeatureCollection with a valid feature', done => {
             request(server)    
-                .get('/api/cadastre/commune?insee=55001&apikey='+API_KEY)
+                .get('/api/cadastre/commune?code_insee=55001&apikey='+API_KEY)
                 .expect(res => {
                     const feature = res.body.features[0];
                     expect(feature.geometry.type).to.eql('MultiPolygon');
@@ -37,10 +41,11 @@ if ( typeof API_KEY !== 'undefined' ){
         });
     });
 
-    describe('/api/cadastre/commune?dep=94',function(){
+    /* filtrage par code_dep */
+    describe('/api/cadastre/commune?code_dep=94',function(){
         it('should reply a FeatureCollection with valid features', done => {
             request(server)    
-                .get('/api/cadastre/commune?dep=94&apikey='+API_KEY)
+                .get('/api/cadastre/commune?code_dep=94&apikey='+API_KEY)
                 .expect(200)
                 .expect(res => {
                     const features = res.body.features;
@@ -52,10 +57,10 @@ if ( typeof API_KEY !== 'undefined' ){
     });
 
 
-    describe('/api/cadastre/commune?dep=94&nom_com=Vincennes',function(){
+    describe('/api/cadastre/commune?code_dep=94&nom_com=Vincennes',function(){
         it('should reply a FeatureCollection with valid features', done => {
             request(server)    
-                .get('/api/cadastre/commune?dep=94&nom_com=Vincennes&apikey='+API_KEY)
+                .get('/api/cadastre/commune?code_dep=94&nom_com=Vincennes&apikey='+API_KEY)
                 .expect(200)
                 .expect(res => {
                     expect(res.body.type).to.eql('FeatureCollection');

@@ -22,7 +22,6 @@ function createCadastreProxy(featureTypeName){
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            params._limit = 1000;
 
             /*  insee => code_dep et code_com */
             if ( params.code_insee ){
@@ -48,7 +47,7 @@ function createCadastreProxy(featureTypeName){
                         if ( ! feature.properties.code_insee ){
                             feature.properties.code_insee = feature.properties.code_dep+feature.properties.code_com;
                         }
-                    })
+                    });
                     return featureCollection;
                 })
                 .then(function(featureCollection) {
@@ -65,18 +64,18 @@ function createCadastreProxy(featureTypeName){
 /**
  * Permet d'alerter en cas de paramètre ayant changer de nom
  * 
- * TODO à finaliser en fonction de lib/prepare-params-cadastre, s'assurer que l'on pourra avoir quelques choses de stable et clair ensuite
+ * TODO Principe à valider (faire un middleware de renommage des paramètres si l'approche est trop violente)
  */
 var legacyValidators = [
-    check('codearr').optional().custom(v => false).withMessage('Le paramètre "codearr" a été remplacé par "code_arr" pour éviter des renommages dans les données et chaînage de requête'),
-    check('dep').optional().custom(v => false).withMessage('Le paramètre "dep" a été remplacé par "code_dep" pour éviter des renommages dans les données et chaînage de requête'),
-    check('insee').optional().custom(v => false).withMessage('Le paramètre "insee" a été remplacé par "code_insee" pour éviter des renommages dans les données et chaînage de requête'),
+    check('codearr').optional().custom(function(){return false;}).withMessage('Le paramètre "codearr" a été remplacé par "code_arr" pour éviter des renommages dans les données et chaînage de requête'),
+    check('dep').optional().custom(function(){return false;}).withMessage('Le paramètre "dep" a été remplacé par "code_dep" pour éviter des renommages dans les données et chaînage de requête'),
+    check('insee').optional().custom(function(){return false;}).withMessage('Le paramètre "insee" a été remplacé par "code_insee" pour éviter des renommages dans les données et chaînage de requête')
 ];
 
 var communeValidators = legacyValidators.concat([
-    check('insee').optional().custom(isCodeInsee),
-    check('code_dep').optional().matches(/\w{2,3}/).withMessage('Code département invalide'),
-    check('code_com').optional().matches(/\d{2,3}/).withMessage('Code commune invalide'),
+    check('code_insee').optional().custom(isCodeInsee),
+    check('code_dep').optional().isAlphanumeric().isLength({min:2,max:2}).withMessage('Code département invalide'),
+    check('code_com').optional().isNumeric().isLength({min:2,max:3}).withMessage('Code commune invalide'),
     check('nom_com').optional(),
     check('geom').optional().custom(isGeometry)
 ]);
@@ -85,9 +84,9 @@ router.post('/commune', communeValidators, createCadastreProxy('BDPARCELLAIRE-VE
 
 
 var divisionValidators = communeValidators.concat([
-    check('section').optional().matches(/\w{2}/).withMessage("Le numéro de section est sur 2 caractères"),
-    check('code_arr').optional().matches(/\d{3}/).withMessage("Le code arrondissement est composé de 3 chiffres"),
-    check('com_abs').optional().matches(/\d{3}/).withMessage("Le prefixe est composé de 3 chiffres obligatoires")
+    check('section').optional().isAlphanumeric().isLength({min:2,max:2}).withMessage('Le numéro de section est sur 2 caractères'),
+    check('code_arr').optional().isNumeric().isLength({min:3,max:3}).withMessage('Le code arrondissement est composé de 3 chiffres'),
+    check('com_abs').optional().isNumeric().isLength({min:3,max:3}).withMessage('Le prefixe est composé de 3 chiffres obligatoires')
 ]);
 router.get('/division', divisionValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad'));
 router.post('/division', divisionValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad'));
@@ -100,7 +99,7 @@ router.post('/division', divisionValidators, createCadastreProxy('BDPARCELLAIRE-
 *
 */
 var parcelleValidators = divisionValidators.concat([
-    check('numero').optional().matches(/\w{4}/).withMessage("Le numéro de parcelle est sur 4 caractères")
+    check('numero').optional().matches(/\w{4}/).withMessage('Le numéro de parcelle est sur 4 caractères')
 ]);
 router.get('/parcelle', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle'));
 router.post('/parcelle', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle'));
@@ -113,15 +112,5 @@ router.post('/parcelle', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-
 */
 router.get('/localisant', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
 router.post('/localisant', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
-
-/**
- * Récupération des parcelles avec calcul d'intersection des géométries
- * 
- * TODO : à rendre générique avec un paramètre _area=true/false?
- */
-const prepareParamsCadastre = require('../../lib/prepare-params-cadastre');
-router.get('/geometrie', gppWfsClient, prepareParamsCadastre, require('./geometrie'));
-router.post('/geometrie', gppWfsClient, prepareParamsCadastre, require('./geometrie'));
-
 
 module.exports=router;

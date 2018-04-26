@@ -24,6 +24,7 @@ function createGpuProxy(typeName){
                 .then(function(featureCollection) {
                     res.json(featureCollection);
                 })
+                
                 .catch(function(err) {
                     res.status(500).json(err);
                 })

@@ -9,33 +9,33 @@ var API_KEY = process.env.GEOPORTAL_API_KEY;
 
 describe('Testing /api/cadastre/division', function() {
 
-    describe('/api/cadastre/division - invalid inputs', function() {
-        this.timeout(5000);
-        it('should reply with 400 for numero=02 (4 chars expected)', function(done){
-            request(server)
-                .get('/api/cadastre/division?insee=94067&numero=02&apikey=fake')
-                .expect(400,done);
+    describe('With invalid inputs', function() {
+
+        describe('With invalid code_insee', function() {
+            it('should reply with 400 for insee=testapi', function(done){
+                request(server)
+                    .get('/api/cadastre/division?code_insee=testapi&apikey=fake')
+                    .expect(400,done);
+            });
         });
 
-        it('should reply with 400 for insee=testapi', function(done){
-            request(server)
-                .get('/api/cadastre/division?insee=testapi&apikey=fake')
-                .expect(400,done);
+        describe('With invalid section', function() {
+            it('should reply with 400', function(done){
+                request(server)
+                    .get('/api/cadastre/division?code_insee=94067&section=invalid&apikey=fake')
+                    .expect(400,done);
+            });
         });
+
     });
 
 if ( typeof API_KEY !== 'undefined' ){
 
-    describe('test /api/cadastre/division - valid inputs', function() {
+    describe('/api/cadastre/division?code_insee=94067&section=0A', function() {
         this.timeout(5000);
-        it('should work for insee=94067 et section=0A', done => {
-            request(server)
-                .get('/api/cadastre/division?insee=94067&section=0A&apikey='+API_KEY)
-                .expect(200, done);
-        });
         it('should reply a FeatureCollection containing a valid Feature for insee=94067 and section=0A', done => {
             request(server)
-                .get('/api/cadastre/division?insee=94067&section=0A&apikey='+API_KEY)
+                .get('/api/cadastre/division?code_insee=94067&section=0A&apikey='+API_KEY)
                 .expect(200)
                 .expect(res => {
                     const feature = res.body.features[0];
@@ -49,14 +49,18 @@ if ( typeof API_KEY !== 'undefined' ){
                         com_abs: '000',
                         echelle: '500',
                         edition: 3,
-                        code_arr: '000'
+                        code_arr: '000',
+                        code_insee: '94067'
                     });
                 })
                 .end(done);
         });
+    });
+
+    describe('/api/cadastre/division?code_insee=75056&code_arr=112&section=AA', function() {
         it('should reply a FeatureCollection containing a valid Feature for case Paris 12e', done => {
             request(server)
-                .get('/api/cadastre/division?insee=75056&codearr=112&section=AA&apikey='+API_KEY)
+                .get('/api/cadastre/division?code_insee=75056&code_arr=112&section=AA&apikey='+API_KEY)
                 .expect(200)
                 .expect(res => {
                     const feature = res.body.features[0];
@@ -70,7 +74,8 @@ if ( typeof API_KEY !== 'undefined' ){
                         com_abs: '000',
                         echelle: '500',
                         edition: 3,
-                        code_arr: '112'
+                        code_arr: '112',
+                        code_insee: '75056'
                     });
                 })
                 .end(done);
