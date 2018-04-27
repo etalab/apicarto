@@ -2,27 +2,81 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>emprise-purl-api - documentation</title>
-    <link href="vendor/swagger-ui/swagger-ui.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/api/doc/css/style.css" media="screen" rel="stylesheet" type="text/css" />
+    <% include partial/head.ejs %>
 </head>
 
 <body>
 
     <% include partial/menu.ejs %>
 
-    <div class="container">
-        <h1>Documentation technique de l'APICARTO</h1>
+        <div class="container">
+            <h1>APICARTO - Documentation Technique</h1>
 
-        TODO :
-        <ul>
-            <li>Installer material design ou bootstrap</li>
-            <li>Remonter le menu en entête</li>
-            <li>Documenter la liste des modules sous forme de tuiles</li>
-            <li>Documenter les jeux de données</li>
-        </ul>
-    </div>
+            <h2>Les modules</h2>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Description</th>                        
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cadastre</td>
+                        <td>
+                            API d'accès aux données cadastrales (commune, division, parcelle, etc.)
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/cadastre">API</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Codes Postaux</td>
+                        <td>
+                            API de récupération des communes en fonction d'un code postal
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/codes-postaux">API</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Urbanisme (GpU)</td>
+                        <td>
+                            API d'accès aux données du géoportail de l'urbanisme (PLU, POS, CC, PSMV, SUP)
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/gpu">API</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>AOC</td>
+                        <td>
+                            API d'accès aux appellations viticoles
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/aoc">API</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h2>Les sources de données</h2>
+
+            TODO :
+            <ul>
+                <li>Mieux configurer les jeux de données (homepage, url, etc.)</li>
+                <li>Documenter les jeux de données</li>
+            </ul>
+
+        </div>
+
+        <% include partial/scripts.ejs %>
 
 </body>
 
