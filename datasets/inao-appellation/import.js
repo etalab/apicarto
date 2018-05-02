@@ -32,7 +32,7 @@ shell.cd(dataDir);
 
 /* Download zip file if not exists */
 if ( ! shell.test('-e', 'delimitation_inao_EPSG2154.zip') ){ 
-    if (shell.exec('wget --progress=bar:force -O delimitation_inao_EPSG2154.zip '+config.download_url).code !== 0) {
+    if (shell.exec('wget --progress=bar:force -O delimitation_inao_EPSG2154.zip '+config.url).code !== 0) {
         shell.echo('Error: wget failed');
         shell.exit(1);
     }

@@ -109,7 +109,11 @@
                     <tr>
                         <td><%= datasetName %><br />(<%= dataset.type %>)</td>
                         <td><%= dataset.version %></td>
-                        <td><%= dataset.description %></td>
+                        <td>
+                            <%= dataset.description %>
+                            <br /><br />
+                            <a target="_blank" href="<%= dataset.url %>"><%= dataset.url %></a> 
+                        </td>
                         <td class="text-right">
                             <a href="<%= dataset.homepage %>" target="_blank">Plus d'information</a>
                         </td>
