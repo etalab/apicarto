@@ -22,7 +22,6 @@ if (!shell.which('unzip')) {
 
 /* Download AOC file */
 var dataDir = __dirname+'/data/';
-shell.rm('-rf', dataDir);
 if (shell.exec('mkdir -p '+dataDir).code !== 0) {
     shell.echo('Fail to create data directory : '+dataDir)
     shell.exit(1);
