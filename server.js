@@ -45,7 +45,7 @@ app.use(
 );
 app.use('/api/doc',  express.static(__dirname + '/doc'));
 app.get('/api/doc',function(req,res){
-    res.render('index');
+    res.render('index',{datasets: require('./datasets')});
 });
 app.get('/api/doc/:moduleName', function(req,res){
     res.render('module',{moduleName: req.params.moduleName});

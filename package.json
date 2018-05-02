@@ -3,9 +3,7 @@
   "version": "0.2.0",
   "main": "index.js",
   "scripts": {
-    "import": "npm run import-adminexpress && npm run import-osm-commune && npm run import-inao-appellation",
-    "import-adminexpress": "node datasets/adminexpress/import.js",
-    "import-osm-commune": "node datasets/osm-commune/import.js",
+    "import": "npm run import-inao-appellation",
     "import-inao-appellation": "node datasets/inao-appellation/import.js",
     "test": "npm run lint && npm run test-unit",
     "test-unit": "NODE_ENV=test istanbul cover _mocha -- --recursive -t 10000",

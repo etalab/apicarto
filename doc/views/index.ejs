@@ -12,6 +12,30 @@
         <div class="container">
             <h1>APICARTO - Documentation Technique</h1>
 
+            <h2>Les principes</h2>
+
+            <ul>
+                <li>Le format utilisé est JSON/GeoJSON</li>
+                <li>La projection utilisée est WGS84 (longitude,latitude)</li>
+                <li>Les API offrent des opérations de filtrage simple 
+                    <ul>
+                        <li>Par attribut sous la forme (?nom_attribut=valeur)</li>
+                        <li>Par intersection géométrique (?geom=géométrie GeoJSON)</li>                        
+                    </ul>
+                </li>
+            </ul>
+
+            Remarques :
+
+            <ul>
+                <li>
+                    Les croisements de données métiers sont réalisés côtés clients (croisements de données = appels successifs aux API)
+                </li>
+                <li>
+                    Les traitements géométriques métiers (calcul de surface, filtrage des résultats, etc.) sont réalisés côté client à l'aide de bibliothèques de calcul géométrique
+                </li>
+            </ul>
+            
             <h2>Les modules</h2>
 
             <table class="table table-striped">
@@ -68,21 +92,57 @@
 
             <h2>Les sources de données</h2>
 
-            TODO :
-            <ul>
-                <li>Mieux configurer les jeux de données (homepage, url, etc.)</li>
-                <li>Documenter les jeux de données</li>
-            </ul>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-xs-2">Nom</th>
+                        <th class="col-xs-1">Version</th>
+                        <th>Description</th>
+                        <th class="col-xs-3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    for ( var datasetName in datasets ){ 
+                        var dataset = datasets[datasetName];    
+                    %>
+                    <tr>
+                        <td><%= datasetName %><br />(<%= dataset.type %>)</td>
+                        <td><%= dataset.version %></td>
+                        <td><%= dataset.description %></td>
+                        <td class="text-right">
+                            <a href="<%= dataset.homepage %>" target="_blank">Plus d'information</a>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            <table>
+            
+            <p><b>Remarques</b> :
+                <ul>
+                    <li>Version=flux traduit généralement une mise à jour en continue</li>
+                    <li>APICARTO conserve la licence des sources de données</li>
+                </ul>
+            </p>
 
+            <h2>A voir aussi...</h2>
 
-            <h2>Les bibliothèques JavaScript</h2>
+            <h3>Les bibliothèques JavaScript</h3>
 
-            <p>Les bibliothèques ci-après sont complémentaires à APICARTO.</p>
+            <p>Les bibliothèques ci-après sont complémentaires à APICARTO :
+
+                <ul>
+                    <li>Les bibliothèques de <b>calcul géométrique</b> peuvent être utilisées en amont et en aval des appels aux API pour calculer des surfaces, des unions de géométrie, calcul d'intersection, etc.</li>
+                    <li>Les bibliothèques de <b>représentation cartographique</b> permettent de visualiser et d'éditer les données en entrée et sortie des API.</li>
+                    <li>Les bibliothèques d'<b>accès à des services et des données</b> apportent des fonctionnalités complémentaires à APICARTO</li>
+                </ul>
+
+            </p>
 
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Nom</th>
+                        <th class="col-xs-2">Nom</th>
                         <th class="text-center">Type</th>
                         <th>Description</th>
                     </tr>
@@ -90,14 +150,14 @@
                 <tbody>
 
                     <tr>
-                        <td><a href="http://turfjs.org/">turfjs</a></td>
+                        <td><a target="_blank" href="http://turfjs.org/">turfjs</a></td>
                         <td class="text-center">Calcul géométrique</td>
                         <td>
                             Permet de réaliser des calculs géométriques simples sur les données GeoJSON (bbox, surface, intersection, etc.)
                         </td>
                     </tr>
                     <tr>
-                        <td><a href="https://bjornharrtell.github.io/jsts/">jsts</a></td>
+                        <td><a target="_blank" href="https://bjornharrtell.github.io/jsts/">jsts</a></td>
                         <td class="text-center">Calcul géométrique</td>
                         <td>
                             Portage de JTS en JavaScript qui permet de réaliser des calculs géométriques avancés (zones tampons, etc.). C'est sensiblement le même moteur de calcul que celui de postgis.
@@ -106,7 +166,7 @@
 
                     <tr>
                         <td>
-                            <a href="https://github.com/IGNF/geoportal-access-lib#biblioth%C3%A8que-dacc%C3%A8s-aux-ressources-du-g%C3%A9oportail">
+                            <a target="_blank" href="https://github.com/IGNF/geoportal-access-lib#biblioth%C3%A8que-dacc%C3%A8s-aux-ressources-du-g%C3%A9oportail">
                                 geoportal-access-lib
                             </a>
                         </td>
@@ -118,7 +178,7 @@
 
                     <tr>
                         <td>
-                            <a href="https://github.com/IGNF/geoportal-wfs-client#geoportal-wfs-client">
+                            <a target="_blank" href="https://github.com/IGNF/geoportal-wfs-client#geoportal-wfs-client">
                                 geoportal-wfs-client
                             </a>
                         </td>
@@ -131,7 +191,7 @@
 
                     <tr>
                         <td>
-                            <a href="https://openlayers.org/">
+                            <a target="_blank" href="https://openlayers.org/">
                                 openlayers
                             </a>
                         </td>
@@ -142,7 +202,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="http://leafletjs.com/">
+                            <a target="_blank" href="http://leafletjs.com/">
                                 leaflet
                             </a>
                         </td>
@@ -154,23 +214,30 @@
 
                     <tr>
                         <td>
-                            <a href="http://bluebirdjs.com/docs/getting-started.html">
+                            <a target="_blank" href="https://github.com/axios/axios#example">
+                                axios
+                            </a>
+                        </td>
+                        <td class="text-center">Utilitaire</td>
+                        <td>
+                            Implémentation des requêtes HTTP sous forme de Promise (simplifie le chaînage des appels)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a target="_blank" href="http://bluebirdjs.com/docs/getting-started.html">
                                 bluebird
                             </a>
                         </td>
                         <td class="text-center">Utilitaire</td>
                         <td>
-                            Implémentation des Promise JavaScript (simplifie les chaînages de requête et la gestion des exécutions en parallèle)
+                            Implémentation des Promise JavaScript avec un support pour les différents navigateurs (simplifie les chaînages de requête et la gestion des exécutions en parallèle)
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <p>
-                <b>Remarque</b> : Les bibliothèques de calcul géométrique peuvent être utilisées en amont 
-                et en aval des appels aux API pour calculer des surfaces, des unions de géométrie, calcul d'intersection, etc. 
-                Ces traitements sont souvent métiers et sont délicats à intégrer dans des API génériques.
-            </p>
         </div>
 
         <% include partial/scripts.ejs %>

@@ -1,5 +1,7 @@
-var shell = require('shelljs');
-var path = require('path');
+const shell = require('shelljs');
+const path = require('path');
+
+const config = require('./config');
 
 if (!shell.which('wget')) {
     shell.echo('Sorry, this script requires wget');
@@ -19,8 +21,6 @@ if (!shell.which('unzip')) {
 }
 
 /* Download AOC file */
-var url = "https://www.data.gouv.fr/s/resources/delimitation-parcellaire-des-aoc-viticoles-de-linao/20180319-085833/delimitation_inao_EPSG2154.zip";
-
 var dataDir = __dirname+'/data/';
 shell.rm('-rf', dataDir);
 if (shell.exec('mkdir -p '+dataDir).code !== 0) {
@@ -33,7 +33,7 @@ shell.cd(dataDir);
 
 /* Download zip file if not exists */
 if ( ! shell.test('-e', 'delimitation_inao_EPSG2154.zip') ){ 
-    if (shell.exec('wget --progress=bar:force -O delimitation_inao_EPSG2154.zip '+url).code !== 0) {
+    if (shell.exec('wget --progress=bar:force -O delimitation_inao_EPSG2154.zip '+config.download_url).code !== 0) {
         shell.echo('Error: wget failed');
         shell.exit(1);
     }

@@ -9,7 +9,7 @@ ALTER TABLE inao.appellation RENAME COLUMN denominati TO denomination;
 -- Correction des géométries
 -----------------------------------------------------------------------------------------
 UPDATE inao.appellation SET 
-    geom = ST_MakeValid(ST_Buffer(geom, 0)) 
+    geom = ST_Multi(ST_MakeValid(ST_Buffer(geom, 0))) 
 WHERE geom IS NOT NULL 
 AND NOT ST_IsValid(geom)
 ;
@@ -35,5 +35,3 @@ CREATE INDEX ON inao.appellation USING GIST (geom);
 
 -- Marquage de l'appellation Sable de Camargue
 -- UPDATE Appellation SET instruction_obligatoire = TRUE WHERE IDApp = '1022';
-
-
