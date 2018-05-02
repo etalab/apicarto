@@ -74,6 +74,103 @@
                 <li>Documenter les jeux de données</li>
             </ul>
 
+
+            <h2>Les bibliothèques JavaScript</h2>
+
+            <p>Les bibliothèques ci-après sont complémentaires à APICARTO.</p>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th class="text-center">Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td><a href="http://turfjs.org/">turfjs</a></td>
+                        <td class="text-center">Calcul géométrique</td>
+                        <td>
+                            Permet de réaliser des calculs géométriques simples sur les données GeoJSON (bbox, surface, intersection, etc.)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://bjornharrtell.github.io/jsts/">jsts</a></td>
+                        <td class="text-center">Calcul géométrique</td>
+                        <td>
+                            Portage de JTS en JavaScript qui permet de réaliser des calculs géométriques avancés (zones tampons, etc.). C'est sensiblement le même moteur de calcul que celui de postgis.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="https://github.com/IGNF/geoportal-access-lib#biblioth%C3%A8que-dacc%C3%A8s-aux-ressources-du-g%C3%A9oportail">
+                                geoportal-access-lib
+                            </a>
+                        </td>
+                        <td class="text-center">Accès aux services/données</td>
+                        <td>
+                            Bibliothèque simplifiant l'accès aux services du géoportail (géocodage, calcul d'itinéraire, calcul d'isochrones, etc.)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="https://github.com/IGNF/geoportal-wfs-client#geoportal-wfs-client">
+                                geoportal-wfs-client
+                            </a>
+                        </td>
+                        <td class="text-center">Accès aux services/données</td>
+                        <td>
+                            Bibliothèque simplifiant l'accès aux services WFS du géoportail (APICARTO générique sous forme d'un client JavaScript)
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <a href="https://openlayers.org/">
+                                openlayers
+                            </a>
+                        </td>
+                        <td class="text-center">Réprésentation cartographique</td>
+                        <td>
+                            Bibliothèque cartographique JavaScript 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="http://leafletjs.com/">
+                                leaflet
+                            </a>
+                        </td>
+                        <td class="text-center">Réprésentation cartographique</td>
+                        <td>
+                            Bibliothèque cartographique JavaScript 
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="http://bluebirdjs.com/docs/getting-started.html">
+                                bluebird
+                            </a>
+                        </td>
+                        <td class="text-center">Utilitaire</td>
+                        <td>
+                            Implémentation des Promise JavaScript (simplifie les chaînages de requête et la gestion des exécutions en parallèle)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                <b>Remarque</b> : Les bibliothèques de calcul géométrique peuvent être utilisées en amont 
+                et en aval des appels aux API pour calculer des surfaces, des unions de géométrie, calcul d'intersection, etc. 
+                Ces traitements sont souvent métiers et sont délicats à intégrer dans des API génériques.
+            </p>
         </div>
 
         <% include partial/scripts.ejs %>

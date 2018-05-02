@@ -8,7 +8,7 @@ info:
     Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
 
 
-    **ATTENTION** : Cette fonctionnalité diffère de la première version d'APICARTO (/aoc/api/beta/in). Il manque dans ce jeu de donnée l'attribut "segment" qui permettait d'enrichir les données avec l'attribut "granularite" ('exacte' ou 'commune') nécessaire aux traitements métiers de l'INAO.
+    **ATTENTION** : Cette fonctionnalité diffère de la première version d'APICARTO (/aoc/api/beta/in). Il manque dans les données libres l'attribut "segment" qui permettait d'enrichir les données avec l'attribut "granularite" ('exacte' ou 'commune') nécessaire aux traitements métiers de l'INAO.
 
   version: '1.0'
 

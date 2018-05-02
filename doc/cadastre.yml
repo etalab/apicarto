@@ -26,6 +26,11 @@ info:
       * bdpv_LOCALISANT
       * bdpv_PARCELLE
 
+    ## Historique des changements
+
+      * Suppression /cadastre/geometrie : récupération des parcelles avec calcul de surfaces
+      * Uniformisation des noms d'attribut et paramètres de filtrage. Paramètre de filtrage = nom de l'attribut (codearr => code_arr, insee => code_insee, etc.)
+
   version: 2.0.0
   
   contact:
@@ -47,7 +52,7 @@ paths:
           in: query
           description: Clé WFS géoportail
           type: string
-          required: true
+          required: false
         - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -74,7 +79,7 @@ paths:
           in: query
           description: Clé WFS géoportail
           type: string
-          required: true
+          required: false
         - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -112,7 +117,7 @@ paths:
           in: query
           description: Clé WFS géoportail
           type: string
-          required: true
+          required: false
         - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -153,31 +158,6 @@ paths:
             $ref: '#/definitions/Parcelles'
 
 
-  /cadastre/geometrie:
-    get:
-      summary: Informations cadastrales sur l'intersection d'une géométrie avec des parcelles cadastrales
-      description: |
-        Prends en entrée une géométrie au format JSON et retourne une featureCollection.
-        Retourne un résultat de Type "FeatureCollection" avec les informations sur les parcelles qui intersectent la géométrie.
-      parameters:
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: true
-        - name: geom
-          in: query
-          description: geometrie au format json
-          type: string
-          required: true
-      tags:
-        - Geometrie
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/Geometries'
-
   /cadastre/localisant:
     get:
       summary: Informations sur les parcelles non vectorisées.
@@ -189,7 +169,7 @@ paths:
           in: query
           description: Clé WFS géoportail
           type: string
-          required: true
+          required: false
         - name: code_insee
           in: query
           description: Code insee de la commune sur 5 caractères
