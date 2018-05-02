@@ -22,14 +22,15 @@ basePath: /api
 
 paths:
   /aoc/appellation-viticole:
-    post:
+    get:
       description: |
         Prends une geometrie de type GeoJSON en paramètre d'entrée geom et renvoie les appellations viticoles intersectantes
 
         Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
+
         - name: geom
-          in: body
+          in: query
           required: true
           schema:
             $ref: "#/definitions/Geometry"
@@ -52,53 +53,13 @@ paths:
 
 definitions:
 
-  Error:
-    required:
-      - code
-      - message
-    properties:
-      code:
-        type: string
-      message:
-        type: string
 
-  Geometry:
-    description: Une géométrie au format GeoJSON
-    type: object
-    properties:
-      type:
-        type: string
-        enum:
-        - Point
-        - LineString
-        - Polygon
-        - MultiPoint
-        - MultiLineString
-        - MultiPolygon
-        description: the geometry type
-
-  FeatureCollectionAppellationViticole:
-    description: "Liste d'objet géographique appellation viticole"
-    type: object
-    properties:
-      type: 
-        type: string
-        enum:
-        - FeatureCollection
-      features:
-        type: array
-        items:
-          $ref: '#/definitions/FeatureAppellationViticole'
-      
-  
   FeatureAppellationViticole:
     description: "Objet géographique appellation viticole" 
     type: object
+    allOf:
+      - $ref: "#/definitions/Feature"
     properties:
-      type: 
-        type: string
-        enum:
-        - Feature
       properties:
         type: object
         properties:
@@ -124,4 +85,38 @@ definitions:
             type: string
           crinao:
             type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'
 
+  FeatureCollectionAppellationViticole:
+    description: "Liste d'objet géographique appellation viticole"
+    type: object
+    properties:
+      type: 
+        type: string
+        enum:
+        - FeatureCollection
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureAppellationViticole'
+      
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'    

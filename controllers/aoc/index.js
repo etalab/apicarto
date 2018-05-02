@@ -14,7 +14,7 @@ var _ = require('lodash');
 /**
  * Récupération des AOC viticoles par géométrie
  */
-router.post('/appellation-viticole', [
+router.get('/appellation-viticole', [
     check('geom').exists().withMessage('Le paramètre geom est obligatoire'),
     check('geom').custom(isGeometry)
 ], validateParams, pgClient, function(req, res, next) {

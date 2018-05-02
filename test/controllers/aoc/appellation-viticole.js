@@ -16,15 +16,15 @@ function returnValidGeoJSON(res) {
 const bboxWithinAppellations = [-0.439, 44.694, -0.437, 44.696];
 const bboxOutsideFrance = [-6.086, 46.3, -5, 46.5];
 
-function makeRequest() {
+function makeRequest(geom) {
     return request(server)
-        .post('/api/aoc/appellation-viticole');
+        .get('/api/aoc/appellation-viticole')
+        .send({geom: geom});
 }
 
 function makeRequestWithBbox(bbox) {
     var geom = bboxPolygon(bbox).geometry;
-    return makeRequest()
-        .send({ geom: geom });
+    return makeRequest(geom);
 }
 
 describe('/aoc/appellation-viticole', () => {

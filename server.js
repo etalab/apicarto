@@ -30,9 +30,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-if ( env !== 'test' ){
-    app.use(require('./middlewares/request-logger')());
-}
+app.use(require('./middlewares/request-logger')());
+
 /*------------------------------------------------------------------------------
  * /api/doc - expose documentation
  -----------------------------------------------------------------------------*/

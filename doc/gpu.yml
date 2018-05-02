@@ -6,6 +6,11 @@ info:
     
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
+    Exemple de géométrie :
+
+      * Centre de Rennes : `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+      * Parcelle : `{"type":"MultiPolygon","coordinates":[[[[-1.6993786,48.1113366],[-1.6994647,48.1113416],[-1.6994613,48.1113573],[-1.6993639,48.111803],[-1.6992707,48.112222],[-1.6990176,48.1120599],[-1.6989945,48.1120573],[-1.6991084,48.111617],[-1.6991262,48.1115482],[-1.6993407,48.1115608],[-1.6993494,48.1115158],[-1.699361,48.111431],[-1.6993786,48.1113366]]]]}`
+
   version: 1.0.0
 
   contact:
@@ -27,21 +32,24 @@ paths:
       tags:
         - Communes
       parameters:
+
         - in: query
           name: geom
           type: object
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
+
         - in: query
           name: insee
           type: string
           required: false
           description: Code insee de la commune
+         
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
 
   /gpu/document:
@@ -62,7 +70,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'      
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/zone-urba:
     get:
@@ -82,7 +90,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/secteur-cc:
     get:
@@ -102,7 +110,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
             
             
   /gpu/prescription-surf:
@@ -123,7 +131,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
                   
   /gpu/prescription-lin:
     get:
@@ -143,7 +151,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
             
   /gpu/prescription-pct:
     get:
@@ -163,7 +171,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/info-surf:
     get:
@@ -183,7 +191,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/info-lin:
     get:
@@ -203,7 +211,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/info-pct:
     get:
@@ -223,7 +231,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
 
   /gpu/acte-sup:
@@ -244,7 +252,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/assiette-sup-s:
     get:
@@ -264,7 +272,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/assiette-sup-l:
     get:
@@ -284,7 +292,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/assiette-sup-p:
     get:
@@ -304,7 +312,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
   
   /gpu/all:
     get:
@@ -324,82 +332,19 @@ paths:
           description: Success
 
 definitions:
-  Geometry:
-    type: object
-    description: Une `Geometry` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#geometry-objects
-      description: La documentation officielle du type `Geometry` de GeoJSON
-    properties:
-      type:
-        type: string
-        enum:
-        - MultiPolygon
-        - Point
-        description: Le type corresponds au type de Géométrie(MultiPolygon ou Point)
-      coordinates:
-        type: array
-        items:
-          type: array
-          items:
-            type: number
 
-  Feature:
-    type: object
-    description: Une `Feature` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#feature-objects
-      description: La documentation officielle du type `Feature` de GeoJSON
-    properties:
-      type:
-        type: string
-        enum:
-        - Feature
-        description: La valeur de type est "Feature"
-      id:
-        type: string
-      geometry:
-        $ref: '#/definitions/Geometry'
-      properties:
-        type: object
+  # TODO FeatureMunicility FeatureCollectionMunicipality
+  # TODO FeatureZoneUrba FeatureCollectionZoneUrba
+  # ...
 
+  # import definitions
   FeatureCollection:
-    type: object
-    description: Une `FeatureCollection` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#feature-collection-objects
-      description: La documentation officielle du type `FeatureCollection` de GeoJSON
-    properties:
-      type:
-        type: string
-        enum:
-        - Feature
-        description: Le type est FeatureCollection
-      features:
-        type: array
-        items: 
-          type: object
-
-
-  Geometrie:
-    description: ''
-    allOf:
-    - $ref: '#/definitions/Feature'
-    - type: object
-      properties:
-        properties:
-          type: object
-          properties:
-            Liste proprietes: 
-              type: string
-
-  Geometries:
-    description: Une `FeatureCollection` contenant uniquement des features de type `Geometrie`
-    allOf:
-    - $ref: '#/definitions/FeatureCollection'
-    - type: object
-      properties:
-        features:
-          type: array
-          items:
-            $ref: '#/definitions/Geometrie'
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+  Point:
+    $ref: './schema/geojson.yml#definitions/Point'
