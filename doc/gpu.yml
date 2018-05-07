@@ -316,7 +316,7 @@ paths:
   
   /gpu/all:
     get:
-      summary:  Récupération de l’ensemble des couches décrites ci-dessous en un appel
+      summary:  Récupération de l’ensemble des couches décrites ci-dessus
       description: |
         Prend en entrée une géométrie au format JSON et retourne une featureCollection contenant toutes les couches du gpu qui intersectent la géométrie.
       tags:

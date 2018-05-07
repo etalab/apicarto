@@ -3,7 +3,7 @@ swagger: '2.0'
 info:
   title: APICarto AOC
   description: >
-    Le module AOC permet de récupérer les AOC viticole de l'INAO intersectant une géométrie GeoJSON.
+    Le module AOC permet de récupérer les AOC viticoles de l'INAO intersectant une géométrie GeoJSON.
 
     Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
 
@@ -24,7 +24,7 @@ paths:
   /aoc/appellation-viticole:
     get:
       description: |
-        Prends une geometrie de type GeoJSON en paramètre d'entrée geom et renvoie les appellations viticoles intersectantes
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les appellations viticoles intersectantes
 
         Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
