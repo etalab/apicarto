@@ -4,33 +4,54 @@ info:
   description: >
     Le service d’interrogation du GPU permet d’obtenir des informations d’urbanisme intersectant une géométrie (ponctuelle ou surfacique).
     
-    Toutes les structures de réponse sont  de type FeatureCollection au format JSON.
-    
+    Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
+
+    Exemple de géométrie :
+
+      * Centre de Rennes : `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+      * Parcelle : `{"type":"MultiPolygon","coordinates":[[[[-1.6993786,48.1113366],[-1.6994647,48.1113416],[-1.6994613,48.1113573],[-1.6993639,48.111803],[-1.6992707,48.112222],[-1.6990176,48.1120599],[-1.6989945,48.1120573],[-1.6991084,48.111617],[-1.6991262,48.1115482],[-1.6993407,48.1115608],[-1.6993494,48.1115158],[-1.699361,48.111431],[-1.6993786,48.1113366]]]]}`
+
   version: 1.0.0
+
   contact:
     name: Apicarto GPU
-  license:
-    name: AGPL-V3
-    url: https://www.gnu.org/licenses/agpl-3.0.html
 
-schemes:
-  - https
-basePath: /api
+
 produces:
   - application/json
+
+basePath: /api
+
 paths:
 
-  /gpu/all:
+  /gpu/municipality:
     get:
-      summary:  Récupération de l’ensemble des couches décrites ci-dessous en un appel
+      summary: Récupération des informations sur une commune (est au RNU? est supprimée?)
       description: |
-        Prend en entrée une géométrie au format JSON et retourne une featureCollection contenant toutes les couches du gpu qui intersectent la géométrie.
+        Retourne un résultat de Type "FeatureCollection" avec des communes correspondant aux paramètres
       tags:
-        - Geometrie
+        - Communes
+      parameters:
+
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: insee
+          type: string
+          required: false
+          description: Code insee de la commune
+         
       responses:
         '200':
           description: Success
-          
+          schema:
+            $ref: '#/definitions/FeatureCollection'
+
+
   /gpu/document:
     get:
       summary: Récupération de l'emprise d'un document
@@ -38,12 +59,18 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec l'emprise d'un document qui intersecte la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'      
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/zone-urba:
     get:
@@ -52,12 +79,18 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/secteur-cc:
     get:
@@ -66,12 +99,18 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
             
             
   /gpu/prescription-surf:
@@ -81,12 +120,18 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche     
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
                   
   /gpu/prescription-lin:
     get:
@@ -95,12 +140,18 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
             
   /gpu/prescription-pct:
     get:
@@ -109,12 +160,19 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche  
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
+
   /gpu/info-surf:
     get:
       summary: Récupération des informations surfaciques d’un document d’urbanisme
@@ -122,12 +180,19 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche    
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
+
   /gpu/info-lin:
     get:
       summary: Récupération des informations linéaires d’un document d’urbanisme
@@ -135,12 +200,18 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/info-pct:
     get:
@@ -149,12 +220,39 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - Documents d'urbanisme (PLU, POS, CC, PSMV)
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche      
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
+
+
+  /gpu/acte-sup:
+    get:
+      summary: Récupération des actes des servitudes d’utilité publique
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche       
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollection'
 
   /gpu/assiette-sup-s:
     get:
@@ -163,12 +261,19 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche   
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
+
   /gpu/assiette-sup-l:
     get:
       summary: Récupération des assiettes linéaires de servitudes d’utilité publique
@@ -176,12 +281,19 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche    
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
+
   /gpu/assiette-sup-p:
     get:
       summary:  Récupération des assiettes ponctuelles de servitudes d’utilité publique
@@ -189,89 +301,50 @@ paths:
         Prend en entrée une géométrie au format JSON et retourne une featureCollection.
         Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
       tags:
-        - Geometrie
+        - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche    
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/Geometries'
+            $ref: '#/definitions/FeatureCollection'
   
-definitions:
-  Geometry:
-    type: object
-    description: Une `Geometry` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#geometry-objects
-      description: La documentation officielle du type `Geometry` de GeoJSON
-    properties:
-      type:
-        type: string
-        enum:
-        - MultiPolygon
-        - Point
-        description: Le type corresponds au type de Géométrie(MultiPolygon ou Point)
-      coordinates:
-        type: array
-        items:
-          type: array
-          items:
-            type: number
-
-  Feature:
-    type: object
-    description: Une `Feature` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#feature-objects
-      description: La documentation officielle du type `Feature` de GeoJSON
-    properties:
-      type:
-        type: string
-        enum:
-        - Feature
-        description: La valeur de type est "Feature"
-      id:
-        type: string
-      geometry:
-        $ref: '#/definitions/Geometry'
-      properties:
-        type: object
-
-  FeatureCollection:
-    type: object
-    description: Une `FeatureCollection` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#feature-collection-objects
-      description: La documentation officielle du type `FeatureCollection` de GeoJSON
-    properties:
-      type:
-        type: string
-        enum:
-        - Feature
-        description: Le type est FeatureCollection
-      features:
-        type: array
-        items: object
-
-
-  Geometrie:
-    description: ''
-    allOf:
-    - $ref: '#/definitions/Feature'
-    - type: object
-      properties:
-        properties:
+  /gpu/all:
+    get:
+      summary:  Récupération de l’ensemble des couches décrites ci-dessus
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection contenant toutes les couches du gpu qui intersectent la géométrie.
+      tags:
+        - All
+      parameters:
+        - in: query
+          name: geom
           type: object
-          properties:
-            Liste proprietes: 
-              type: string
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
+      responses:
+        '200':
+          description: Success
 
-  Geometries:
-    description: Une `FeatureCollection` contenant uniquement des features de type `Geometrie`
-    allOf:
-    - $ref: '#/definitions/FeatureCollection'
-    - type: object
-      properties:
-        features:
-          type: array
-          items:
-            $ref: '#/definitions/Geometrie'
+definitions:
+
+  # TODO FeatureMunicility FeatureCollectionMunicipality
+  # TODO FeatureZoneUrba FeatureCollectionZoneUrba
+  # ...
+
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+  Point:
+    $ref: './schema/geojson.yml#definitions/Point'

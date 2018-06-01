@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include partial/head.ejs %>
+</head>
+
+<body>
+
+    <% include partial/menu.ejs %>
+
+        <div class="container">
+            <h1>APICARTO - Documentation Technique</h1>
+
+            <h2>Les principes</h2>
+            <br/>
+            <ul>
+				<li> L’API CARTO est une API Rest compatible avec la spécification OpenAPI.</li>
+                <li>Le format utilisé est JSON/GeoJSON</li>
+                <li>La projection utilisée est WGS84 (coordonnées en longitude,latitude)</li>
+                <li>Les API offrent des opérations génériques de filtrage simple:
+                    <ul>
+                        <li>Par attribut sous la forme (?nom_attribut=valeur)</li>
+                        <li>Par intersection géométrique (?geom=géométrie GeoJSON)</li>                        
+                    </ul>
+                </li>
+            </ul>
+
+            Remarques :
+
+            <ul>
+                <li>
+                    Les croisements de données métiers sont réalisés côté client (croisements de données = appels successifs aux API)
+                </li>
+                <li>
+                    Les traitements géométriques métiers (calcul de surface, filtrage des résultats, etc.) sont réalisés côté client à l'aide de bibliothèques de calcul géométrique
+                </li>
+            </ul>
+            
+            <h2>Les modules</h2>
+			<br/>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Description</th>                        
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cadastre</td>
+                        <td>
+                            API d'accès aux données cadastrales (commune, division, parcelle, etc.)
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/cadastre">API</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Codes Postaux</td>
+                        <td>
+                            API de récupération des communes en fonction d'un code postal
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/codes-postaux">API</a>
+                        </td>
+                    </tr>
+					 <tr>
+                        <td>AOC</td>
+                        <td>
+                            API d'accès aux appellations viticoles
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/aoc">API</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Urbanisme (GpU)</td>
+                        <td>
+                            API d'accès aux données du géoportail de l'urbanisme (PLU, POS, CC, PSMV, SUP)
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/gpu">API</a>
+                        </td>
+                    </tr>
+
+                   
+                </tbody>
+            </table>
+
+
+            <h2>Les sources de données</h2>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-xs-2">Nom</th>
+                        <th class="col-xs-1">Version</th>
+                        <th>Description</th>
+                        <th class="col-xs-3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    for ( var datasetName in datasets ){ 
+                        var dataset = datasets[datasetName];    
+                    %>
+                    <tr>
+                        <td><%= datasetName %><br />(<%= dataset.type %>)</td>
+                        <td><%= dataset.version %></td>
+                        <td>
+                            <%= dataset.description %>
+                            <br /><br />
+                            <a target="_blank" href="<%= dataset.url %>"><%= dataset.url %></a> 
+                        </td>
+                        <td class="text-right">
+                            <a href="<%= dataset.homepage %>" target="_blank">Plus d'information</a>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            <table>
+            
+            <p><b>Remarques</b> :
+                <ul>
+                    <li>Version=flux traduit généralement une mise à jour en continue</li>
+                    <li>APICARTO conserve la licence des sources de données</li>
+                </ul>
+            </p>
+
+            <h2>A voir aussi...</h2>
+
+            <h3>Les bibliothèques JavaScript</h3>
+
+            <p>Les bibliothèques ci-après sont complémentaires à APICARTO :
+
+                <ul>
+                    <li>Les bibliothèques de <b>calcul géométrique</b> peuvent être utilisées en amont et en aval des appels aux API pour calculer des surfaces, des unions de géométrie, calcul d'intersection, etc.</li>
+                    <li>Les bibliothèques de <b>représentation cartographique</b> permettent de visualiser et d'éditer les données en entrée et sortie des API.</li>
+                    <li>Les bibliothèques d'<b>accès à des services et des données</b> apportent des fonctionnalités complémentaires à APICARTO</li>
+                </ul>
+
+            </p>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-xs-2">Nom</th>
+                        <th class="text-center">Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td><a target="_blank" href="http://turfjs.org/">turfjs</a></td>
+                        <td class="text-center">Calcul géométrique</td>
+                        <td>
+                            Permet de réaliser des calculs géométriques simples sur les données GeoJSON (bbox, surface, intersection, etc.)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a target="_blank" href="https://bjornharrtell.github.io/jsts/">jsts</a></td>
+                        <td class="text-center">Calcul géométrique</td>
+                        <td>
+                            Portage de JTS en JavaScript qui permet de réaliser des calculs géométriques avancés (zones tampons, etc.). C'est sensiblement le même moteur de calcul que celui de postgis.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a target="_blank" href="https://github.com/IGNF/geoportal-access-lib#biblioth%C3%A8que-dacc%C3%A8s-aux-ressources-du-g%C3%A9oportail">
+                                geoportal-access-lib
+                            </a>
+                        </td>
+                        <td class="text-center">Accès aux services/données</td>
+                        <td>
+                            Bibliothèque simplifiant l'accès aux services du géoportail (géocodage, calcul d'itinéraire, calcul d'isochrones, etc.)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a target="_blank" href="https://github.com/IGNF/geoportal-wfs-client#geoportal-wfs-client">
+                                geoportal-wfs-client
+                            </a>
+                        </td>
+                        <td class="text-center">Accès aux services/données</td>
+                        <td>
+                            Bibliothèque simplifiant l'accès aux services WFS du géoportail (APICARTO générique sous forme d'un client JavaScript)
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <a target="_blank" href="https://openlayers.org/">
+                                openlayers
+                            </a>
+                        </td>
+                        <td class="text-center">Réprésentation cartographique</td>
+                        <td>
+                            Bibliothèque cartographique JavaScript 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a target="_blank" href="http://leafletjs.com/">
+                                leaflet
+                            </a>
+                        </td>
+                        <td class="text-center">Réprésentation cartographique</td>
+                        <td>
+                            Bibliothèque cartographique JavaScript 
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a target="_blank" href="https://github.com/axios/axios#example">
+                                axios
+                            </a>
+                        </td>
+                        <td class="text-center">Utilitaire</td>
+                        <td>
+                            Implémentation des requêtes HTTP sous forme de Promise (simplifie le chaînage des appels)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a target="_blank" href="http://bluebirdjs.com/docs/getting-started.html">
+                                bluebird
+                            </a>
+                        </td>
+                        <td class="text-center">Utilitaire</td>
+                        <td>
+                            Implémentation des Promise JavaScript avec un support pour les différents navigateurs (simplifie les chaînages de requête et la gestion des exécutions en parallèle)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <% include partial/scripts.ejs %>
+
+</body>
+
+</html>

@@ -33,7 +33,57 @@ brew install gdal
 brew install postgresql postgis
 ```
 
+
+## Variables d'environnements
+
+### Configuration de la connexion postgresql
+
+La connexion à la base postgresql est configurée à l'aide des variables d'environnement standard postgresql :
+
+| Variable   | Description                   |
+|------------|-------------------------------|
+| PGHOST     | Host du serveur postgresql    |
+| PGDATABASE | Nom de la base de données     |
+| PGUSER     | Nom de l'utilisateur          |
+| PGPASSWORD | Mot de passe de l'utilisateur |
+
+
+### Configuration de la clé géoportail
+
+Les modules faisant appel aux flux geoportail supportent un paramètre `apikey` en paramètre de requête. Il est toutefois possible de déployer un serveur APICARTO où les utilisateurs n'ont pas besoin de fournir ce paramètre :
+
+| Variable              | Description                   | Valeur par défaut        |
+|-----------------------|-------------------------------|--------------------------|
+| GEOPORTAL_API_KEY     | Clé geoportail                | aucune                   |
+| GEOPORTAL_REFERER     | Permet d'écraser le referer   | http://localhost         |
+
+L'ordre de priorité dans l'utilisation des variables est le suivant :
+
+* Pour la clé d'API, on utilise d'abord `apikey`, puis la variable d'environnement `GEOPORTAL_API_KEY`
+* Pour le referer, si le paramètre `apikey` est utilisé, on utilise le referer de la requête. Sinon, on utilise `GEOPORTAL_REFERER` et en dernier recours la valeur par défaut.
+
+Remarque : Vous n'êtes pas obligé de créer une clé protégée par referer, vous pouvez aussi spécifier une protection par IP (celui du serveur hébergeant APICARTO) ou par User-Agent ('apicarto')
+
+
+## Sources de données
+
+| Nom              | Description                                                        | Source                                                                                                 |
+|------------------|--------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| bdparcellaire    | Base de données cadastrale                                         | http://professionnels.ign.fr/bdparcellaire                                                             |
+| adminexpress     | Découpage administratif du territoire métropolitain et ultra-marin | http://professionnels.ign.fr/adminexpress                                                              |
+| osm-commune      | Découpage administratif issu de openstreetmap                      | https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/#  |
+| inao-appellation | Appellation viticoles INAO                                         | https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/#_            |
+| codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/etalab/codes-postaux#sources                                                   |
+
+
+
 ## Installation
+
+### Installation du package
+
+```
+npm install
+```
 
 ### Création de la base de données
 
@@ -44,22 +94,11 @@ createdb "apicarto"
 psql -d "apicarto" -c "CREATE EXTENSION postgis"
 ```
 
-### Installation du package
-
-```
-npm install
-```
 
 ### Chargement des données
 
-TODO : mettre à jour
-
 ```bash
-# Définir le répertoire distant contenant les données sources
-npm config set apicarto:refDataDir http://###:###@apicarto-data.sgmap.fr/prod
-
-# Lancer le script d'import
-npm run import
+PGDATABASE=apicarto npm run import
 ```
 
 ### Clé Géoportail IGN

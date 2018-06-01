@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include partial/head.ejs %>
+</head>
+
+<body>
+
+    <% include partial/menu.ejs %>
+
+    <div class="container">
+        <div id="swagger-ui"></div>
+    </div>
+
+
+    <% include partial/scripts.ejs %>    
+
+
+    <script type="text/javascript">
+        var moduleName = "<%= moduleName %>";
+        var ui = SwaggerUIBundle({
+            url: moduleName+".yml",
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ]
+        });
+    </script>
+</body>
+
+</html>

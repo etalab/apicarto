@@ -1,148 +1,122 @@
 swagger: '2.0'
+
 info:
   title: APICarto AOC
   description: >
-    Le service d'interrogation du cadastre permet de faire le croisement entre un polygone et la couche des AOC/IGP.
-    Les données proviennent de France Agrimer et de l'INAO.
-    Possibilité d'utiliser les communes de l'IGN ou les communes OSM
+    Le module AOC permet de récupérer les AOC viticoles de l'INAO intersectant une géométrie GeoJSON.
+
+    Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
 
 
-     ```json
-        {"type":"FeatureCollection",
-         "features":
-          [{"type":"Feature",
-           "geometry":
-           {"type":"MultiPolygon","coordinates":[...]},
-          "properties":{
-             "area_inter":xxx,
-             "appellation":"XXX",
-             "id_uni":"X-XX-XXXX"
-          }
-        ]}
-       }
-
-    ```
-
-
-
+    **ATTENTION** : Cette fonctionnalité diffère de la première version d'APICARTO (/aoc/api/beta/in). Il manque dans les données libres l'attribut "segment" qui permettait d'enrichir les données avec l'attribut "granularite" ('exacte' ou 'commune') nécessaire aux traitements métiers de l'INAO.
 
   version: '1.0'
-schemes:
-  - https
+
+
 consumes:
   - application/json
-basePath: /api
 produces:
   - application/json
+
+basePath: /api
+
 paths:
-  /aoc/api/beta/in:
-    post:
+  /aoc/appellation-viticole:
+    get:
       description: |
-        Prends une geometrie de type GeoJSON en paramètre d'entrée geom
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les appellations viticoles intersectantes
 
         Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
+      parameters:
+
+        - name: geom
+          in: query
+          required: true
+          schema:
+            $ref: "#/definitions/Geometry"
+
       tags:
         - Appellations
       responses:
         '200':
-          description: Success
+          description: "Succès"
           schema:
-            $ref: '#/definitions/AOCs'
+            $ref: "#/definitions/FeatureCollectionAppellationViticole"
+        '400':
+          description: "Paramètres invalide"
+          schema:
+            $ref: "#/definitions/Error"
+        '500':
+          description: "Erreur dans le traitement de la requête"
+          schema:
+            $ref: "#/definitions/Error"
 
 definitions:
-  Geometry:
-    type: object
-    description: Une `Geometry` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#geometry-objects
-      description: La documentation officielle du type `Geometry` de GeoJSON
-    properties:
-      type:
-        type: string
-        enum:
-        - MultiPolygon
-        - Point
-        description: Le type corresponds au type de Géométrie(MultiPolygon ou Point)
-      coordinates:
-        type: array
-        items:
-          type: array
-          items:
-            type: number
 
-  Feature:
+
+  FeatureAppellationViticole:
+    description: "Objet géographique appellation viticole" 
     type: object
-    description: Une `Feature` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#feature-objects
-      description: La documentation officielle du type `Feature` de GeoJSON
+    allOf:
+      - $ref: "#/definitions/Feature"
     properties:
-      type:
-        type: string
-        enum:
-        - Feature
-        description: La valeur de type est "Feature"
-      id:
-        type: string
-      geometry:
-        $ref: '#/definitions/Geometry'
       properties:
         type: object
+        properties:
+          id:
+            type: string        
+          id_app:
+            type: string
+          new_insee:
+            type: string
+          new_nomcom:
+            type: string
+          old_insee:
+            type: string
+          old_nomcom:
+            type: string
+          type_ig:
+            type: string
+          appellation:
+            type: string
+          id_denom:
+            type: string
+          denomination:
+            type: string
+          crinao:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'
 
-  FeatureCollection:
+  FeatureCollectionAppellationViticole:
+    description: "Liste d'objet géographique appellation viticole"
     type: object
-    description: Une `FeatureCollection` au sens GeoJSON
-    externalDocs:
-      url: http://geojson.org/geojson-spec.html#feature-collection-objects
-      description: La documentation officielle du type `FeatureCollection` de GeoJSON
     properties:
-      type:
+      type: 
         type: string
         enum:
         - FeatureCollection
-        description: Le type est FeatureCollection
       features:
         type: array
         items:
-          $ref: '#/definitions/Feature'
+          $ref: '#/definitions/FeatureAppellationViticole'
+      
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
 
-  AOC:
-    description: ''
-    allOf:
-    - $ref: '#/definitions/Feature'
-    - properties:
-        properties:
-          type: object
-          properties:
-            area :
-              type: number
-              format: float
-            idapp:
-              type: string
-            id_uni:
-              type: string
-              description: corresponds à "segment-idapp-insee"
-            insee:
-              type: string
-            segment:
-              type: string
-            instruction_obligatoire:
-              type: boolean
-            granularite:
-              type: string
-              enum:
-              - commune
-              - exacte
-            contains:
-              type: boolean
-
-  AOCs:
-    description: Une `FeatureCollection` contenant uniquement des features de type `AOC`
-    allOf:
-    - $ref: '#/definitions/FeatureCollection'
-    - type: object
-      properties:
-        features:
-          type: array
-          items:
-            $ref: '#/definitions/AOC'
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'    

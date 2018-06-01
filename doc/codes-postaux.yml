@@ -28,25 +28,27 @@ paths:
       responses:
         '200':
           description: Success
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Commune'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/Commune'
 
 definitions:
   Commune:
     type: object
     description: Commune correspondant au code postal
     properties:
-      codeInsee:
+      codePostal:
+        type: string
+        description: Le code postal
+      codeCommune:
         type: string
         description: Le code INSEE de la commune
       nomCommune:
         type: string
         description: Le nom de la commune
-      codePostal:
-        type: string
-        description: Le code postal
       libelleAcheminement:
         type: string
         description: Le libellé d'acheminement
