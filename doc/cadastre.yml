@@ -73,7 +73,19 @@ paths:
           description: Géométrie de recherche
           schema:
             $ref: '#/definitions/Geometry'
-
+            
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+        
       tags:
         - Commune
       responses:
@@ -131,6 +143,18 @@ paths:
           pattern: '\d{3}'
           type: string
           required: false
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
       tags:
         - Division
       responses:
@@ -187,7 +211,19 @@ paths:
           type: string
           pattern: '\d{3}'
           required: false
-
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+          
       tags:
         - Parcelle
 
@@ -239,7 +275,19 @@ paths:
           type: string
           pattern: '\d{3}'
           required: false
-
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+          
       responses:
         '200':
           description: Success
