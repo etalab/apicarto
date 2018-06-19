@@ -36,6 +36,7 @@ function createCadastreProxy(featureTypeName){
                 if ( params.code_dep && params.code_com ){
                     params.code_insee = params.code_dep + params.code_com ;
                     params = _.omit(params,'code_com');
+                    params = _.omit(params,'code_dep');
                 }
             }
 

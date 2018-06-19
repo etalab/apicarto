@@ -1,7 +1,6 @@
 'use strict';
 const collectionIncludes = require('lodash').includes;
 
-const DOM_PREFIXES = ['971', '972', '973', '974', '975'];
 const INVALID_PREFIXES = ['96', '98', '99', '00', '20'];
 
 module.exports = function parseInseeCode(inseeCode) {
@@ -22,13 +21,6 @@ module.exports = function parseInseeCode(inseeCode) {
     // Vérifie que le préfixe (2 premiers caractères) ne contient bien que des chiffres (Corse exclus)
     if (! prefix.match(/[0-9]{2}/)) throw new Error('Invalid INSEE code');
 
-    // DOM
-    if (prefix === '97') {
-        prefix = inseeCode.substr(0, 3);
-        suffix = inseeCode.substr(3, 2);
-        if (! collectionIncludes(DOM_PREFIXES, prefix)) throw new Error('Invalid INSEE code');
-        return { code_dep: prefix, code_com: suffix };
-    }
 
     if (collectionIncludes(INVALID_PREFIXES, prefix)) throw new Error('Invalid INSEE code');
 
