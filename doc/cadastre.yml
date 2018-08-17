@@ -70,7 +70,7 @@ paths:
 
         - name: geom
           in: query
-          description: Géométrie de recherche
+          description: Géométrie au format GeoJson
           schema:
             $ref: '#/definitions/Geometry'
 
@@ -131,6 +131,12 @@ paths:
           pattern: '\d{3}'
           type: string
           required: false
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+            
       tags:
         - Division
       responses:
@@ -158,7 +164,7 @@ paths:
           description: Code insee de la commune sur 5 caractères
           type: string
           pattern: '\d{5}'
-          required: true
+          required: false
 
         - name: section
           in: query
@@ -187,6 +193,12 @@ paths:
           type: string
           pattern: '\d{3}'
           required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
 
       tags:
         - Parcelle
@@ -239,6 +251,11 @@ paths:
           type: string
           pattern: '\d{3}'
           required: false
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
 
       responses:
         '200':
