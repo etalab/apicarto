@@ -40,6 +40,10 @@ function createCadastreProxy(featureTypeName){
                 }
             }
 
+            /* Value default pour _limit an _start */
+             if ( typeof params._start == 'undefined' ) {params._start = 0;}
+             if( typeof params._limit == 'undefined') {params._limit = 1000;}
+           
             /* requête WFS GPP*/
             req.gppWfsClient.getFeatures(featureTypeName, params)
                 /* uniformisation des attributs en sortie */
@@ -71,6 +75,7 @@ var legacyValidators = [
     check('codearr').optional().custom(function(){return false;}).withMessage('Le paramètre "codearr" a été remplacé par "code_arr" pour éviter des renommages dans les données et chaînage de requête'),
     check('dep').optional().custom(function(){return false;}).withMessage('Le paramètre "dep" a été remplacé par "code_dep" pour éviter des renommages dans les données et chaînage de requête'),
     check('insee').optional().custom(function(){return false;}).withMessage('Le paramètre "insee" a été remplacé par "code_insee" pour éviter des renommages dans les données et chaînage de requête')
+
 ];
 
 var communeValidators = legacyValidators.concat([
@@ -78,7 +83,9 @@ var communeValidators = legacyValidators.concat([
     check('code_dep').optional().isAlphanumeric().isLength({min:2,max:2}).withMessage('Code département invalide'),
     check('code_com').optional().isNumeric().isLength({min:2,max:3}).withMessage('Code commune invalide'),
     check('nom_com').optional(),
-    check('geom').optional().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('_limit').optional().isNumeric(),
+    check('_start').optional().isNumeric()
 ]);
 router.get('/commune', communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
 router.post('/commune', communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
