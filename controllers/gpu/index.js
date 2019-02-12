@@ -1,4 +1,5 @@
 var Router = require('express').Router;
+var cors = require('cors');
 var router = new Router();
 
 const { check } = require('express-validator/check');
@@ -53,47 +54,68 @@ const mapping = {
     'assiette-sup-s': 'wfs_sup:assiette_sup_s'
 };
 
-router.get('/municipality', [
+
+var corsOptionsGlobal = function(origin,callback) {
+	var corsOptions;
+	if (origin) {
+		corsOptions = {
+			origin: origin,
+		    optionsSuccessStatus: 200,
+	        methods: 'GET,POST',
+	        credentials: true
+        }
+    } else {
+		corsOptions = {
+			origin : 'http://apicarto.ign.fr',
+			optionsSuccessStatus : 200,
+			methods:  'GET,POST',
+			credentials: true
+		}
+	}
+ callback(null, corsOptions);
+}
+
+router.get('/municipality',cors(corsOptionsGlobal), [
     check('geom').optional().custom(isGeometry),
     check('insee').optional().isAlphanumeric()
 ], createGpuProxy(mapping['municipality']));
 
 
-router.get('/document', [
+router.get('/document',cors(corsOptionsGlobal), [
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['document']));
 
 
-router.get('/zone-urba', [
+router.get('/zone-urba', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['zone-urba']));
 
-router.get('/secteur-cc', [
+router.get('/secteur-cc', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['secteur-cc']));
 
 
-router.get('/prescription-pct', [
+router.get('/prescription-pct', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['prescription-pct']));
 
-router.get('/prescription-lin', [
+router.get('/prescription-lin', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy('wfs_du:prescription_lin'));
 
-router.get('/prescription-surf', [
+router.get('/prescription-surf', cors(corsOptionsGlobal), [
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy('wfs_du:prescription_surf'));
 
-router.get('/info-pct', [
+router.get('/info-pct', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['info-pct']));
 
-router.get('/info-lin', [
+router.get('/info-lin', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['info-lin']));
 
-router.get('/info-surf', [
+router.get('/info-surf', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['info_surf']));
 
@@ -101,19 +123,19 @@ router.get('/info-surf', [
  * SUP
  -------------------------------------------------------------------------------------------*/
 
-router.get('/acte-sup', [
+router.get('/acte-sup', cors(corsOptionsGlobal), [
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['acte-sup']));
 
-router.get('/assiette-sup-p', [
+router.get('/assiette-sup-p', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['assiette-sup-p']));
 
-router.get('/assiette-sup-l', [
+router.get('/assiette-sup-l', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['assiette-sup-l']));
 
-router.get('/assiette-sup-s', [
+router.get('/assiette-sup-s', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
 ], createGpuProxy(mapping['assiette-sup-s']));
 
@@ -121,7 +143,7 @@ router.get('/assiette-sup-s', [
 /*--------------------------------------------------------------------------------------------
  * Recherche dans toutes les tables par geom...
  -------------------------------------------------------------------------------------------*/
-router.get('/all', [
+router.get('/all', cors(corsOptionsGlobal), [
     check('geom').exists().withMessage('Le paramètre geom est obligatoire'),
     check('geom').custom(isGeometry)
 ], validateParams, gpuWfsClient, function(req,res){

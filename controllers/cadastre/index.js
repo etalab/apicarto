@@ -1,6 +1,6 @@
 var Router = require('express').Router;
 var router = new Router();
-
+var cors = require('cors');
 const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
@@ -66,6 +66,27 @@ function createCadastreProxy(featureTypeName){
     ];
 }
 
+
+var corsOptionsGlobal = function(origin,callback) {
+	var corsOptions;
+	if (origin) {
+		corsOptions = {
+			origin: origin,
+		    optionsSuccessStatus: 200,
+	        methods: 'GET,POST',
+	        credentials: true
+        }
+    } else {
+		corsOptions = {
+			origin : '*',
+			optionsSuccessStatus : 200,
+			methods:  'GET,POST',
+			credentials: true
+		}
+	}
+ callback(null, corsOptions);
+}
+
 /**
  * Permet d'alerter en cas de paramètre ayant changer de nom
  * 
@@ -87,8 +108,8 @@ var communeValidators = legacyValidators.concat([
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric()
 ]);
-router.get('/commune', communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
-router.post('/commune', communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
+router.get('/commune', cors(corsOptionsGlobal),communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
+router.post('/commune',cors(corsOptionsGlobal), communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
 
 
 var divisionValidators = communeValidators.concat([
@@ -96,8 +117,8 @@ var divisionValidators = communeValidators.concat([
     check('code_arr').optional().isNumeric().isLength({min:3,max:3}).withMessage('Le code arrondissement est composé de 3 chiffres'),
     check('com_abs').optional().isNumeric().isLength({min:3,max:3}).withMessage('Le prefixe est composé de 3 chiffres obligatoires')
 ]);
-router.get('/division', divisionValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad'));
-router.post('/division', divisionValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad'));
+router.get('/division', cors(corsOptionsGlobal),divisionValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad'));
+router.post('/division', cors(corsOptionsGlobal),divisionValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad'));
 
 
 /**
@@ -109,8 +130,8 @@ router.post('/division', divisionValidators, createCadastreProxy('BDPARCELLAIRE-
 var parcelleValidators = divisionValidators.concat([
     check('numero').optional().matches(/\w{4}/).withMessage('Le numéro de parcelle est sur 4 caractères')
 ]);
-router.get('/parcelle', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle'));
-router.post('/parcelle', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle'));
+router.get('/parcelle', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle'));
+router.post('/parcelle', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle'));
 
 /**
 * Récupération des localisants
@@ -118,8 +139,8 @@ router.post('/parcelle', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-
 * Paramètres : une feature avec pour nom "geom"...
 *
 */
-router.get('/localisant', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
-router.post('/localisant', parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
+router.get('/localisant',cors(corsOptionsGlobal),, parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
+router.post('/localisant', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
 
 
 //TODO clarifier la restoration ou non de geometrie <=> parcelle?geom=... avec surface & surface d'intersection
