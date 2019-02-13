@@ -66,7 +66,7 @@ var corsOptionsGlobal = function(origin,callback) {
         }
     } else {
 		corsOptions = {
-			origin : 'http://apicarto.ign.fr',
+			origin : '*',
 			optionsSuccessStatus : 200,
 			methods:  'GET,POST',
 			credentials: true

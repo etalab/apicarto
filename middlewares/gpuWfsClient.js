@@ -9,7 +9,6 @@ module.exports = function(req, res, next) {
 
     /* forward du referer du client */
     if ( req.headers.referer ){
-		console.log('je suis dans if');
         referer = req.headers.referer ;
     }
 
