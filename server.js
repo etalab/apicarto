@@ -6,7 +6,6 @@ var pg = require('pg');
 var onFinished = require('on-finished');
 var communesHelper = require('./helpers/communes');
 var aoc = require('./controllers/aoc');
-var codesPostaux = require('./controllers/codes-postaux');
 var qp = require('./controllers/quartiers-prioritaires');
 var cadastre = require('./controllers/cadastre');
 
@@ -44,7 +43,6 @@ function pgClient(req, res, next) {
 
 /* Routes */
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
-app.get('/codes-postaux/communes/:codePostal', codesPostaux.communes);
 app.post('/quartiers-prioritaires/search', pgClient, qp.search);
 app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
 app.use('/cadastre', cadastre({
