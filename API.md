@@ -2,48 +2,6 @@
 
 ### Quartiers prioritaires
 
-### Récupérer la couche
-
-__GET__ `/quartiers-prioritaires/layer`
-
-Requête :
-```
-(optionnel) bbox=southwest_lng,southwest_lat,northeast_lng,northeast_lat
-```
-
-```json
-{
-  "type": "FeatureCollection",
-  "features": [{
-    "type": "Feature",
-    "geometry": {
-      "type": "MultiPolygon",
-      "coordinates": [
-                [
-                  [
-                    [
-                      6.21925242135598,
-                      49.1159338557574
-                    ],
-                    [
-                      6.21992104991902,
-                      49.1161049131682
-                    ],
-                    ...
-                  ]
-                ]
-              ]
-    },
-    "properties": {
-      "code": "QP057020",
-      "nom": "Borny",
-      "commune": "Metz"
-    }
-  }]
-}
-
-```
-
 #### Recherche géographique
 
 __POST__ `/quartiers-prioritaires/search`

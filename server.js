@@ -44,7 +44,6 @@ function pgClient(req, res, next) {
 /* Routes */
 app.post('/aoc/api/beta/aoc/in', pgClient, communesHelper.intersects({ ref: 'ign-parcellaire' }), aoc.in);
 app.post('/quartiers-prioritaires/search', pgClient, qp.search);
-app.get('/quartiers-prioritaires/layer', pgClient, qp.layer);
 app.use('/cadastre', cadastre({
     key: process.env.GEOPORTAIL_KEY || process.env.npm_package_config_geoportailKey,
     referer: process.env.GEOPORTAIL_REFERER || process.env.npm_package_config_geoportailReferer || 'http://localhost'
