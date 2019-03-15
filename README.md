@@ -1,4 +1,4 @@
-⚠️ Ce service est en fin de vie ⚠️
+## ⚠️ Ce service est en fin de vie ⚠️
 
 Nous nous concentrons désormais exclusivement sur l'[API Géo](https://geo.api.gouv.fr), qui sera verra bientôt enrichie des fonctionnalités de l'API Carto.
 
