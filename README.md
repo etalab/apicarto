@@ -1,14 +1,17 @@
+⚠️ Ce service est en fin de vie ⚠️
+
+Nous nous concentrons désormais exclusivement sur l'[API Géo](https://geo.api.gouv.fr), qui sera verra bientôt enrichie des fonctionnalités de l'API Carto.
+
+L'IGN continue certains développements de l'[API Carto](https://apicarto.ign.fr), en lien avec son [Géoportail](https://www.geoportail.gouv.fr).
+
 # APICarto
 
-[![Circle CI](https://circleci.com/gh/sgmap/apicarto/tree/master.svg?style=shield)](https://circleci.com/gh/sgmap/apicarto/tree/master)
-[![Coverage Status](https://coveralls.io/repos/sgmap/apicarto/badge.svg?branch=master&service=github)](https://coveralls.io/github/sgmap/apicarto?branch=master)
-[![Dependency Status](https://david-dm.org/sgmap/apicarto.svg?style=flat)](https://david-dm.org/sgmap/apicarto)
-[![Join the chat at https://gitter.im/sgmap/apicarto](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sgmap/apicarto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Dependency Status](https://david-dm.org/etalab/apicarto.svg?style=flat)](https://david-dm.org/etalab/apicarto)
 
 ## Prérequis
 
 Pour faire fonctionner APICarto, vous avez besoin de :
-* [Node.js](https://nodejs.org) v4.2+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
+* [Node.js](https://nodejs.org) v6+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
 * PostgreSQL v9.4+
 * PostGIS v2.1+
 * [ogr2ogr](http://www.gdal.org/ogr2ogr.html) v1.11+
