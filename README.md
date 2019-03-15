@@ -2,7 +2,7 @@
 
 Nous nous concentrons désormais exclusivement sur l'[API Géo](https://geo.api.gouv.fr), qui sera verra bientôt enrichie des fonctionnalités de l'API Carto.
 
-L'IGN continue certains développements de l'[API Carto](https://apicarto.ign.fr), en lien avec son [Géoportail](https://www.geoportail.gouv.fr).
+L'IGN continue certains développements de l'API Carto, en lien avec son [Géoportail](https://www.geoportail.gouv.fr). Plus d'information sur [leur site dédié](https://apicarto.ign.fr).
 
 # APICarto
 
