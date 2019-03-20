@@ -139,7 +139,7 @@ router.post('/parcelle', cors(corsOptionsGlobal),parcelleValidators, createCadas
 * Paramètres : une feature avec pour nom "geom"...
 *
 */
-router.get('/localisant',cors(corsOptionsGlobal),, parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
+router.get('/localisant',cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
 router.post('/localisant', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
 
 
