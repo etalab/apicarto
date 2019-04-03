@@ -33,7 +33,7 @@
     "ejs": "^2.5.9",
     "express": "^4.13.3",
     "express-validator": "^5.1.2",
-    "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#v0.1.0",
+    "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#v0.2.0",
     "lodash": "^4.17.10",
     "pg": "^7.4.1",
     "pg-format": "^1.0.1",
