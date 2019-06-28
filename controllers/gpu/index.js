@@ -47,7 +47,7 @@ const mapping = {
     'prescription-lin': 'wfs_du:prescription_lin',
     'prescription-surf': 'wfs_du:prescription_surf',
     'info-pct': 'wfs_du:info_pct',
-
+    'info-lin': 'wfs_du:info_lin',
     'acte-sup': 'wfs_sup:acte_sup',
     'assiette-sup-p': 'wfs_sup:assiette_sup_p',
     'assiette-sup-l': 'wfs_sup:assiette_sup_l',
