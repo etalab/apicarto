@@ -32,23 +32,23 @@
     "debug": "^3.1.0",
     "ejs": "^2.5.9",
     "express": "^4.13.3",
-    "express-validator": "^5.1.2",
+    "express-validator": "^5.3.1",
     "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#v0.2.0",
-    "lodash": "^4.17.10",
-    "pg": "^7.4.1",
-    "pg-format": "^1.0.1",
-    "request": "^2.65.0",
-    "shelljs": "^0.8.1",
+    "lodash": "^4.17.11",
+    "pg": "^7.11.0",
+    "pg-format": "^1.0.4",
+    "request": "^2.88.0",
+    "shelljs": "^0.8.3",
     "swagger-ui-dist": "^3.13.6",
-    "uuid": "^3.0.1"
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
+    "eslint": "^5.16.0",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.1",
-    "mocha": "^3.2.0",
+    "mocha": "^6.1.4",
     "nock": "^9.2.5",
     "supertest": "^3.0.0",
-    "unit.js": "^2.0.0"
+    "unit.js": "^2.1.0"
   }
 }

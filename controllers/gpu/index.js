@@ -47,6 +47,7 @@ const mapping = {
     'prescription-lin': 'wfs_du:prescription_lin',
     'prescription-surf': 'wfs_du:prescription_surf',
     'info-pct': 'wfs_du:info_pct',
+    'info-surf': 'wfs_du:info_surf',
     'info-lin': 'wfs_du:info_lin',
     'acte-sup': 'wfs_sup:acte_sup',
     'assiette-sup-p': 'wfs_sup:assiette_sup_p',
@@ -117,7 +118,7 @@ router.get('/info-lin', cors(corsOptionsGlobal),[
 
 router.get('/info-surf', cors(corsOptionsGlobal),[
     check('geom').exists().custom(isGeometry)
-], createGpuProxy(mapping['info_surf']));
+], createGpuProxy(mapping['info-surf']));
 
 /*--------------------------------------------------------------------------------------------
  * SUP
