@@ -6,13 +6,13 @@ const Client = require('pg').Client;
  */
 module.exports = function(req, res, next) {
     debug("create pg connection...");
-    req.pgClient = new Client(/*{
-        user: 'postgis',
-        host: 'localhost',
-        database: 'postgres',
-        password: 'postgis',
-        port: 5432
-    }*/);
+    req.pgClient = new Client({
+        user: process.env.PGUSER|| 'postgis',
+        host: process.env.PGHOST || 'localhost',
+        database: process.env.PGDATABASE || 'postgres',
+        password: process.env.PGPASSWORD || 'postgis',
+        port: process.env.PGPORT || 'postgis'
+    });
     req.pgClient.connect().then(function(){
         var _end = res.end; 
         res.end = function(){
