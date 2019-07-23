@@ -4,8 +4,8 @@ var Handlebars = require('handlebars');
 
 var inQuery = Handlebars.compile(`
         SELECT
-            {{#if withGeometries}}ST_AsGeoJSON(appellation.geom) AS geom,{{/if}}
-            ST_Area(ST_Intersection(input.geom, appellation.geom)::geography) / 10000 AS area,
+            {{#if withGeometries}}ST_AsGeoJSON(appellations.geom) AS geom,{{/if}}
+            ST_Area(ST_Intersection(input.geom, appellations.geom)::geography) / 10000 AS area,
             appellation,
             idapp,
             id_uni,
@@ -13,11 +13,11 @@ var inQuery = Handlebars.compile(`
             segment,
             instruction_obligatoire,
             granularite,
-            ST_Contains(input.geom, appellation.geom) AS contains
+            ST_Contains(input.geom, appellations.geom) AS contains
         FROM
             (SELECT ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326) geom) input,
-            appellation
-        WHERE appellation.insee IN (%L);
+            appellations
+        WHERE appellations.insee IN (%L);
 `);
 
 function buildSQLQuery(options) {
