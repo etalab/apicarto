@@ -88,7 +88,7 @@ docker-compose up -d postgis
 docker-compose run import
 
 # Démarrage de l'API
-docker-compose ip -d app
+docker-compose up -d app
 ```
 
 L'API est ensuite disponible sur http://localhost:8091.
