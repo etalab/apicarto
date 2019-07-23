@@ -54,7 +54,7 @@ module.exports = function (grunt) {
         },
         'appellations-viticoles': {
             dataSource: '/vsizip/' + appellationRelease + '.zip',
-            layerName: 'appellation',
+            layerName: 'appellations',
             convertToWgs84: true,
             spatialIndex: 'NO',
             pgClientEncoding: 'LATIN1',
