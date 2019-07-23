@@ -1,0 +1,36 @@
+version: "2"
+services:
+  app:
+    restart: always
+    build: .
+    ports:
+      - "8091:8091"
+    volumes:
+      - ./data:/app/data
+    links:
+      - postgis
+    environment:
+      - PG_URI=postgres://apicarto:apicarto@postgis/apicarto
+    env_file:
+      - production.env
+  import:
+    build: .
+    command: yarn run import
+    volumes:
+      - ./data:/app/data
+    links:
+      - postgis
+    environment:
+      - PGUSER=apicarto
+      - PGPASSWORD=apicarto
+      - PGDBNAME=apicarto
+      - PGHOST=postgis
+    env_file:
+      - production.env
+  postgis:
+    image: mdillon/postgis
+    environment:
+      - POSTGRES_USER=apicarto
+      - POSTGRES_DB=apicarto
+      - POSTGRES_PASSWORD=apicarto
+

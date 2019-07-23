@@ -5,7 +5,8 @@ module.exports = function (grunt) {
     const pgConfig = {
         user: process.env.PGUSER || process.env.npm_package_config_pgUser,
         dbName: process.env.PGDBNAME || process.env.npm_package_config_pgDbName || 'apicarto',
-        password: process.env.PGPASSWORD || process.env.npm_package_config_pgPassword
+        password: process.env.PGPASSWORD || process.env.npm_package_config_pgPassword,
+        host: process.env.PGHOST || process.env.npm_package_config_pgHost || 'localhost'
     };
 
     const appellationRelease = '20190701_Appellation';
@@ -87,7 +88,7 @@ module.exports = function (grunt) {
                     if (config.spatialIndex) ogrOptions.push('-lco SPATIAL_INDEX=' + config.spatialIndex);
 
                     const psqlOptions = [
-                        '-h localhost',
+                        '-h ' + pgConfig.host,
                         '-d ' + pgConfig.dbName
                     ];
                     if (pgConfig.user) psqlOptions.push('-U ' + pgConfig.user);
@@ -105,7 +106,7 @@ module.exports = function (grunt) {
             runpg: {
                 command: (scope) => {
                     const psqlOptions = [
-                        '-h localhost',
+                        '-h ' + pgConfig.host,
                         '-d ' + pgConfig.dbName
                     ];
                     if (pgConfig.user) psqlOptions.push('-U ' + pgConfig.user);

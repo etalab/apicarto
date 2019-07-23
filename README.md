@@ -73,6 +73,26 @@ npm config set apicarto:geoportailReferer ****mon referer****
 npm start
 ```
 
+## Docker
+
+Vous pouvez aussi installer cette API grâce à Docker.
+
+Quelques variables d'environnement sont requises pour préparer les données et faire tourner le service.
+Vous pouvez les définir dans un fichier `production.env` situé à la racine du projet. Le fichier `production.env.sample` est fourni en exemple.
+
+```bash
+# Démarrage de PostGIS
+docker-compose up -d postgis
+
+# Chargement des données et indexation
+docker-compose run import
+
+# Démarrage de l'API
+docker-compose ip -d app
+```
+
+L'API est ensuite disponible sur http://localhost:8091.
+
 ## Développement derrière un proxy
 
 En cas de nécessité, utiliser les [variables d'environnement standards](https://www.npmjs.com/package/request#controlling-proxy-behaviour-using-environment-variables).
