@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         host: process.env.PGHOST || process.env.npm_package_config_pgHost || 'localhost'
     };
 
-    const appellationRelease = '20190701_Appellation';
+    const appellationRelease = '20190701_Appellation_corr';
 
     const sourceFiles = {
         qp: refDataDir + '/qp-politiquedelaville-shp.zip',
