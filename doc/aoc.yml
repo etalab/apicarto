@@ -22,11 +22,12 @@ basePath: /api
 
 paths:
   /aoc/appellation-viticole:
-    get:
+    post:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les appellations viticoles intersectantes
-
-        Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
+      consumes:
+        - application/x-www-form-urlencoded
+      Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
 
         - name: geom

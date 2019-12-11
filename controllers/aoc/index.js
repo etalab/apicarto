@@ -14,7 +14,7 @@ var _ = require('lodash');
 /**
  * Récupération des AOC viticoles par géométrie
  */
-router.get('/appellation-viticole', [
+router.post('/appellation-viticole', [
     check('geom').exists().withMessage('Le paramètre geom est obligatoire'),
     check('geom').custom(isGeometry)
 ], validateParams, pgClient, function(req, res, next) {
@@ -22,27 +22,23 @@ router.get('/appellation-viticole', [
 
     var sql = format(`
         SELECT 
-            id,
-            new_insee,
-            new_nomcom,
-            old_insee,
-            old_nomcom,
-            type_ig,
-            id_app,
-            appellation,
-            id_denom,
-            denomination,
-            crinao,
-            ST_AsGeoJSON(geom) as geom 
+        appellation,
+        idapp,
+        id_uni,
+        insee,
+        segment,
+        instruction_obligatoire,
+        granularite,
+        ST_AsGeoJSON(geom) as geom
         FROM 
-            inao.appellation
+            appellations
         WHERE ST_Intersects(
             geom,
             ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326)
-        )        
+        )    
         LIMIT 1000
     `, params.geom );
-
+    
     req.pgClient.query(sql,function(err,result){
         if (err)
             return next(err);
