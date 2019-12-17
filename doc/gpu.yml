@@ -66,6 +66,12 @@ paths:
           type: object
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
       responses:
         '200':
           description: Success
@@ -86,6 +92,13 @@ paths:
           type: object
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -106,6 +119,13 @@ paths:
           type: object
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -126,7 +146,14 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche     
+          description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -147,6 +174,13 @@ paths:
           type: object
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -166,7 +200,14 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche  
+          description: Géométrie GeoJSON utilisée pour la recherche 
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -186,7 +227,14 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche    
+          description: Géométrie GeoJSON utilisée pour la recherche   
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -207,6 +255,13 @@ paths:
           type: object
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -226,7 +281,14 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche      
+          description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -247,7 +309,14 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche       
+          description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
       responses:
         '200':
           description: Success
@@ -267,7 +336,20 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche   
+          description: Géométrie GeoJSON utilisée pour la recherche
+          
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
+        - in: query
+          name: categorie
+          type: string
+          required: false
+          description: Categorie
+
       responses:
         '200':
           description: Success
@@ -287,7 +369,20 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche    
+          description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
+        - in: query
+          name: categorie
+          type: string
+          required: false
+          description: Categorie
+
       responses:
         '200':
           description: Success
@@ -307,13 +402,126 @@ paths:
           name: geom
           type: object
           required: false
-          description: Géométrie GeoJSON utilisée pour la recherche    
+          description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
+        - in: query
+          name: categorie
+          type: string
+          required: false
+          description: Categorie
+
       responses:
         '200':
           description: Success
           schema:
             $ref: '#/definitions/FeatureCollection'
   
+
+  /gpu/generateur-sup-s:
+    get:
+      summary: Récupération des générateurs surfaciques des servitudes d’utilité publique
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
+        - in: query
+          name: categorie
+          type: string
+          required: false
+          description: Categorie
+
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollection'
+
+  /gpu/generateur-sup-l:
+    get:
+      summary: Récupération des générateurs linéaires des servitudes d’utilité publique
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche
+    
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
+        - in: query
+          name: categorie
+          type: string
+          required: false
+          description: Categorie
+
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollection'
+
+  /gpu/generateur-sup-p:
+    get:
+      summary:  Récupération des générateurs ponctuels des servitudes d’utilité publique
+      description: |
+        Prend en entrée une géométrie au format JSON et retourne une featureCollection.
+        Retourne un résultat de Type "FeatureCollection" avec les informations qui intersectent la géométrie.
+      tags:
+        - SUP
+      parameters:
+        - in: query
+          name: geom
+          type: object
+          required: false
+          description: Géométrie GeoJSON utilisée pour la recherche 
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
+        - in: query
+          name: categorie
+          type: string
+          required: false
+          description: Categorie
+
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollection'
+
   /gpu/all:
     get:
       summary:  Récupération de l’ensemble des couches décrites ci-dessus
@@ -327,6 +535,19 @@ paths:
           type: object
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
+
+        - in: query
+          name: partition
+          type: string
+          required: false
+          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+
+        - in: query
+          name: categorie
+          type: string
+          required: false
+          description: Categorie
+
       responses:
         '200':
           description: Success

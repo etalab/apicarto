@@ -21,6 +21,14 @@ function createGpuProxy(typeName){
         function(req,res){
             var params = matchedData(req);
             params._limit = 100;
+            //Si couche du type generateur ou assiette le champ categorie corresponds à suptype
+            if (params.categorie) {
+                if ((typeName.startsWith('generateur')) || (typeName.startsWith('assiette'))) {
+                    params.suptype = params.categorie;
+                    params = _.omit(params,'categorie');
+                }
+                
+            }
             req.gpuWfsClient.getFeatures(typeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
@@ -52,7 +60,11 @@ const mapping = {
     'acte-sup': 'wfs_sup:acte_sup',
     'assiette-sup-p': 'wfs_sup:assiette_sup_p',
     'assiette-sup-l': 'wfs_sup:assiette_sup_l',
-    'assiette-sup-s': 'wfs_sup:assiette_sup_s'
+    'assiette-sup-s': 'wfs_sup:assiette_sup_s',
+    'generateur-sup-p': 'wfs_sup:generateur_sup_p',
+    'generateur-sup-l': 'wfs_sup:generateur_sup_l',
+    'generateur-sup-s': 'wfs_sup:generateur_sup_s'
+    
 };
 
 
@@ -83,41 +95,50 @@ router.get('/municipality',cors(corsOptionsGlobal), [
 
 
 router.get('/document',cors(corsOptionsGlobal), [
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy(mapping['document']));
 
 
 router.get('/zone-urba', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy(mapping['zone-urba']));
 
 router.get('/secteur-cc', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy(mapping['secteur-cc']));
 
 
 router.get('/prescription-pct', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy(mapping['prescription-pct']));
 
 router.get('/prescription-lin', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy('wfs_du:prescription_lin'));
 
 router.get('/prescription-surf', cors(corsOptionsGlobal), [
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy('wfs_du:prescription_surf'));
 
 router.get('/info-pct', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy(mapping['info-pct']));
 
 router.get('/info-lin', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy(mapping['info-lin']));
 
 router.get('/info-surf', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString()
 ], createGpuProxy(mapping['info-surf']));
 
 /*--------------------------------------------------------------------------------------------
@@ -125,28 +146,55 @@ router.get('/info-surf', cors(corsOptionsGlobal),[
  -------------------------------------------------------------------------------------------*/
 
 router.get('/acte-sup', cors(corsOptionsGlobal), [
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString(),
 ], createGpuProxy(mapping['acte-sup']));
 
 router.get('/assiette-sup-p', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString(),
+    check('categorie').optional().isString()
 ], createGpuProxy(mapping['assiette-sup-p']));
 
 router.get('/assiette-sup-l', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString(),
+    check('categorie').optional().isString()
 ], createGpuProxy(mapping['assiette-sup-l']));
 
 router.get('/assiette-sup-s', cors(corsOptionsGlobal),[
-    check('geom').exists().custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString(),
+    check('categorie').optional().isString()
 ], createGpuProxy(mapping['assiette-sup-s']));
 
+/*--------------------------------------------------------------------------------------------
+ * Generateur sup
+ -------------------------------------------------------------------------------------------*/
+
+router.get('/generateur-sup-p', cors(corsOptionsGlobal),[
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString(),
+    check('categorie').optional().isString()
+], createGpuProxy(mapping['generateur-sup-p']));
+
+router.get('/generateur-sup-l', cors(corsOptionsGlobal),[
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString(),
+    check('categorie').optional().isString()
+], createGpuProxy(mapping['generateur-sup-l']));
+
+router.get('/generateur-sup-s', cors(corsOptionsGlobal),[
+    check('geom').optional().custom(isGeometry),
+    check('partition').optional().isString(),
+    check('categorie').optional().isString()
+], createGpuProxy(mapping['generateur-sup-s']));
 
 /*--------------------------------------------------------------------------------------------
  * Recherche dans toutes les tables par geom...
  -------------------------------------------------------------------------------------------*/
 router.get('/all', cors(corsOptionsGlobal), [
-    check('geom').exists().withMessage('Le paramètre geom est obligatoire'),
-    check('geom').custom(isGeometry)
+    check('geom').optional().custom(isGeometry),
 ], validateParams, gpuWfsClient, function(req,res){
     /**
      * Récupération des paramètres
