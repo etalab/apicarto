@@ -315,7 +315,7 @@ paths:
           name: partition
           type: string
           required: false
-          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+          description: Partition GPU du document
 
       responses:
         '200':
@@ -342,7 +342,7 @@ paths:
           name: partition
           type: string
           required: false
-          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+          description: Partition GPU du document
 
         - in: query
           name: categorie
@@ -375,7 +375,7 @@ paths:
           name: partition
           type: string
           required: false
-          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+          description: Partition GPU du document
 
         - in: query
           name: categorie
@@ -408,7 +408,7 @@ paths:
           name: partition
           type: string
           required: false
-          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+          description: Partition GPU du document 
 
         - in: query
           name: categorie
@@ -442,7 +442,7 @@ paths:
           name: partition
           type: string
           required: false
-          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+          description: Partition GPU du document
 
         - in: query
           name: categorie
@@ -475,8 +475,7 @@ paths:
           name: partition
           type: string
           required: false
-          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
-
+          description: Partition GPU du document au format
         - in: query
           name: categorie
           type: string
