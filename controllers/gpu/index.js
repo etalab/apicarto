@@ -8,7 +8,7 @@ const isGeometry = require('../../checker/isGeometry');
 const validateParams = require('../../middlewares/validateParams');
 
 var gpuWfsClient = require('../../middlewares/gpuWfsClient');
-
+const _ = require('lodash');
 
 /**
  * Creation d'une chaîne de proxy sur le GPU
@@ -23,7 +23,7 @@ function createGpuProxy(typeName){
             params._limit = 100;
             //Si couche du type generateur ou assiette le champ categorie corresponds à suptype
             if (params.categorie) {
-                if ((typeName.startsWith('generateur')) || (typeName.startsWith('assiette'))) {
+                if ((typeName.indexOf('generateur')) || (typeName.indexOf('assiette'))) {
                     params.suptype = params.categorie;
                     params = _.omit(params,'categorie');
                 }
@@ -119,12 +119,12 @@ router.get('/prescription-pct', cors(corsOptionsGlobal),[
 router.get('/prescription-lin', cors(corsOptionsGlobal),[
     check('geom').optional().custom(isGeometry),
     check('partition').optional().isString()
-], createGpuProxy('wfs_du:prescription_lin'));
+], createGpuProxy(mapping['prescription-lin']));
 
 router.get('/prescription-surf', cors(corsOptionsGlobal), [
     check('geom').optional().custom(isGeometry),
     check('partition').optional().isString()
-], createGpuProxy('wfs_du:prescription_surf'));
+], createGpuProxy(mapping['prescription-surf']));
 
 router.get('/info-pct', cors(corsOptionsGlobal),[
     check('geom').optional().custom(isGeometry),
