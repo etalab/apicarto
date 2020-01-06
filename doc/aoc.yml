@@ -64,28 +64,28 @@ definitions:
       properties:
         type: object
         properties:
-          id:
+          appelation:
             type: string        
-          id_app:
+          idapp:
             type: string
-          new_insee:
+          id_uni:
             type: string
-          new_nomcom:
+            description: corresponds à "segment-idapp-insee"
+          insee:
             type: string
-          old_insee:
+          segment:
             type: string
-          old_nomcom:
+          instruction_obligatoire:
+            type: boolean
+          granularite:
             type: string
-          type_ig:
-            type: string
+            enum:
+              - commune
+              - exacte
           appellation:
             type: string
-          id_denom:
-            type: string
-          denomination:
-            type: string
-          crinao:
-            type: string
+          contains:
+            type: boolean
       geometry:
         $ref: '#/definitions/MultiPolygon'
 
