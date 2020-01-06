@@ -1,6 +1,6 @@
 {
   "name": "apicarto",
-  "version": "2.0.0",
+  "version": "2.1.2",
   "main": "index.js",
   "scripts": {
     "import": "npm run import-inao-appellation",
@@ -16,7 +16,7 @@
     "Vincent Sagniez <vincent.sagniez@ign.fr>",
     "Mickael Borne <mickael.borne@ign.fr>"
   ],
-  "repository": "sgmap/apicarto",
+  "repository": "IGNF/apicarto",
   "license": "AGPL-3.0",
   "engines": {
     "node": ">=6"
