@@ -24,7 +24,7 @@ function createGpuProxy(typeName){
             //Si couche du type generateur ou assiette le champ categorie corresponds à suptype
             if (params.categorie) {
                 if ((typeName.indexOf('generateur')) || (typeName.indexOf('assiette'))) {
-                    params.suptype = params.categorie;
+                    params.suptype = params.categorie.toLowerCase();
                     params = _.omit(params,'categorie');
                 }
                 
