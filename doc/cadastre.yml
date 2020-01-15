@@ -12,6 +12,10 @@ info:
 
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
+    Toutes les requêtes du module cadastre peuvent se faire en POST ou en GET. 
+
+    Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+
     ## Clé WFS géoportail (apikey)
     
       Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
