@@ -535,18 +535,6 @@ paths:
           required: false
           description: Géométrie GeoJSON utilisée pour la recherche
 
-        - in: query
-          name: partition
-          type: string
-          required: false
-          description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
-
-        - in: query
-          name: categorie
-          type: string
-          required: false
-          description: Categorie
-
       responses:
         '200':
           description: Success
