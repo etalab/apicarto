@@ -270,7 +270,7 @@ paths:
           description: Code insee de la commune sur 5 caractères
           type: string
           pattern: '\d{5}'
-          required: true
+          required: false
 
         - name: section
           in: query
