@@ -89,7 +89,13 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
-        
+
+        - name: source_pci
+          in: query
+          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          enum:
+            - O
+          required: false
       tags:
         - Commune
       responses:
@@ -166,6 +172,13 @@ paths:
           type: integer
           required: false
 
+        - name: source_pci
+          in: query
+          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          enum:
+            - O
+          required: false
+    
       tags:
         - Division
       responses:
@@ -240,6 +253,14 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
+
+        - name: source_pci
+          in: query
+          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          
+          enum:
+            - O
+          required: false
           
       tags:
         - Parcelle
@@ -309,6 +330,13 @@ paths:
           in: query
           description: Position pour le début de la recherche
           type: integer
+          required: false
+        
+        - name: source_pci
+          in: query
+          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          enum:
+            - O
           required: false
           
       responses:

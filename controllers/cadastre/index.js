@@ -12,6 +12,7 @@ const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 
+
 /**
  * Creation d'une chaîne de proxy sur le geoportail
  * @param {String} featureTypeName le nom de la couche WFS
@@ -22,7 +23,16 @@ function createCadastreProxy(featureTypeName){
         validateParams,
         function(req,res){
             var params = matchedData(req);
-
+            console.log(params.source_pci);
+            if (params.source_pci) {
+                if(params.source_pci === 1) {
+                    featureTypeName = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
+                    console.log('dans if');
+                    console.log(featureTypeName);
+                }
+            }
+            console.log(featureTypeName);
+            params = _.omit(params,'source_pci');
             /*  insee => code_dep et code_com */
             if ( params.code_insee ){
                 var inseeParts = parseInseeCode(params.code_insee);
@@ -106,7 +116,8 @@ var communeValidators = legacyValidators.concat([
     check('nom_com').optional(),
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),
-    check('_start').optional().isNumeric()
+    check('_start').optional().isNumeric(),
+    check('source_pci').optional().isString().isLength({min:1,max:1}).withMessage('Les valeurs possibles sont O ou N')
 ]);
 router.get('/commune', cors(corsOptionsGlobal),communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
 router.post('/commune',cors(corsOptionsGlobal), communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
@@ -140,7 +151,7 @@ router.post('/parcelle', cors(corsOptionsGlobal),parcelleValidators, createCadas
 *
 */
 router.get('/localisant',cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
-router.post('/localisant', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
+router.post('/localisant', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84Glocalisant'));
 
 
 //TODO clarifier la restoration ou non de geometrie <=> parcelle?geom=... avec surface & surface d'intersection
