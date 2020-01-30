@@ -14,7 +14,7 @@ module.exports = function(req, res, next) {
 
     req.gpuWfsClient = new GeoportalWfsClient({
         'apiKey':  '39wtxmgtn23okfbbs1al2lz3',
-        'url' : 'http://wxs-gpu.mongeoportail.ign.fr/externe/39wtxmgtn23okfbbs1al2lz3/wfs/v',
+        'url' : 'https://wxs-gpu.mongeoportail.ign.fr/externe/39wtxmgtn23okfbbs1al2lz3/wfs/v',
         'headers':{
             Referer: referer,
             'User-Agent': 'apicarto'
