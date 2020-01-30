@@ -1,0 +1,139 @@
+swagger: '2.0'
+
+info:
+  title: APICarto AOC
+  description: >
+    Le module AOC permet de récupérer les AOC viticoles de l'INAO intersectant une géométrie GeoJSON.
+
+    Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
+
+
+    **ATTENTION** : Cette fonctionnalité diffère de la première version d'APICARTO (/aoc/api/beta/in). Il manque dans les données libres l'attribut "segment" qui permettait d'enrichir les données avec l'attribut "granularite" ('exacte' ou 'commune') nécessaire aux traitements métiers de l'INAO.
+
+  version: '1.0'
+
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /rpg/parcelle:
+    post:
+      description: |
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les appellations viticoles intersectantes
+      consumes:
+        - application/x-www-form-urlencoded
+      Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
+      parameters:
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: annee
+          in: query
+          type: integer
+          pattern: '\d{4}'
+          required: false
+          
+        - name: code_cultu
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          required: false
+          schema:
+            $ref: "#/definitions/Geometry"
+
+      tags:
+        - RPG
+      responses:
+        '200':
+          description: "Succès"
+          schema:
+            $ref: "#/definitions/FeatureCollectionAppellationViticole"
+        '400':
+          description: "Paramètres invalide"
+          schema:
+            $ref: "#/definitions/Error"
+        '500':
+          description: "Erreur dans le traitement de la requête"
+          schema:
+            $ref: "#/definitions/Error"
+
+definitions:
+
+
+  FeatureAppellationViticole:
+    description: "Objet géographique appellation viticole" 
+    type: object
+    allOf:
+      - $ref: "#/definitions/Feature"
+    properties:
+      properties:
+        type: object
+        properties:
+          appelation:
+            type: string        
+          idapp:
+            type: string
+          id_uni:
+            type: string
+            description: corresponds à "segment-idapp-insee"
+          insee:
+            type: string
+          segment:
+            type: string
+          instruction_obligatoire:
+            type: boolean
+          granularite:
+            type: string
+            enum:
+              - commune
+              - exacte
+          appellation:
+            type: string
+          contains:
+            type: boolean
+      geometry:
+        $ref: '#/definitions/MultiPolygon'
+
+  FeatureCollectionAppellationViticole:
+    description: "Liste d'objet géographique appellation viticole"
+    type: object
+    properties:
+      type: 
+        type: string
+        enum:
+        - FeatureCollection
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureAppellationViticole'
+      
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'    
