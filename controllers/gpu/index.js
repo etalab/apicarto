@@ -4,7 +4,7 @@ var router = new Router();
 
 const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
-const isGeometry = require('../../checker/isGeometry');
+const {isGeometry,isCodeInsee} = require('../../checker');
 const validateParams = require('../../middlewares/validateParams');
 
 var gpuWfsClient = require('../../middlewares/gpuWfsClient');
@@ -87,108 +87,82 @@ var corsOptionsGlobal = function(origin,callback) {
 	}
  callback(null, corsOptions);
 }
+/* Définition des tests paramètres */
+var legacyValidators = [
+    check('geom').optional().custom(isGeometry)
+];
 
-router.get('/municipality',cors(corsOptionsGlobal), [
-    check('geom').optional().custom(isGeometry),
-    check('insee').optional().isAlphanumeric()
-], createGpuProxy(mapping['municipality']));
+var communeValidators = legacyValidators.concat([
+    check('insee').optional().custom(isCodeInsee)
+]);
 
-
-router.get('/document',cors(corsOptionsGlobal), [
-    check('geom').optional().custom(isGeometry),
+var partitionValidators = legacyValidators.concat([
     check('partition').optional().isString()
-], createGpuProxy(mapping['document']));
+]);
+
+var categoriesValidators = partitionValidators.concat([
+    check('categorie').optional().isString()
+])
+
+router.get('/municipality', cors(corsOptionsGlobal),communeValidators, createGpuProxy(mapping['municipality']));
+router.post('/municipality',cors(corsOptionsGlobal), communeValidators, createGpuProxy(mapping['municipality']));
 
 
-router.get('/zone-urba', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['zone-urba']));
+router.get('/document',cors(corsOptionsGlobal),partitionValidators,createGpuProxy(mapping['document']));
+router.post('/document',cors(corsOptionsGlobal),partitionValidators,createGpuProxy(mapping['document']));
 
-router.get('/secteur-cc', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['secteur-cc']));
+router.get('/zone-urba', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['zone-urba']));
+router.post('/zone-urba', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['zone-urba']));
 
+router.get('/secteur-cc', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['secteur-cc']));
+router.post('/secteur-cc', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['secteur-cc']));
 
-router.get('/prescription-pct', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['prescription-pct']));
+router.get('/prescription-pct', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['prescription-pct']));
+router.post('/prescription-pct', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['prescription-pct']));
 
-router.get('/prescription-lin', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['prescription-lin']));
+router.get('/prescription-lin', cors(corsOptionsGlobal),partitionValidators,createGpuProxy(mapping['prescription-lin']));
+router.post('/prescription-lin', cors(corsOptionsGlobal),partitionValidators,createGpuProxy(mapping['prescription-lin']));
 
-router.get('/prescription-surf', cors(corsOptionsGlobal), [
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['prescription-surf']));
+router.get('/prescription-surf', cors(corsOptionsGlobal),partitionValidators ,createGpuProxy(mapping['prescription-surf']));
+router.post('/prescription-surf', cors(corsOptionsGlobal),partitionValidators ,createGpuProxy(mapping['prescription-surf']));
 
-router.get('/info-pct', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['info-pct']));
+router.get('/info-pct', cors(corsOptionsGlobal), partitionValidators,createGpuProxy(mapping['info-pct']));
+router.post('/info-pct', cors(corsOptionsGlobal), partitionValidators,createGpuProxy(mapping['info-pct']));
 
-router.get('/info-lin', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['info-lin']));
+router.get('/info-lin', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['info-lin']));
+router.post('/info-lin', cors(corsOptionsGlobal),partitionValidators, createGpuProxy(mapping['info-lin']));
 
-router.get('/info-surf', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString()
-], createGpuProxy(mapping['info-surf']));
+router.get('/info-surf', cors(corsOptionsGlobal), partitionValidators, createGpuProxy(mapping['info-surf']));
+router.post('/info-surf', cors(corsOptionsGlobal), partitionValidators, createGpuProxy(mapping['info-surf']));
 
 /*--------------------------------------------------------------------------------------------
  * SUP
  -------------------------------------------------------------------------------------------*/
 
-router.get('/acte-sup', cors(corsOptionsGlobal), [
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString(),
-], createGpuProxy(mapping['acte-sup']));
+router.get('/acte-sup', cors(corsOptionsGlobal),partitionValidators,createGpuProxy(mapping['acte-sup']));
+router.post('/acte-sup', cors(corsOptionsGlobal),partitionValidators,createGpuProxy(mapping['acte-sup']));
 
-router.get('/assiette-sup-p', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString(),
-    check('categorie').optional().isString()
-], createGpuProxy(mapping['assiette-sup-p']));
+router.get('/assiette-sup-p', cors(corsOptionsGlobal),categoriesValidators , createGpuProxy(mapping['assiette-sup-p']));
+router.post('/assiette-sup-p', cors(corsOptionsGlobal),categoriesValidators , createGpuProxy(mapping['assiette-sup-p']));
 
-router.get('/assiette-sup-l', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString(),
-    check('categorie').optional().isString()
-], createGpuProxy(mapping['assiette-sup-l']));
+router.get('/assiette-sup-l', cors(corsOptionsGlobal),categoriesValidators , createGpuProxy(mapping['assiette-sup-l']));
+router.post('/assiette-sup-l', cors(corsOptionsGlobal),categoriesValidators , createGpuProxy(mapping['assiette-sup-l']));
 
-router.get('/assiette-sup-s', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString(),
-    check('categorie').optional().isString()
-], createGpuProxy(mapping['assiette-sup-s']));
+router.get('/assiette-sup-s', cors(corsOptionsGlobal),categoriesValidators, createGpuProxy(mapping['assiette-sup-s']));
+router.post('/assiette-sup-s', cors(corsOptionsGlobal),categoriesValidators, createGpuProxy(mapping['assiette-sup-s']));
 
 /*--------------------------------------------------------------------------------------------
  * Generateur sup
  -------------------------------------------------------------------------------------------*/
 
-router.get('/generateur-sup-p', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString(),
-    check('categorie').optional().isString()
-], createGpuProxy(mapping['generateur-sup-p']));
+router.get('/generateur-sup-p', cors(corsOptionsGlobal),categoriesValidators,createGpuProxy(mapping['generateur-sup-p']));
+router.post('/generateur-sup-p', cors(corsOptionsGlobal),categoriesValidators,createGpuProxy(mapping['generateur-sup-p']));
 
-router.get('/generateur-sup-l', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString(),
-    check('categorie').optional().isString()
-], createGpuProxy(mapping['generateur-sup-l']));
+router.get('/generateur-sup-l', cors(corsOptionsGlobal),categoriesValidators, createGpuProxy(mapping['generateur-sup-l']));
+router.post('/generateur-sup-l', cors(corsOptionsGlobal),categoriesValidators, createGpuProxy(mapping['generateur-sup-l']));
 
-router.get('/generateur-sup-s', cors(corsOptionsGlobal),[
-    check('geom').optional().custom(isGeometry),
-    check('partition').optional().isString(),
-    check('categorie').optional().isString()
-], createGpuProxy(mapping['generateur-sup-s']));
+router.get('/generateur-sup-s', cors(corsOptionsGlobal),categoriesValidators, createGpuProxy(mapping['generateur-sup-s']));
+router.post('/generateur-sup-s', cors(corsOptionsGlobal),categoriesValidators, createGpuProxy(mapping['generateur-sup-s']));
 
 /*--------------------------------------------------------------------------------------------
  * Recherche dans toutes les tables par geom...
