@@ -3,10 +3,15 @@ info:
   title: Module urbanisme (GpU)
   description: >
     Le service d’interrogation du GPU permet d’obtenir des informations d’urbanisme intersectant une géométrie (ponctuelle ou surfacique).
+
+
+    Attention : les géométries passées en paramètre doivent comporter un nombre de points raisonnable.
+
     
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
     Toutes les requêtes(sauf /all) du module GPU peuvent se faire en POST ou en GET. 
+    
 
     Exemple de géométrie :
 
