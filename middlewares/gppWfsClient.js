@@ -11,7 +11,7 @@ module.exports = function(req, res, next) {
     /* gestion des variables d'environnement et valeur par défaut */
     var options = {
         apiKey:  process.env.GEOPORTAL_API_KEY,
-        url: 'http://wxs.ign.fr/{apiKey}/geoportail/wfs',
+        url: 'https://wxs.ign.fr/{apiKey}/geoportail/wfs',
         headers:{
             'User-Agent': 'apicarto',
             'Referer': 'http://localhost'
