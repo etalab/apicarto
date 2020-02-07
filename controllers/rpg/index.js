@@ -10,7 +10,8 @@ const {isGeometry,isCodeInsee} = require('../../checker');
 const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
-const lastYearRPG = '2018';
+const lastYearRPG = 2017;
+const firstYearRPG = 2015;
 
 /**
  * Creation d'une chaîne de proxy sur le geoportail
@@ -23,10 +24,12 @@ function createRpgProxy(featureTypeName){
         function(req,res){
             var params = matchedData(req);
 
-            /*  insee => code_dep et code_com */
+            /*  Modification année dans le flux */
             if ( params.annee ){
-                // Remplacer XXXX dans FeatureName pour l'année de la couche
-                featureTypeName = featureTypeName.replace('{annee}', params.annee);
+                if(params.annee >= firstYearRPG && params.annee <= lastYearRPG) {
+                    // Remplacer XXXX dans FeatureName pour l'année de la couche
+                    featureTypeName = featureTypeName.replace('{annee}', params.annee);
+                } else { throw new Error('Invalid YEAR : only 2015 or 2016 or 2017');}
             } else {
                 // on met l'année par défaut de la couche
                 featureTypeName = featureTypeName.replace('{annee}', lastYearRPG);

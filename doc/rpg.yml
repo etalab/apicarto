@@ -1,16 +1,10 @@
 swagger: '2.0'
 
 info:
-  title: APICarto AOC
+  title: APICarto RPG
   description: >
-    Le module AOC permet de récupérer les AOC viticoles de l'INAO intersectant une géométrie GeoJSON.
-
-    Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
-
-
-    **ATTENTION** : Cette fonctionnalité diffère de la première version d'APICARTO (/aoc/api/beta/in). Il manque dans les données libres l'attribut "segment" qui permettait d'enrichir les données avec l'attribut "granularite" ('exacte' ou 'commune') nécessaire aux traitements métiers de l'INAO.
-
-  version: '1.0'
+    
+  version: '2.0'
 
 
 consumes:
@@ -22,11 +16,9 @@ basePath: /api
 
 paths:
   /rpg/parcelle:
-    post:
+    get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les appellations viticoles intersectantes
-      consumes:
-        - application/x-www-form-urlencoded
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
         - name: apikey
@@ -40,7 +32,7 @@ paths:
           type: integer
           pattern: '\d{4}'
           required: false
-          
+
         - name: code_cultu
           in: query
           type: string
@@ -51,6 +43,18 @@ paths:
           required: false
           schema:
             $ref: "#/definitions/Geometry"
+
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
 
       tags:
         - RPG
