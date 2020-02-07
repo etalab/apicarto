@@ -90,11 +90,10 @@ paths:
           type: integer
           required: false
 
-        - name: source_pci
+        - name: source_ign
           in: query
-          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
-          enum:
-            - O
+          description: Mettre PCI pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          type: string
           required: false
       tags:
         - Commune
@@ -172,11 +171,10 @@ paths:
           type: integer
           required: false
 
-        - name: source_pci
+        - name: source_ign
           in: query
-          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
-          enum:
-            - O
+          description: Mettre PCI pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          type: string
           required: false
     
       tags:
@@ -254,12 +252,10 @@ paths:
           type: integer
           required: false
 
-        - name: source_pci
+        - name: source_ign
           in: query
-          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
-          
-          enum:
-            - O
+          description: Mettre PCI pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          type: string
           required: false
           
       tags:
@@ -332,11 +328,10 @@ paths:
           type: integer
           required: false
         
-        - name: source_pci
+        - name: source_ign
           in: query
-          description: Mettre O pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
-          enum:
-            - O
+          description: Mettre PCI pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          type: string
           required: false
           
       responses:

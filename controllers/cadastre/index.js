@@ -23,16 +23,13 @@ function createCadastreProxy(featureTypeName){
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            console.log(params.source_pci);
-            if (params.source_pci) {
-                if(params.source_pci === 1) {
-                    featureTypeName = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
-                    console.log('dans if');
-                    console.log(featureTypeName);
+            var featureTypeNameFinal = featureTypeName;
+            if (params.source_ign) {
+                if(params.source_ign.toUpperCase() == "PCI") {
+                    featureTypeNameFinal = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
                 }
             }
-            console.log(featureTypeName);
-            params = _.omit(params,'source_pci');
+            params = _.omit(params,'source_ign');
             /*  insee => code_dep et code_com */
             if ( params.code_insee ){
                 var inseeParts = parseInseeCode(params.code_insee);
@@ -55,7 +52,7 @@ function createCadastreProxy(featureTypeName){
              if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-            req.gppWfsClient.getFeatures(featureTypeName, params)
+            req.gppWfsClient.getFeatures(featureTypeNameFinal, params)
                 /* uniformisation des attributs en sortie */
                 .then(function(featureCollection){
                     featureCollection.features.forEach(function(feature){
@@ -117,7 +114,7 @@ var communeValidators = legacyValidators.concat([
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric(),
-    check('source_pci').optional().isString().isLength({min:1,max:1}).withMessage('Les valeurs possibles sont O ou N')
+    check('source_ign').optional().isString().isLength({min:3,max:3}).withMessage('La seule valeur possible est PCI pour utiliser les couches PCI-Express')
 ]);
 router.get('/commune', cors(corsOptionsGlobal),communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
 router.post('/commune',cors(corsOptionsGlobal), communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
