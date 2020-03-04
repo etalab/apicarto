@@ -11,28 +11,42 @@ const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 const lastYearRPG = 2017;
-const firstYearRPG = 2015;
+const firstYearRPG = 2010;
 
 /**
  * Creation d'une chaîne de proxy sur le geoportail
  * @param {String} featureTypeName le nom de la couche WFS
  */
-function createRpgProxy(featureTypeName){
+function createRpgProxy(valeurSearch) {
     return [
         gppWfsClient,
         validateParams,
         function(req,res){
             var params = matchedData(req);
-
             /*  Modification année dans le flux */
-            if ( params.annee ){
-                if(params.annee >= firstYearRPG && params.annee <= lastYearRPG) {
-                    // Remplacer XXXX dans FeatureName pour l'année de la couche
-                    featureTypeName = featureTypeName.replace('{annee}', params.annee);
-                } else { throw new Error('Invalid YEAR : only 2015 or 2016 or 2017');}
+            if (valeurSearch == 'avant2015') {
+                if ((params.annee >= firstYearRPG) && (params.annee < 2015))  {
+                    if (params.annee == 2014) {
+                        featureTypeName = 'RPG.' + params.annee + ':ilots_anonymes';
+                    } else  {
+                        featureTypeName = 'RPG.' + params.annee + ':rpg_' + params.annee;
+                    }
+                } else {
+                        return res.status(400).send({
+                            code: 400,
+                            message: 'Année Invalide : Valeurs uniquement entre ' + firstYearRPG + ' et 2014'
+                    });  
+                }
             } else {
-                // on met l'année par défaut de la couche
-                featureTypeName = featureTypeName.replace('{annee}', lastYearRPG);
+                if ((params.annee >= 2015) && (params.annee <= lastYearRPG)) {
+                    featureTypeName = 'RPG.' + params.annee + ':parcelles_graphiques';
+                } else {
+                    return res.status(400).send({
+                        code: 400,
+                        essage: 'Année Invalide : Valeurs uniquement entre 2015 et ' + lastYearRPG
+                     });
+
+                }
             }
 
             /* Supprimer annee inutile ensuite de params */
@@ -98,8 +112,15 @@ var rpgValidators = [
     check('_start').optional().isNumeric()
 ];
 
-router.get('/parcelle', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('RPG.{annee}:parcelles_graphiques'));
-router.post('/parcelle', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('RPG.{annee}:parcelles_graphiques'));
+/** Nous avons 2 requetes identiques mais il y a une difference dans les champs 
+ * Possibilité de traiter différement par la suite.
+ */
+router.get('/apres2014', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('apres2014'));
+router.post('/apres2014', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('apres2014'));
+
+router.get('/avant2015', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('avant2015'));
+router.post('/avant2015', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('avant2015'));
+
 
 
 module.exports=router;

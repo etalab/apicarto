@@ -1,8 +1,32 @@
 swagger: '2.0'
 
 info:
-  title: APICarto RPG
+  title: Module RPG (Version Beta)
   description: >
+
+    Le service d’interrogation du RPG permet d’obtenir des informations du registre parcellaire graphique intersectant une géométrie (ponctuelle ou surfacique).
+    
+    Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
+
+    
+    Toutes les requêtes du module RPG peuvent se faire en POST ou en GET. 
+
+    
+    Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+
+    ## Clé WFS géoportail (apikey)
+    
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ .
+      
+      Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - RPG" ci-dessous suivant l'année désirée:
+          
+      * RPG 2010, RPG 2011, RPG 2012, RPG 2013
+      * RPG 2014:ilots_anonymes
+      * RPG 2015:parcelles_graphiques
+      * RPG 2016:parcelles_graphiques
+      * RPG 2017:parcelles_graphiques
     
   version: '2.0'
 
@@ -15,10 +39,10 @@ produces:
 basePath: /api
 
 paths:
-  /rpg/parcelle:
+  /rpg/apres2014:
     get:
       description: |
-        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les appellations viticoles intersectantes
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
         - name: apikey
@@ -31,7 +55,7 @@ paths:
           in: query
           type: integer
           pattern: '\d{4}'
-          required: false
+          required: true
 
         - name: code_cultu
           in: query
@@ -57,26 +81,67 @@ paths:
           required: false
 
       tags:
-        - RPG
+        - RPG Apres 2014 (version Beta)
       responses:
         '200':
           description: "Succès"
           schema:
-            $ref: "#/definitions/FeatureCollectionAppellationViticole"
-        '400':
-          description: "Paramètres invalide"
-          schema:
-            $ref: "#/definitions/Error"
-        '500':
-          description: "Erreur dans le traitement de la requête"
-          schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/FeatureCollectionRPGApres2014"
 
+  /rpg/avant2015:
+    get:
+      description: |
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
+      Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
+      parameters:
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: annee
+          in: query
+          type: integer
+          pattern: '\d{4}'
+          required: true
+
+        - name: code_cultu
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          required: false
+          schema:
+            $ref: "#/definitions/Geometry"
+
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+
+      tags:
+        - RPG Avant 2015 (Version Beta)
+      responses:
+        '200':
+          description: "Succès"
+          schema:
+            $ref: "#/definitions/FeatureCollectionRPGAvant2015"
+            
+            
 definitions:
 
-
-  FeatureAppellationViticole:
-    description: "Objet géographique appellation viticole" 
+  FeatureRPGApres2014:
+    description: "Objet géographique RPG après 2014" 
     type: object
     allOf:
       - $ref: "#/definitions/Feature"
@@ -84,33 +149,26 @@ definitions:
       properties:
         type: object
         properties:
-          appelation:
+          id_parcel:
             type: string        
-          idapp:
+          surf_parc:
             type: string
-          id_uni:
+          code_cultu:
             type: string
-            description: corresponds à "segment-idapp-insee"
-          insee:
+          code_group:
             type: string
-          segment:
+          culture_d1:
             type: string
-          instruction_obligatoire:
-            type: boolean
-          granularite:
+          culture_d2:
             type: string
-            enum:
-              - commune
-              - exacte
-          appellation:
+          code_insee:
             type: string
-          contains:
-            type: boolean
+
       geometry:
         $ref: '#/definitions/MultiPolygon'
 
-  FeatureCollectionAppellationViticole:
-    description: "Liste d'objet géographique appellation viticole"
+  FeatureCollectionRPGApres2014:
+    description: "Liste d'objet géographique RPG"
     type: object
     properties:
       type: 
@@ -120,19 +178,54 @@ definitions:
       features:
         type: array
         items:
-          $ref: '#/definitions/FeatureAppellationViticole'
-      
-  Error:
-    required:
-      - code
-      - message
-    properties:
-      code:
-        type: string
-      message:
-        type: string
+          $ref: '#/definitions/FeatureRPGApres2014'
 
-  # import definitions
+  FeatureRPGAvant2015:
+    description: "Objet géographique RPG avant 2015" 
+    type: object
+    allOf:
+      - $ref: "#/definitions/Feature"
+    properties:
+      properties:
+        type: object
+        properties:
+          num_ilot:
+            type: string        
+          commune:
+            type: string
+          forme_juri:
+            type: string
+          surf_decla:
+            type: string
+          dep_rattach:
+            type: string
+          surf_cultu:
+            type: string
+          code_cultu:
+            type: string
+          code_insee:
+            type: string
+          nom_cultu:
+            type: string
+
+      geometry:
+        $ref: '#/definitions/MultiPolygon'
+
+  FeatureCollectionRPGAvant2015:
+    description: "Liste d'objet géographique RPG"
+    type: object
+    properties:
+      type: 
+        type: string
+        enum:
+        - FeatureCollection
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureRPGAvant2015'
+          
+          
+# import definitions
   FeatureCollection:
     $ref: './schema/geojson.yml#definitions/FeatureCollection'
   Feature:
@@ -140,4 +233,6 @@ definitions:
   Geometry:
     $ref: './schema/geojson.yml#definitions/Geometry'
   MultiPolygon:
-    $ref: './schema/geojson.yml#definitions/MultiPolygon'    
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+
+  
