@@ -15,7 +15,7 @@ const firstYearRPG = 2010;
 
 /**
  * Creation d'une chaîne de proxy sur le geoportail
- * @param {String} featureTypeName le nom de la couche WFS
+ * @param {String} valeurSearch du chemin le nom de la couche WFS
  */
 function createRpgProxy(valeurSearch) {
     return [
@@ -23,6 +23,7 @@ function createRpgProxy(valeurSearch) {
         validateParams,
         function(req,res){
             var params = matchedData(req);
+            var FeatureTypeName= '';
             /*  Modification année dans le flux */
             if (valeurSearch == 'avant2015') {
                 if ((params.annee >= firstYearRPG) && (params.annee < 2015))  {
@@ -48,7 +49,6 @@ function createRpgProxy(valeurSearch) {
 
                 }
             }
-
             /* Supprimer annee inutile ensuite de params */
             params = _.omit(params,'annee');
 

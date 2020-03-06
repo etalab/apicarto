@@ -72,18 +72,6 @@ paths:
           type: string
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
-
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
           
       responses:
         '200':
@@ -112,18 +100,6 @@ paths:
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
 
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-
       responses:
         '200':
           description: Success
@@ -151,18 +127,6 @@ paths:
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
         
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-
       responses:
         '200':
           description: Success
@@ -190,18 +154,6 @@ paths:
           type: string
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
-        
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -230,18 +182,6 @@ paths:
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
 
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-
       responses:
         '200':
           description: Success
@@ -268,18 +208,6 @@ paths:
           type: string
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
-        
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -308,18 +236,6 @@ paths:
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
 
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-
       responses:
         '200':
           description: Success
@@ -346,18 +262,6 @@ paths:
           type: string
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
-
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -386,18 +290,6 @@ paths:
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
 
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-
       responses:
         '200':
           description: Success
@@ -425,18 +317,6 @@ paths:
           type: string
           required: false
           description: Partition GPU du document
-
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -470,18 +350,6 @@ paths:
           type: string
           required: false
           description: Categorie
-        
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -515,18 +383,6 @@ paths:
           type: string
           required: false
           description: Categorie
-        
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -560,18 +416,6 @@ paths:
           type: string
           required: false
           description: Categorie
-
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -607,18 +451,6 @@ paths:
           required: false
           description: Categorie
 
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-
       responses:
         '200':
           description: Success
@@ -650,18 +482,6 @@ paths:
           type: string
           required: false
           description: Categorie
-
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':
@@ -695,18 +515,6 @@ paths:
           type: string
           required: false
           description: Categorie
-
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
 
       responses:
         '200':

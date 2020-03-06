@@ -20,6 +20,8 @@ function createGpuProxy(typeName){
         gpuWfsClient,
         function(req,res){
             var params = matchedData(req);
+            params._limit = 5000;
+
             //Si couche du type generateur ou assiette le champ categorie corresponds à suptype
             if (params.categorie) {
                 if ((typeName.indexOf('generateur')) || (typeName.indexOf('assiette'))) {
@@ -28,10 +30,6 @@ function createGpuProxy(typeName){
                 }
             }
 
-             /* Value default pour _limit an _start */
-             if ( typeof params._start == 'undefined' ) {params._start = 0;}
-             if( typeof params._limit == 'undefined') {params._limit = 1000;}
-             
             req.gpuWfsClient.getFeatures(typeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
