@@ -79,6 +79,7 @@ paths:
           type: string
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
+          
       responses:
         '200':
           description: Success
@@ -132,7 +133,7 @@ paths:
           type: string
           required: false
           description: Partition GPU du document au format <DU/PSMV>_<INSEE/SIREN>
-
+        
       responses:
         '200':
           description: Success

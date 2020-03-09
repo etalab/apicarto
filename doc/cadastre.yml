@@ -29,10 +29,22 @@ info:
       * bdpv_LOCALISANT
       * bdpv_PARCELLE
 
+      Si vous souhaitez utiliser les ressources PCI-EXPRESS vous devez commander les flux "Ressources WFS Géoportail - CADASTRALPARCELS®" ci-dessous:
+      
+      * CADASTRALPARCELS.PARCELLAIRE_EXPRESS:commune
+      * CADASTRALPARCELS.PARCELLAIRE_EXPRESS:feuille
+      * CADASTRALPARCELS.PARCELLAIRE_EXPRESS:localisant 
+      * CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle
+
+      Pour utiliser une des couches ressources PCI-EXPRESS, il faudra mettre PCI dans le champ source_ign présent sur les requêtes BD - Parcellaire saud division.
+      Dans PCI EXPRESS, la recherche par division de BD PARCELLAIRE correponds une recherche par feuille (cadastre/feuille)
+      
     ## Historique des changements
 
       * Suppression /cadastre/geometrie : récupération des parcelles avec calcul de surfaces
       * Uniformisation des noms d'attribut et paramètres de filtrage. Paramètre de filtrage = nom de l'attribut (codearr => code_arr, insee => code_insee, etc.)
+      * Ajout de la possibilité d'utiliser les couches PCI EXPRESS ou les couches BD PARCELLAIRE
+
 
   version: 2.0.0
   
@@ -89,7 +101,13 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
-        
+
+        - name: source_ign
+          in: query
+          description: Mettre PCI pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          type: string
+          required: false
+
       tags:
         - Commune
       responses:
@@ -165,7 +183,7 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
-
+    
       tags:
         - Division
       responses:
@@ -240,6 +258,12 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
+        
+        - name: source_ign
+          in: query
+          description: Mettre PCI pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          type: string
+          required: false
           
       tags:
         - Parcelle
@@ -310,13 +334,95 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
-          
+        
+        - name: source_ign
+          in: query
+          description: Mettre PCI pour utiliser la couche PCI Express au lieu de la couche BDPARCELLAIRE
+          type: string
+          required: false
+        
       responses:
         '200':
           description: Success
           schema:
             $ref: '#/definitions/FeatureCollectionLocalisant'
 
+
+  /cadastre/feuille:
+    get:
+      summary: Recherche d'informations sur les feuilles parcellaires d'une commune en utilisant la couche PCI EXPRESS
+      description: |
+        Retourne un résultat de Type "FeatureCollection" avec la liste des feuilles d'une commune
+        * Paramètre insee => Retour des feuilles d'une commune
+        * Paramètre Insee + section => Retour des feuilles d'une section dans une commune
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: code_insee
+          in: query
+          description: Code insee de la commune sur 5 caractères
+          type: string
+          pattern: '\d{5}'
+          required: false
+
+        - name: code_dep
+          in: query
+          description: Code du département
+          type: string
+          pattern: '\d{2,3}'
+          required: false
+
+        - name: code_com
+          in: query
+          description: Code de la commune
+          type: string
+          pattern: '\d{2,3}'
+          required: false
+
+        - name: section
+          in: query
+          description: Section de la parcelle sur 2 caractères
+          pattern: '\w{2}'
+          type: string
+          required: false
+
+        - name: code_arr
+          in: query
+          description: Code arrondisssement pour Paris, Lyon, Marseille
+          pattern: '\d{3}'
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+    
+      tags:
+        - Feuille PCI EXPRESS
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionDivision'
 
 definitions:
 
@@ -473,6 +579,50 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/FeatureLocalisant'
+
+
+  #---------------------------------------------------
+  # /cadastre/feuille
+  #---------------------------------------------------
+            
+  FeatureFeuillePCI:
+    description: 'Une feuille'
+    allOf:
+    - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          feuille:
+            type: number
+          section:
+            type: string
+          code_dep:
+            type: string
+          nom_comm:
+            type: string
+          code_com:
+            type: string
+          com_abs:
+            type: string
+          echelle:
+            type: string
+          code_arr:
+            type: string
+          code_insee:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'              
+
+  FeatureCollectionFeuillePCI:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureFeuillePCI`
+    allOf:
+    - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureFeuillePCI'
 
   
   # import definitions

@@ -66,6 +66,9 @@ app.use('/api/codes-postaux', require('./controllers/codes-postaux'));
 /* Module GPU */
 app.use('/api/gpu',require('./controllers/gpu'));
 
+/* Module RPG */
+app.use('/api/rpg',require('./controllers/rpg'));
+
 app.listen(port);
 
 module.exports = app;

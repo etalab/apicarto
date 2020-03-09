@@ -12,6 +12,7 @@ const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 
+
 /**
  * Creation d'une chaîne de proxy sur le geoportail
  * @param {String} featureTypeName le nom de la couche WFS
@@ -22,6 +23,20 @@ function createCadastreProxy(featureTypeName){
         validateParams,
         function(req,res){
             var params = matchedData(req);
+            var featureTypeNameFinal = featureTypeName;
+
+            if ((params.source_ign) && (featureTypeName != 'BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad') && (featureTypeName != 'CADASTRALPARCELS.PARCELLAIRE_EXPRESSG:feuille')) {
+                if(params.source_ign.toUpperCase() == "PCI") {
+                    featureTypeNameFinal = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
+                } else {
+                    return res.status(400).send({
+                        code: 400,
+                        essage: 'Erreur de valeur pour une recherche sur la couche PCI EXPRESS'
+                     });
+
+                }
+            }
+            params = _.omit(params,'source_ign');
 
             /*  insee => code_dep et code_com */
             if ( params.code_insee ){
@@ -32,7 +47,7 @@ function createCadastreProxy(featureTypeName){
             }
 
             /* hack du couple code_dep et code_com dans le cas des communes */
-            if ( featureTypeName.endsWith('commune') ){
+            if ( featureTypeNameFinal.endsWith('commune') ){
                 if ( params.code_dep && params.code_com ){
                     params.code_insee = params.code_dep + params.code_com ;
                     params = _.omit(params,'code_com');
@@ -45,7 +60,7 @@ function createCadastreProxy(featureTypeName){
              if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-            req.gppWfsClient.getFeatures(featureTypeName, params)
+            req.gppWfsClient.getFeatures(featureTypeNameFinal, params)
                 /* uniformisation des attributs en sortie */
                 .then(function(featureCollection){
                     featureCollection.features.forEach(function(feature){
@@ -92,11 +107,13 @@ var corsOptionsGlobal = function(origin,callback) {
  * 
  * TODO Principe à valider (faire un middleware de renommage des paramètres si l'approche est trop violente)
  */
+
+
 var legacyValidators = [
     check('codearr').optional().custom(function(){return false;}).withMessage('Le paramètre "codearr" a été remplacé par "code_arr" pour éviter des renommages dans les données et chaînage de requête'),
     check('dep').optional().custom(function(){return false;}).withMessage('Le paramètre "dep" a été remplacé par "code_dep" pour éviter des renommages dans les données et chaînage de requête'),
-    check('insee').optional().custom(function(){return false;}).withMessage('Le paramètre "insee" a été remplacé par "code_insee" pour éviter des renommages dans les données et chaînage de requête')
-
+    check('insee').optional().custom(function(){return false;}).withMessage('Le paramètre "insee" a été remplacé par "code_insee" pour éviter des renommages dans les données et chaînage de requête'),
+    check('source_ign').optional().isString().isLength({min:3,max:3}).withMessage('La seule valeur possible est PCI pour utiliser les couches PCI-Express')
 ];
 
 var communeValidators = legacyValidators.concat([
@@ -108,9 +125,15 @@ var communeValidators = legacyValidators.concat([
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric()
 ]);
-router.get('/commune', cors(corsOptionsGlobal),communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
-router.post('/commune',cors(corsOptionsGlobal), communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
 
+router.get('/commune', cors(corsOptionsGlobal),communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
+router.post('/commune',cors(corsOptionsGlobal),communeValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:commune'));
+
+/**
+ * Récupération des divisions de la BDParcellaire
+ * la valeur source_ign ne sera pas utilisée pour la recherche.
+ * Nous avons la requête module pour faire directement une recherche sur PCI EXPRESS
+ */
 
 var divisionValidators = communeValidators.concat([
     check('section').optional().isAlphanumeric().isLength({min:2,max:2}).withMessage('Le numéro de section est sur 2 caractères'),
@@ -140,9 +163,17 @@ router.post('/parcelle', cors(corsOptionsGlobal),parcelleValidators, createCadas
 *
 */
 router.get('/localisant',cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
-router.post('/localisant', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:localisant'));
+router.post('/localisant', cors(corsOptionsGlobal),parcelleValidators, createCadastreProxy('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84Glocalisant'));
 
 
-//TODO clarifier la restoration ou non de geometrie <=> parcelle?geom=... avec surface & surface d'intersection
+/**
+ * Récupérations des feuilles(divisions sur BDParcellaire) pour PCI Express
+ * Les champs validator sont identiques aux divisions
+ * 
+ */
+
+router.get('/feuille', cors(corsOptionsGlobal),divisionValidators, createCadastreProxy('CADASTRALPARCELS.PARCELLAIRE_EXPRESS:feuille'));
+router.post('/feuille', cors(corsOptionsGlobal),divisionValidators, createCadastreProxy('CADASTRALPARCELS.PARCELLAIRE_EXPRESS:feuille'));
+
 
 module.exports=router;

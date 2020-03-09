@@ -1,0 +1,126 @@
+var Router = require('express').Router;
+var router = new Router();
+var cors = require('cors');
+const { check } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
+
+const validateParams = require('../../middlewares/validateParams');
+const {isGeometry,isCodeInsee} = require('../../checker');
+
+const gppWfsClient = require('../../middlewares/gppWfsClient');
+
+const _ = require('lodash');
+const lastYearRPG = 2017;
+const firstYearRPG = 2010;
+
+/**
+ * Creation d'une chaîne de proxy sur le geoportail
+ * @param {String} valeurSearch du chemin le nom de la couche WFS
+ */
+function createRpgProxy(valeurSearch) {
+    return [
+        gppWfsClient,
+        validateParams,
+        function(req,res){
+            var params = matchedData(req);
+            var FeatureTypeName= '';
+            /*  Modification année dans le flux */
+            if (valeurSearch == 'avant2015') {
+                if ((params.annee >= firstYearRPG) && (params.annee < 2015))  {
+                    if (params.annee == 2014) {
+                        featureTypeName = 'RPG.' + params.annee + ':ilots_anonymes';
+                    } else  {
+                        featureTypeName = 'RPG.' + params.annee + ':rpg_' + params.annee;
+                    }
+                } else {
+                        return res.status(400).send({
+                            code: 400,
+                            message: 'Année Invalide : Valeurs uniquement entre ' + firstYearRPG + ' et 2014'
+                    });  
+                }
+            } else {
+                if ((params.annee >= 2015) && (params.annee <= lastYearRPG)) {
+                    featureTypeName = 'RPG.' + params.annee + ':parcelles_graphiques';
+                } else {
+                    return res.status(400).send({
+                        code: 400,
+                        essage: 'Année Invalide : Valeurs uniquement entre 2015 et ' + lastYearRPG
+                     });
+
+                }
+            }
+            /* Supprimer annee inutile ensuite de params */
+            params = _.omit(params,'annee');
+
+            /* Value default pour _limit an _start */
+             if ( typeof params._start == 'undefined' ) {params._start = 0;}
+             if( typeof params._limit == 'undefined') {params._limit = 1000;}
+           
+            /* requête WFS GPP*/
+            req.gppWfsClient.getFeatures(featureTypeName, params)
+                /* uniformisation des attributs en sortie */
+                .then(function(featureCollection){
+                    featureCollection.features.forEach(function(feature){
+                        if ( ! feature.properties.code_insee ){
+                            feature.properties.code_insee = feature.properties.code_dep+feature.properties.code_com;
+                        }
+                    });
+                    return featureCollection;
+                })
+                .then(function(featureCollection) {
+                    res.json(featureCollection);
+                })
+                .catch(function(err) {
+                    res.status(500).json(err);
+                })
+            ;
+        }
+    ];
+}
+
+
+var corsOptionsGlobal = function(origin,callback) {
+	var corsOptions;
+	if (origin) {
+		corsOptions = {
+			origin: origin,
+		    optionsSuccessStatus: 200,
+	        methods: 'GET,POST',
+	        credentials: true
+        }
+    } else {
+		corsOptions = {
+			origin : '*',
+			optionsSuccessStatus : 200,
+			methods:  'GET,POST',
+			credentials: true
+		}
+	}
+ callback(null, corsOptions);
+}
+
+/**
+ * Permet d'alerter en cas de paramètre ayant changer de nom
+ * 
+ * TODO Principe à valider (faire un middleware de renommage des paramètres si l'approche est trop violente)
+ */
+var rpgValidators = [
+    check('annee').optional().isNumeric().isLength({min:4,max:4}).withMessage('Année sur 4 chiffres'),
+    check('code_cultu').optional().isString(),
+    check('geom').optional().custom(isGeometry),
+    check('_limit').optional().isNumeric(),
+    check('_start').optional().isNumeric()
+];
+
+/** Nous avons 2 requetes identiques mais il y a une difference dans les champs 
+ * Possibilité de traiter différement par la suite.
+ */
+router.get('/apres2014', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('apres2014'));
+router.post('/apres2014', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('apres2014'));
+
+router.get('/avant2015', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('avant2015'));
+router.post('/avant2015', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('avant2015'));
+
+
+
+module.exports=router;
