@@ -27,6 +27,14 @@ info:
       * RPG 2015:parcelles_graphiques
       * RPG 2016:parcelles_graphiques
       * RPG 2017:parcelles_graphiques
+      * Prochainement RPG 2018
+
+
+      Exemple de géométrie :
+
+      * Point : `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+      * MultiPolygon : `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+
     
   version: '1.0'
 
@@ -39,10 +47,11 @@ produces:
 basePath: /api
 
 paths:
-  /rpg/apres2014:
+  /rpg/v1:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
+        Prend une date qui sera une valeur comprise entre 2010 et 2014 inclus
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
         - name: apikey
@@ -81,67 +90,69 @@ paths:
           required: false
 
       tags:
-        - RPG Apres 2014 (version Beta)
-      responses:
-        '200':
-          description: "Succès"
-          schema:
-            $ref: "#/definitions/FeatureCollectionRPGApres2014"
-
-  /rpg/avant2015:
-    get:
-      description: |
-        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-      Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
-      parameters:
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: false
-
-        - name: annee
-          in: query
-          type: integer
-          pattern: '\d{4}'
-          required: true
-
-        - name: code_cultu
-          in: query
-          type: string
-          required: false
-
-        - name: geom
-          in: query
-          required: false
-          schema:
-            $ref: "#/definitions/Geometry"
-
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-
-      tags:
-        - RPG Avant 2015 (Version Beta)
+        - RPG avant 2015 (version bêta)
       responses:
         '200':
           description: "Succès"
           schema:
             $ref: "#/definitions/FeatureCollectionRPGAvant2015"
+
+  /rpg/v2:
+    get:
+      description: |
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
+        Prend une date qui sera une valeur comprise entre 2015 et 2017 inclus
+        
+      Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
+      parameters:
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: annee
+          in: query
+          type: integer
+          pattern: '\d{4}'
+          required: true
+
+        - name: code_cultu
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          required: false
+          schema:
+            $ref: "#/definitions/Geometry"
+
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+
+      tags:
+        - RPG à partir de 2015 (Version bêta)
+      responses:
+        '200':
+          description: "Succès"
+          schema:
+            $ref: "#/definitions/FeatureCollectionRPGApartirde2015"
             
             
 definitions:
 
-  FeatureRPGApres2014:
-    description: "Objet géographique RPG après 2014" 
+  FeatureRPGApartirde2015:
+    description: "Objet géographique RPG à partir de 2015" 
     type: object
     allOf:
       - $ref: "#/definitions/Feature"
@@ -167,7 +178,7 @@ definitions:
       geometry:
         $ref: '#/definitions/MultiPolygon'
 
-  FeatureCollectionRPGApres2014:
+  FeatureCollectionRPGApartirde2015:
     description: "Liste d'objet géographique RPG"
     type: object
     properties:
@@ -178,7 +189,7 @@ definitions:
       features:
         type: array
         items:
-          $ref: '#/definitions/FeatureRPGApres2014'
+          $ref: '#/definitions/FeatureRPGApartirde2015'
 
   FeatureRPGAvant2015:
     description: "Objet géographique RPG avant 2015" 

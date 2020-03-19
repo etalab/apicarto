@@ -25,7 +25,7 @@ function createRpgProxy(valeurSearch) {
             var params = matchedData(req);
             var FeatureTypeName= '';
             /*  Modification année dans le flux */
-            if (valeurSearch == 'avant2015') {
+            if (valeurSearch == 'v1') {
                 if ((params.annee >= firstYearRPG) && (params.annee < 2015))  {
                     if (params.annee == 2014) {
                         featureTypeName = 'RPG.' + params.annee + ':ilots_anonymes';
@@ -114,12 +114,14 @@ var rpgValidators = [
 
 /** Nous avons 2 requetes identiques mais il y a une difference dans les champs 
  * Possibilité de traiter différement par la suite.
+ * /v1 : corresponds aux années avant 2015
+ * /v2 : corresponds aux années à partir de 2015
  */
-router.get('/apres2014', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('apres2014'));
-router.post('/apres2014', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('apres2014'));
+router.get('/v1', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('v1'));
+router.post('/v1', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('V1'));
 
-router.get('/avant2015', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('avant2015'));
-router.post('/avant2015', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('avant2015'));
+router.get('/v2', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('v2'));
+router.post('/v2', cors(corsOptionsGlobal),rpgValidators, createRpgProxy('V2'));
 
 
 
