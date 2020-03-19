@@ -28,7 +28,7 @@
     "body-parser": "^1.14.1",
     "bunyan": "^1.5.1",
     "circular-json": "^0.5.9",
-    "codes-postaux": "^2.1.0",
+    "codes-postaux": "^3.3.0",
     "cors": "^2.7.1",
     "debug": "^3.1.0",
     "ejs": "^2.5.9",
