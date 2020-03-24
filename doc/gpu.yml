@@ -12,6 +12,7 @@ info:
 
     Toutes les requêtes(sauf /all) du module GPU peuvent se faire en POST ou en GET. 
     
+    Consultez la [documentation utilisateurs](https://apicarto.ign.fr/api/doc/pdf/doc_user_modUrbanisme_v1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats
 
     Exemple de géométrie :
 
