@@ -79,7 +79,7 @@ paths:
 
         - name: _limit
           in: query
-          description: Limite de résultats à afficher
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
           type: integer
           required: false
           
@@ -130,7 +130,7 @@ paths:
 
         - name: _limit
           in: query
-          description: Limite de résultats à afficher
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
           type: integer
           required: false
           

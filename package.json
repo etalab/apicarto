@@ -17,7 +17,7 @@
     "Mickael Borne <mickael.borne@ign.fr>"
   ],
   "repository": "IGNF/apicarto",
-  "license": "AGPL-3.0",
+  "license": "CeCILL-B",
   "engines": {
     "node": ">=6"
   },
