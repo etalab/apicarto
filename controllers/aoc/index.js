@@ -15,7 +15,6 @@ var Handlebars = require('handlebars');
 var reqAppellations = Handlebars.compile(`
         SELECT
             {{#if withGeometries}}ST_AsGeoJSON(appellations.geom) AS geom,{{/if}}
-            ST_Area(ST_Intersection(input.geom, appellations.geom)::geography) / 10000 AS area,
             appellation,
             idapp,
             id_uni,
@@ -49,7 +48,6 @@ router.post('/appellation-viticole', [
         NOM_COM as nom,
         CODE_INSEE as insee,
         ST_Contains(input.geom, communes_ign.geom) AS contains,
-        ST_Area(ST_Intersection(input.geom, communes_ign.geom)::geography) / 10000 AS intersect_area,
         ST_AsGeoJSON(communes_ign.geom) AS geom
         FROM
 			communes_ign,
