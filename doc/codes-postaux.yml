@@ -14,7 +14,7 @@ produces:
   - application/json
 
 paths:
-  /api/codes-postaux/communes/{codePostal}:
+  /codes-postaux/communes/{codePostal}:
     get:
       description: Renvoie les communes correspondant à un code postal
       parameters:
