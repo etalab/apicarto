@@ -92,7 +92,7 @@ paths:
             
         - name: _limit
           in: query
-          description: Limite de résultats à afficher
+          description: Limite de résultats à afficher(chiffre entre 1 et 1000)
           type: integer
           required: false
           
@@ -174,7 +174,7 @@ paths:
           
         - name: _limit
           in: query
-          description: Limite de résultats à afficher
+          description: Limite de résultats à afficher(chiffre entre 1 et 1000)
           type: integer
           required: false
           
@@ -185,13 +185,88 @@ paths:
           required: false
     
       tags:
-        - Division
+        - Division BD Parcellaire
       responses:
         '200':
           description: Success
           schema:
             $ref: '#/definitions/FeatureCollectionDivision'
 
+  /cadastre/feuille:
+    get:
+      summary: Recherche d'informations sur les feuilles parcellaires d'une commune en utilisant la couche PCI EXPRESS
+      description: |
+        Retourne un résultat de Type "FeatureCollection" avec la liste des feuilles d'une commune
+        * Paramètre insee => Retour des feuilles d'une commune
+        * Paramètre Insee + section => Retour des feuilles d'une section dans une commune
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: code_insee
+          in: query
+          description: Code insee de la commune sur 5 caractères
+          type: string
+          pattern: '\d{5}'
+          required: false
+
+        - name: code_dep
+          in: query
+          description: Code du département
+          type: string
+          pattern: '\d{2,3}'
+          required: false
+
+        - name: code_com
+          in: query
+          description: Code de la commune
+          type: string
+          pattern: '\d{2,3}'
+          required: false
+
+        - name: section
+          in: query
+          description: Section de la parcelle sur 2 caractères
+          pattern: '\w{2}'
+          type: string
+          required: false
+
+        - name: code_arr
+          in: query
+          description: Code arrondisssement pour Paris, Lyon, Marseille
+          pattern: '\d{3}'
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+    
+      tags:
+        - Feuille PCI EXPRESS
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionDivision'
 
   /cadastre/parcelle:
     get:
@@ -249,7 +324,7 @@ paths:
 
         - name: _limit
           in: query
-          description: Limite de résultats à afficher
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
           type: integer
           required: false
           
@@ -325,7 +400,7 @@ paths:
           
         - name: _limit
           in: query
-          description: Limite de résultats à afficher
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
           type: integer
           required: false
           
@@ -347,82 +422,6 @@ paths:
           schema:
             $ref: '#/definitions/FeatureCollectionLocalisant'
 
-
-  /cadastre/feuille:
-    get:
-      summary: Recherche d'informations sur les feuilles parcellaires d'une commune en utilisant la couche PCI EXPRESS
-      description: |
-        Retourne un résultat de Type "FeatureCollection" avec la liste des feuilles d'une commune
-        * Paramètre insee => Retour des feuilles d'une commune
-        * Paramètre Insee + section => Retour des feuilles d'une section dans une commune
-      parameters:
-
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: false
-
-        - name: code_insee
-          in: query
-          description: Code insee de la commune sur 5 caractères
-          type: string
-          pattern: '\d{5}'
-          required: false
-
-        - name: code_dep
-          in: query
-          description: Code du département
-          type: string
-          pattern: '\d{2,3}'
-          required: false
-
-        - name: code_com
-          in: query
-          description: Code de la commune
-          type: string
-          pattern: '\d{2,3}'
-          required: false
-
-        - name: section
-          in: query
-          description: Section de la parcelle sur 2 caractères
-          pattern: '\w{2}'
-          type: string
-          required: false
-
-        - name: code_arr
-          in: query
-          description: Code arrondisssement pour Paris, Lyon, Marseille
-          pattern: '\d{3}'
-          type: string
-          required: false
-          
-        - name: geom
-          in: query
-          description: Géométrie au format GeoJson
-          schema:
-            $ref: '#/definitions/Geometry'
-          
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-    
-      tags:
-        - Feuille PCI EXPRESS
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/FeatureCollectionDivision'
 
 definitions:
 

@@ -1,6 +1,6 @@
 var Router = require('express').Router;
 var router = new Router();
-
+var format = require('pg-format');
 const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 const isGeometry = require('../../checker/isGeometry');
@@ -10,6 +10,28 @@ var pgClient = require('../../middlewares/pgClient');
 
 var format = require('pg-format');
 var _ = require('lodash');
+var Handlebars = require('handlebars');
+
+var reqAppellations = Handlebars.compile(`
+        SELECT
+            {{#if withGeometries}}ST_AsGeoJSON(appellations.geom) AS geom,{{/if}}
+            appellation,
+            idapp,
+            id_uni,
+            insee,
+            segment,
+            instruction_obligatoire,
+            granularite,
+            ST_Contains(input.geom, appellations.geom) AS contains
+        FROM
+            (SELECT ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326) geom) input,
+            appellations
+        WHERE appellations.insee IN (%L);
+`);
+
+function buildSQLQuery(options) {
+    return format(reqAppellations(options), options.geometry, options.inseeCodeList);
+}
 
 /**
  * Récupération des AOC viticoles par géométrie
@@ -19,27 +41,9 @@ router.post('/appellation-viticole', [
     check('geom').custom(isGeometry)
 ], validateParams, pgClient, function(req, res, next) {
     var params = matchedData(req);
-
-    var sql = format(`
-        SELECT 
-        appellation,
-        idapp,
-        id_uni,
-        insee,
-        segment,
-        instruction_obligatoire,
-        granularite,
-        ST_AsGeoJSON(geom) as geom
-        FROM 
-            appellations
-        WHERE ST_Intersects(
-            geom,
-            ST_SetSRID(ST_GeomFromGeoJSON('%s'), 4326)
-        )    
-        LIMIT 1000
-    `, params.geom );
     
     var sqlCommunes = format(`
+        
 		SELECT
         NOM_COM as nom,
         CODE_INSEE as insee,
@@ -54,11 +58,19 @@ router.post('/appellation-viticole', [
     req.pgClient.query(sqlCommunes,function(err,result){  
         if (err)
         return next(err);
-        req.intersectedCommunes = result.rows;    
-		req.pgClient.query(sql,function(err,result){
-			if (err)
-            return next(err);
-
+        req.intersectedCommunes = result.rows;   
+        req.pgClient.query(buildSQLQuery({
+            geometry: params.geom,
+            withGeometries: req.body.geojson !== false,
+            inseeCodeList: _.map(req.intersectedCommunes, 'insee')
+        }), function(err, result) {
+            if (err) {
+                return next(err);
+            }
+            if (!result.rows) {
+                return res.status(404).send({ status: 'No Data' });
+            }
+    
 			return res.send({
 				type: 'FeatureCollection',
 				features: result.rows.map(function (row) {
@@ -67,11 +79,9 @@ router.post('/appellation-viticole', [
 						geometry: JSON.parse(row.geom),
 					properties: _.omit(row, 'geom')
 					};
-					const communetest = _.find(req.intersectedCommunes, { insee: row.insee });
-					
 					if (row.granularite === 'commune' && !row.instruction_obligatoire) {
-						const commune = _.find(req.intersectedCommunes, { insee: row.insee });
-						feature.properties.area = commune.intersect_area;
+                        const commune = _.find(req.intersectedCommunes, { insee: row.insee });
+                        feature.properties.area = commune.intersect_area;
 						feature.properties.contains = commune.contains;
 						feature.geometry = JSON.parse(commune.geom);
 					}

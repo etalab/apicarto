@@ -1,6 +1,6 @@
 {
   "name": "apicarto",
-  "version": "2.1.2",
+  "version": "2.1.7",
   "main": "index.js",
   "scripts": {
     "import": "npm run import-inao-appellation",
@@ -17,7 +17,7 @@
     "Mickael Borne <mickael.borne@ign.fr>"
   ],
   "repository": "IGNF/apicarto",
-  "license": "AGPL-3.0",
+  "license": "CECILL-B",
   "engines": {
     "node": ">=6"
   },
@@ -28,10 +28,10 @@
     "body-parser": "^1.14.1",
     "bunyan": "^1.5.1",
     "circular-json": "^0.5.9",
-    "codes-postaux": "^2.1.0",
+    "codes-postaux": "^3.3.0",
     "cors": "^2.7.1",
     "debug": "^3.1.0",
-    "ejs": "^2.5.9",
+    "ejs": "^2.7.4",
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
     "flatted": "^2.0.1",
