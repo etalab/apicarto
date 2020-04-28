@@ -41,13 +41,14 @@
     "pg-format": "^1.0.4",
     "shelljs": "^0.8.3",
     "swagger-ui-dist": "^3.13.6",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "handlebars": "^4.7.6"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.1",
-    "mocha": "^6.1.4",
+    "mocha": "^7.1.2",
     "nock": "^9.2.5",
     "supertest": "^3.0.0",
     "unit.js": "^2.1.0"
