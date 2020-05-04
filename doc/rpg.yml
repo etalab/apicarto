@@ -14,6 +14,10 @@ info:
     
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
+
+    Consultez la [documentation utilisateurs](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleRPG_v1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
+  
+
     ## Clé WFS géoportail (apikey)
     
       Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
@@ -23,7 +27,7 @@ info:
       Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - RPG" ci-dessous suivant l'année désirée:
           
       * RPG 2010, RPG 2011, RPG 2012, RPG 2013
-      * RPG 2014:ilots_anonymes
+      * RPG 2014:ilots_anonymes (à venir)
       * RPG 2015:parcelles_graphiques
       * RPG 2016:parcelles_graphiques
       * RPG 2017:parcelles_graphiques
@@ -51,7 +55,7 @@ paths:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend une date qui sera une valeur comprise entre 2010 et 2014 inclus
+        Prend une date qui sera une valeur comprise entre 2010 et 2013 inclus
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
         - name: apikey
@@ -90,18 +94,18 @@ paths:
           required: false
 
       tags:
-        - RPG avant 2015 (version bêta)
+        - RPG avant 2014 (version bêta)
       responses:
         '200':
           description: "Succès"
           schema:
-            $ref: "#/definitions/FeatureCollectionRPGAvant2015"
+            $ref: "#/definitions/FeatureCollectionRPGAvant2014"
 
   /rpg/v2:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend une date qui sera une valeur comprise entre 2015 et 2017 inclus
+        Prend une date qui sera une valeur comprise entre 2015 et 2018 inclus
         
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
@@ -191,8 +195,8 @@ definitions:
         items:
           $ref: '#/definitions/FeatureRPGApartirde2015'
 
-  FeatureRPGAvant2015:
-    description: "Objet géographique RPG avant 2015" 
+  FeatureRPGAvant2014:
+    description: "Objet géographique RPG avant 2014" 
     type: object
     allOf:
       - $ref: "#/definitions/Feature"
@@ -222,7 +226,7 @@ definitions:
       geometry:
         $ref: '#/definitions/MultiPolygon'
 
-  FeatureCollectionRPGAvant2015:
+  FeatureCollectionRPGAvant2014:
     description: "Liste d'objet géographique RPG"
     type: object
     properties:
@@ -233,7 +237,7 @@ definitions:
       features:
         type: array
         items:
-          $ref: '#/definitions/FeatureRPGAvant2015'
+          $ref: '#/definitions/FeatureRPGAvant2014'
           
           
 # import definitions

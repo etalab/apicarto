@@ -3,6 +3,9 @@ info:
   title: APICarto - codes-postaux
   description: >
     API de récupération des communes associées à un code postal donné. Voir https://github.com/etalab/codes-postaux#codes-postaux pour plus d'information sur les sources de données.
+    
+    Consultez la [documentation utilisateurs](https://apicarto.ign.fr/api/doc/pdf/docUsers_modulecodes_postaux_v1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
+  
   version: '2.0'
 
 consumes:
