@@ -15,6 +15,9 @@ info:
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
 
+    Consultez la [documentation utilisateurs](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleRPG_v1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
+  
+
     ## Clé WFS géoportail (apikey)
     
       Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.

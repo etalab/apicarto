@@ -7,7 +7,7 @@ info:
 
     Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
    
-     Consultez la [documentation utilisateurs](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleAoc_v1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats
+     Consultez la [documentation utilisateurs](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleAoc_v1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
   version: '1.0'
 
