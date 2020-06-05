@@ -1,0 +1,417 @@
+swagger: '2.0'
+info:
+  title: Module Nature
+  description: >
+
+    Le service d'interrogation du module nature  permet d'obtenir les informations suivantes sur différentes couches réserves naturelles et natura 2000:
+    
+    Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
+
+    Toutes les requêtes du module cadastre peuvent se faire en POST ou en GET. 
+
+    Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+
+    Attention à la différence des autres modules apicarto, les géométries 
+
+    
+    ## Clé WFS géoportail (apikey)
+    
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ .
+      
+
+      Si vous souhaitez utiliser les différentes ressources de ce modules vous devez commander les flux "Ressources WFS Géoportail" ci-dessous:
+      
+      * PROTECTEDAREAS.SIC:sic  (Sites Natura 2000 au titre de la directive Habitat)
+      * PROTECTEDAREAS.ZPS:zps  (Sites NATURA 2000 au titre de la Directive Oiseaux)
+      * PROTECTEDAREAS.RNC:rnc  (Réserves Naturelles de Corse)
+      * PROTECTEDAREAS.ZNIEFF1:znieff1 (Zones écologiques de nature remarquable (ZNIEFF1))
+      * PROTECTEDAREAS.ZNIEFF2:znieff2  (Zones écologiques de nature remarquable (ZNIEFF2))
+
+  version: 2.0.0
+  
+  contact:
+    name: Apicarto Nature
+
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /nature/natura-habitat:
+    get:
+      summary: Récupération de la géométrie pour natura 2000 au titre de la directive habitat
+      description: |
+        Retourne un résultat de Type "FeatureCollection".
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: sitecode
+          in: query
+          type: string
+          required: false
+
+        - name: sitename
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+            
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher(chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+
+      tags:
+        - Natura 2000 directive habitat
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatura'
+
+  /nature-oiseaux:
+    get:
+      summary: Recherche d'informations sur les divisions parcellaires d'une commune
+      description: |
+        Retourne un résultat de Type "FeatureCollection"
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: sitecode
+          in: query
+          type: string
+          required: false
+
+        - name: sitename
+          in: query
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher(chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+    
+      tags:
+        - Natura 2000 directives oiseaux
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatura'
+
+  /nature/rnc:
+    get:
+      summary: Recherche d'informations sur les réserves naturelles de Corse
+      description: |
+        Retourne un résultat de Type "FeatureCollection"
+
+      tags:
+        - Réserves naturelles de Corse
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+
+        - name: nom
+          in: query
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+    
+      
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureAutre'
+
+  /nature/znieff1:
+    get:
+      summary: Recherche d'informations sur des Zones écologiques de nature remarquable
+      description: |
+        Retourne un résultat de Type "FeatureCollection"
+      
+      tags:
+        - znieff1
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+
+        - name: nom
+          in: query
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureAutre'
+
+
+  /nature/znieff2:
+    get:
+      summary: Recherche d'informations sur des Zones écologiques de nature remarquable
+      description: Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - znieff2
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+
+        - name: nom
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureAutre'
+
+  /nature/pn:
+    get:
+      summary: Informations sur les parcelles non vectorisées.
+      description: Renvoie une featureCollection de type Point pour centrer le point sur une carte
+      tags:
+        - Parcs nationaux
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+
+        - name: nom
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+        
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureAutre'
+
+
+definitions:
+
+  #---------------------------------------------------
+  # /nature/natura-habitat et natura-oiseaux
+  #---------------------------------------------------
+  
+  FeatureNatura:
+    description: 'Pour les couches natura'
+    allOf:
+    - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          sitecode:
+            type: string
+          sitename:
+            type: string
+          url:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'
+
+  FeatureCollectionNatura:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCommune`
+    allOf:
+    - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureNatura'
+      geometry:
+        $ref: '#/definitions/MultiPolygon'
+
+  #---------------------------------------------------
+  # /nature/
+  #---------------------------------------------------
+            
+  FeatureNatureAutre:
+    description: 'Nature autres'
+    allOf:
+    - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          id_mnhn:
+            type: string
+          nom:
+            type: string
+          url:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'              
+
+  FeatureCollectionNatureAutre:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureDivision`
+    allOf:
+    - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureNatureAutre'
+
+  
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+  Point:
+    $ref: './schema/geojson.yml#definitions/Point'
