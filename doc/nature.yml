@@ -3,7 +3,7 @@ info:
   title: Module Nature
   description: >
 
-    Le service d'interrogation du module nature  permet d'obtenir les informations suivantes sur différentes couches réserves naturelles et natura 2000:
+    Le service d'interrogation du module nature  permet d'obtenir les informations  sur différentes couches réserves naturelles et natura 2000.
     
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
@@ -11,7 +11,11 @@ info:
 
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
-    Attention à la différence des autres modules apicarto, les géométries 
+    Attention à la différence des autres modules apicarto, toutes les couches n'ont pas des référentiels sur EPSG:4326.
+    
+    Veuillez vérifier le référentiel par défaut en faisant un getCapabilities avec votre clé:
+
+    https://wxs.ign.fr/VOTRECLE/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities
 
     
     ## Clé WFS géoportail (apikey)
@@ -28,8 +32,9 @@ info:
       * PROTECTEDAREAS.RNC:rnc  (Réserves Naturelles de Corse)
       * PROTECTEDAREAS.ZNIEFF1:znieff1 (Zones écologiques de nature remarquable (ZNIEFF1))
       * PROTECTEDAREAS.ZNIEFF2:znieff2  (Zones écologiques de nature remarquable (ZNIEFF2))
+      * PROTECTEDAREAS.PN:pn (Parcs nationnaux)
+      * PROTECTEDAREAS.PNR:pnr (Parcs nationaux régionaux)
 
-  version: 2.0.0
   
   contact:
     name: Apicarto Nature
@@ -290,8 +295,8 @@ paths:
 
   /nature/pn:
     get:
-      summary: Informations sur les parcelles non vectorisées.
-      description: Renvoie une featureCollection de type Point pour centrer le point sur une carte
+      summary: Recherche des zones dans les parcs nationaux
+      description: Retourne un résultat de Type "FeatureCollection"
       tags:
         - Parcs nationaux
       parameters:
@@ -336,6 +341,53 @@ paths:
           schema:
             $ref: '#/definitions/FeatureCollectionNatureAutre'
 
+  /nature/pnr:
+    get:
+      summary: Recherche des zones dans les parcs nationaux régionaux
+      description: Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - Parcs nationaux régionaux
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+
+        - name: nom
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+        
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureAutre'
 
 definitions:
 
@@ -379,7 +431,7 @@ definitions:
   FeatureNatureAutre:
     description: 'Nature autres'
     allOf:
-    - $ref: '#/definitions/Feature'
+      - $ref: '#/definitions/Feature'
     properties:
       properties:
         type: object
@@ -396,7 +448,7 @@ definitions:
   FeatureCollectionNatureAutre:
     description: Une `FeatureCollection` contenant uniquement des features de type `FeatureDivision`
     allOf:
-    - $ref: '#/definitions/FeatureCollection'
+      - $ref: '#/definitions/FeatureCollection'
     properties:
       features:
         type: array

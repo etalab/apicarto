@@ -72,6 +72,9 @@ app.use('/api/rpg',require('./controllers/rpg'));
 /* Module Nature */
 app.use('/api/nature',require('./controllers/nature'));
 
+/* Module all module IGN */
+app.use('/api/all-wfs-ign/',require('./controllers/all-wfs-ign'))
+
 app.listen(port);
 
 module.exports = app;

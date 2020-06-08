@@ -22,7 +22,6 @@ function createNaturaProxy(featureTypeName){
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            params = _.omit(params,'source_ign');
 
             /* Value default pour _limit an _start */
              if ( typeof params._start == 'undefined' ) {params._start = 0;}
@@ -131,4 +130,11 @@ router.get('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('
 router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pn'));
 
 
+/**
+* Récupération des couches Parcs naturels régionaux
+*
+*/
+
+router.get('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
+router.post('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
 module.exports=router;
