@@ -94,7 +94,7 @@ paths:
           schema:
             $ref: '#/definitions/FeatureCollectionNatura'
 
-  /nature-oiseaux:
+  /nature/natura-oiseaux:
     get:
       summary: Recherche d'informations sur les divisions parcellaires d'une commune
       description: |
