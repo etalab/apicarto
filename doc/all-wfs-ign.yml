@@ -1,0 +1,94 @@
+swagger: '2.0'
+
+info:
+  title: Module pour rechercher dans tous les flux WFS Géoportail (Version Beta)
+  description: >
+
+    Ce module permet d'interroger n'importe quelle ressource WFS qui intersecte une géométrie( géométie dans le référentiel correspondant à la couche) et selon vos droits sur cette ressource.
+    Il faut mettre en paramètre une géométrie et le nom de la ressource WFS Géoportail.
+    
+    Toutes les requêtes du module RPG peuvent se faire en POST ou en GET. 
+
+    
+    Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+
+    ## Clé WFS géoportail (apikey)
+    
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. 
+      Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ .
+      Vous ne pourrez interroger que les couches dont vous avez les droits sur votre clé IGN.
+      Attention il faut bien vérifier la représentation géométrique de chaque couche pour passer la géométrie dans le bon référentiel.
+
+      Exemple de géométrie : (format EPSG:4326)
+
+      * Point : `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+      * MultiPolygon : `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+
+    
+  version: '1.0'
+
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /all-wfs-ign/search:
+    get:
+      description: |
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
+        Prend une date qui sera une valeur comprise entre 2010 et 2013 inclus
+      Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
+      parameters:
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: true
+          
+        - name: source
+          in: query
+          description: Source des données WFS Géoportail
+          type: string
+          required: true
+
+        - name: geom
+          in: query
+          required: true
+          schema:
+            $ref: "#/definitions/Geometry"
+
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+
+      responses:
+        '200':
+          description: "Succès"
+
+definitions:          
+          
+# import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+
+  

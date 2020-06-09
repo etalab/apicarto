@@ -31,7 +31,7 @@ function createCadastreProxy(featureTypeName){
                 } else {
                     return res.status(400).send({
                         code: 400,
-                        essage: 'Erreur de valeur pour une recherche sur la couche PCI EXPRESS'
+                        message: 'Erreur de valeur pour une recherche sur la couche PCI EXPRESS'
                      });
 
                 }
