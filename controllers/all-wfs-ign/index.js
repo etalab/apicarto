@@ -15,7 +15,7 @@ const _ = require('lodash');
  * Creation d'une chaîne de proxy sur le geoportail
  * @param {String} valeurSearch du chemin le nom de la couche WFS
  */
-function createRpgProxy() {
+function createWfsProxy() {
     return [
         gppWfsClient,
         validateParams,
@@ -94,7 +94,7 @@ var moduleValidator = [
 
 
  
-router.get('/search', cors(corsOptionsGlobal),moduleValidator, createRpgProxy());
+router.get('/search', cors(corsOptionsGlobal),moduleValidator, createWfsProxy());
 
 
 
