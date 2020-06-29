@@ -81,7 +81,7 @@ var natureValidators = [
 
 var naturaValidators = natureValidators.concat([
     check('sitecode').optional().isString(),
-    check('sitename').optional().isString())
+    check('sitename').optional().isString()
 ]);
 
 router.get('/natura-habitat', cors(corsOptionsGlobal),naturaValidators, createNaturaProxy('PROTECTEDAREAS.SIC:sic'));
@@ -137,4 +137,5 @@ router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy(
 
 router.get('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
 router.post('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
+
 module.exports=router;

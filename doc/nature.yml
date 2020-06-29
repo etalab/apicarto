@@ -22,7 +22,7 @@ info:
     
       Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
 
-      Pour obtenir une clé geoportail, vous devez vous connecter au site : http://professionnels.ign.fr/ .
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
       
 
       Si vous souhaitez utiliser les différentes ressources de ce modules vous devez commander les flux "Ressources WFS Géoportail" ci-dessous:

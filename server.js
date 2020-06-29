@@ -73,7 +73,8 @@ app.use('/api/rpg',require('./controllers/rpg'));
 app.use('/api/nature',require('./controllers/nature'));
 
 /* Module all module IGN */
-app.use('/api/all-wfs-ign/',require('./controllers/all-wfs-ign'))
+app.use('/api/wfs-geoportail/',require('./controllers/wfs-geoportail'));
+
 
 app.listen(port);
 
