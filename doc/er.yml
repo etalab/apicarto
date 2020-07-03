@@ -1,0 +1,314 @@
+swagger: '2.0'
+info:
+  title: Module Espace revendeur
+  description: >
+
+    Le service d'interrogation du module nature  permet d'obtenir les informations  sur différentes couches de l'espace revendeurr.
+    
+    Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
+
+    Toutes les requêtes du module cadastre peuvent se faire en POST ou en GET. 
+
+    Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+    
+    ## Clé WFS géoportail (apikey)
+    
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
+  
+  contact:
+    name: Apicarto Espace revendeur
+
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /er/product:
+    get:
+      summary: Récupération de la géométrie pour natura 2000 au titre de la directive habitat
+      description: |
+        Retourne un résultat de Type "FeatureCollection".
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: code_ean
+          in: query
+          type: string
+          required: false
+        
+        - name: sale
+          in: query
+          type: string
+          required: false
+        
+        - name: publicationDate
+          in: query
+          type: string
+          require: false
+        
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+            
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher(chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+
+      tags:
+        - product
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollection'
+
+  /er/grid:
+    get:
+      summary: Recherche d'informations sur les divisions parcellaires d'une commune
+      description: |
+        Retourne un résultat de Type "FeatureCollection"
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: title
+          in: query
+          type: string
+          required: false
+        
+        - name: type
+          in: query
+          type: string
+          required: false
+
+        - name: zip_codes
+          in: query
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher(chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+    
+      tags:
+        - grid
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollection'
+
+  /er/category:
+    get:
+      summary: Recherche d'informations sur les réserves naturelles de Corse
+      description: |
+        Retourne un résultat de Type "FeatureCollection"
+
+      tags:
+        - Category
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: name
+          in: query
+          type: string
+          required: false
+
+        - name: type
+          in: query
+          type: string
+          required: false
+
+        - name: category_id
+          in: query
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+  
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureProduct'
+
+
+definitions:
+
+  #---------------------------------------------------
+  # /er/product/
+  #---------------------------------------------------
+  
+  FeatureProduct:
+    description: 'Pour la recherche produits'
+    allOf:
+    - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          id:
+            type: string
+          code_ean:
+            type: string
+          name_compl:
+            type: string
+          status:
+            type: string
+          complement:
+            type: string
+          segment_ti:
+            type: string
+          segment_sl:
+            type: string
+          theme_titl:
+            type: string
+          theme_slug:
+            type: string
+          collection:
+            type: string
+          collecti_1:
+            type: string
+          background:
+            type: string
+          border_col:
+            type: string
+          serie_code:
+            type: string
+          price_excl:
+            type: string
+          price:
+            type: string
+          vat:
+            type: string
+          price_code:
+            type: string
+          front_image:
+            type: string
+          back_image:
+            type: string
+          sale:
+            type: string
+          publicatio:
+            type: string
+          edition_nu:
+            type: string
+          dimensions:
+            type: string
+          scale:
+            type: string
+          editorail:
+            type: string
+          geometry:
+        $ref: '#/definitions/MultiPolygon'
+
+  FeatureCollectionProduct:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCommune`
+    allOf:
+    - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureProduct'
+
+  #---------------------------------------------------
+  # /er/grid
+  #---------------------------------------------------
+            
+  FeatureGrid:
+    description: 'Grid'
+    allOf:
+      - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          id_mnhn:
+            type: string
+          nom:
+            type: string
+          url:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'              
+
+  FeatureCollectionGrid:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureDivision`
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeaturGrid'
+
+  
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+  Point:
+    $ref: './schema/geojson.yml#definitions/Point'
