@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
     }
 
     req.erWfsClient = new GeoportalWfsClient({
-        'apiKey':  '',
+        apiKey:  process.env.GEOPORTAL_API_KEY,
         'url' : 'https://qlf-wxs-v.geo.rie.gouv.fr/geoportail/wfs',
         'headers':{
             Referer: referer,
