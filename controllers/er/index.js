@@ -17,37 +17,38 @@ const _ = require('lodash');
  * Creation d'une chaîne de proxy sur le geoportail
  * @param {String} featureTypeName le nom de la couche WFS
  */
-function createErProxy(featureTypeName){
+function createErProxy(featureTypeName,typeSearch){
     return [
         erWfsClient,
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            if (featureTypeName == "espace_revendeurs:product_view" ) {
-                if ((params.name) && (params.type)) {
+            if (typeSearch == 'category')  {
+                if (params.name && params.type) {
                     if(params.type == 's') { 
                         // Recherche sur segment_titl
                         params.segment_ti = params.name;
-                } else if (params.type == 't') {
-                   //Recherche sur segment_ti
-                   params.theme_titl = params.name;
-                }else if (params.type == 'c') {
-                   // Recherche sur collection
-                   params.collection = params.name;
-                   
-               } else {
-                return res.status(400).send({
-                    code: 400,
-                    message: 'Les 2 champs name et type doivent être renseignés pour cette recherche spécfique avec pour type les valeurs t, c ou s uniquement'
-                 });
-               }
+                    } else if (params.type == 't') {
+                        //Recherche sur segment_ti
+                        params.theme_titl = params.name;
+                    }else if (params.type == 'c') {
+                        // Recherche sur collection
+                        params.collection = params.name;
+                   } else {
+                        return res.status(400).send({
+                            code: 400,
+                            message: 'Le champ type contient uniquement les valeurs t, c ou s'
+                            });
+                    }
+                } else {
+                    if(params.name || params.type) {
+                    return res.status(400).send({
+                        code: 400,
+                        message: 'Les 2 champs name et type doivent être renseignés pour cette recherche spécfique. Pour Le champ type les valeurs acceptées sont t,c ou s'
+                        });
+                    }
 
-            } else {
-                return res.status(400).send({
-                    code: 400,
-                    message: 'Les 2 champs name et type doivent être renseignés pour cette recherche spécfique avec pour type les valeurs t, c ou s uniquement'
-                 });
-               }
+                }
             }
             params = _.omit(params,'name');
             params = _.omit(params,'type');
@@ -64,7 +65,7 @@ function createErProxy(featureTypeName){
                     res.status(500).json(err);
                 })
                 ;
-            }
+        }
     ];
 }
 
@@ -112,8 +113,8 @@ var productValidators = erValidators.concat([
     
 ]);
 
-router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product_view'));
-router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product_view'));
+router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product_view','product'));
+router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product_view','product'));
 
 /**
  * Récupération des information sur les category dans le flux product_view
@@ -126,8 +127,8 @@ var categoryValidators = erValidators.concat([
     check('category_id').optional().isString()
 ]);
 
-router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product_view'));
-router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product_view'));
+router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product_view','category'));
+router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product_view','category'));
 
 
 /**
@@ -141,8 +142,8 @@ var gridValidators = erValidators.concat([
     check('zip_codes').optional().matches(/^\d{5}$/).withMessage('zip_codes doit contenir 5 caractères')
 ]);
 
-router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid_view'));
-router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid_view'));
+router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid_view','grid'));
+router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid_view','grid'));
 
 
 module.exports=router;
