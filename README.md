@@ -1,12 +1,8 @@
-## ⚠️ Ce service est en fin de vie ⚠️
+## ⚠️ Ce service est abandonné ⚠️
 
-Nous nous concentrons désormais exclusivement sur l'[API Géo](https://geo.api.gouv.fr), qui sera verra bientôt enrichie des fonctionnalités de l'API Carto.
-
-L'IGN continue certains développements de l'API Carto, en lien avec son [Géoportail](https://www.geoportail.gouv.fr). Plus d'information sur [leur site dédié](https://apicarto.ign.fr).
+L'IGN a repris les développements à son compte. Plus d'information sur [leur site dédié](https://apicarto.ign.fr).
 
 # APICarto
-
-[![Dependency Status](https://david-dm.org/etalab/apicarto.svg?style=flat)](https://david-dm.org/etalab/apicarto)
 
 ## Prérequis
 
