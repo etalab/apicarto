@@ -39,7 +39,7 @@ paths:
           type: string
           required: false
 
-        - name: code_ean
+        - name: code_article
           in: query
           type: string
           required: false
@@ -49,7 +49,7 @@ paths:
           type: string
           required: false
         
-        - name: publicationDate
+        - name: publication_date
           in: query
           type: string
           require: false
@@ -206,55 +206,55 @@ definitions:
         properties:
           id:
             type: string
-          code_ean:
+          code_article:
             type: string
-          name_compl:
+          name:
             type: string
-          status:
-            type: string
-          complement:
-            type: string
-          segment_ti:
-            type: string
-          segment_sl:
-            type: string
-          theme_titl:
-            type: string
-          theme_slug:
-            type: string
-          collection:
-            type: string
-          collecti_1:
-            type: string
-          background:
-            type: string
-          border_col:
-            type: string
-          serie_code:
-            type: string
-          price_excl:
-            type: string
-          price:
-            type: string
-          vat:
-            type: string
-          price_code:
+          name_complement:
             type: string
           front_image:
             type: string
           back_image:
             type: string
-          sale:
+          edition_number:
             type: string
-          publicatio:
+          publication_date:
             type: string
-          edition_nu:
+          status:
             type: string
-          dimensions:
+          replacement:
+            type: string
+          dimension:
             type: string
           scale:
             type: string
-          editorail:
+          complement:
+            type: string
+          category_id:
+            type: string
+          segment_title:
+            type: string
+          segment_slug:
+            type: string
+          theme_title:
+            type: string
+          theme_slug:
+            type: string
+          collection_title:
+            type: string
+          collection_slug:
+            type: string
+          background_color:
+            type: string
+          border_color:
+            type: string
+          pricecode:
+            type: string
+          price:
+            type: string
+          price_exlcuding_vat:
+            type: string
+          vat:
             type: string
           geometry:
         $ref: '#/definitions/MultiPolygon'

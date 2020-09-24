@@ -104,12 +104,12 @@ var erValidators = [
 
 var productValidators = erValidators.concat([
     check('id').optional().isAlphanumeric(),
-    check('code_ean').optional().isString(),
+    check('code_article').optional().isString(),
     check('name').optional().isString(),
     check('sale').optional().isNumeric(),
     check('geom').optional().custom(isGeometry),
     check('type').optional().isString(),
-    check('publicationDate').optional().isString()
+    check('publication_date').optional().isString()
     
 ]);
 
