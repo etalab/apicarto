@@ -10,7 +10,7 @@ const {isGeometry,isCodeInsee} = require('../../checker');
 const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
-const lastYearRPG = 2018;
+const lastYearRPG = 2019;
 const firstYearRPG = 2010;
 
 /**
@@ -35,7 +35,7 @@ function createRpgProxy(valeurSearch) {
                 } else {
                         return res.status(400).send({
                             code: 400,
-                            message: 'Année Invalide : Valeurs uniquement entre ' + firstYearRPG + ' et 2013'
+                            message: 'Année Invalide : Valeur uniquement entre ' + firstYearRPG + ' et 2013'
                     });  
                 }
             } else {
