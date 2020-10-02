@@ -44,7 +44,7 @@ function createRpgProxy(valeurSearch) {
                 } else {
                     return res.status(400).send({
                         code: 400,
-                        message: 'Année Invalide : Valeurs uniquement entre 2015 et ' + lastYearRPG
+                        message: 'Année Invalide : Valeur uniquement entre 2015 et ' + lastYearRPG
                      });
 
                 }
