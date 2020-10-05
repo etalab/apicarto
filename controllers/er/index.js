@@ -50,6 +50,10 @@ function createErProxy(featureTypeName,typeSearch){
 
                 }
             }
+            if(params.code_ean) {
+                params.id = params.code_ean;
+            }
+            params = _.omit(params,'code_ean');
             params = _.omit(params,'name');
             params = _.omit(params,'type');
             /* Value default pour _limit an _start */
@@ -97,13 +101,13 @@ var corsOptionsGlobal = function(origin,callback) {
 
 
 var erValidators = [
-    check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
+    //check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric()
 ];
 
 var productValidators = erValidators.concat([
-    check('id').optional().isAlphanumeric(),
+    check('code_ean').optional().isAlphanumeric(),
     check('code_article').optional().isString(),
     check('name').optional().isString(),
     check('sale').optional().isNumeric(),

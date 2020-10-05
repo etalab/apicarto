@@ -28,7 +28,7 @@ basePath: /api
 paths:
   /er/product:
     get:
-      summary: Récupération de la géométrie pour natura 2000 au titre de la directive habitat
+      summary: Recherche des produits de l'espace revendeurs
       description: |
         Retourne un résultat de Type "FeatureCollection".
       parameters:
@@ -36,6 +36,11 @@ paths:
         - name: apikey
           in: query
           description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: code_ean
+          in: query
           type: string
           required: false
 
@@ -82,7 +87,7 @@ paths:
 
   /er/grid:
     get:
-      summary: Recherche d'informations sur les divisions parcellaires d'une commune
+      summary: Recherche des informations sur les produits
       description: |
         Retourne un résultat de Type "FeatureCollection"
       parameters:
@@ -136,7 +141,7 @@ paths:
 
   /er/category:
     get:
-      summary: Recherche d'informations sur les réserves naturelles de Corse
+      summary: Recherche d'informations en se basant sur les catégories des produits
       description: |
         Retourne un résultat de Type "FeatureCollection"
 
