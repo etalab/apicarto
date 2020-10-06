@@ -98,6 +98,13 @@ paths:
           type: string
           required: false
 
+        - name: name
+          in: query
+          description: Code insee de la commune sur 5 caractères
+          type: string
+          pattern: '\d{5}'
+          required: false
+
         - name: title
           in: query
           type: string
@@ -209,7 +216,7 @@ definitions:
       properties:
         type: object
         properties:
-          id:
+          code_ean:
             type: string
           code_article:
             type: string
@@ -265,7 +272,7 @@ definitions:
         $ref: '#/definitions/MultiPolygon'
 
   FeatureCollectionProduct:
-    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCommune`
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCollectionProduit` 
     allOf:
     - $ref: '#/definitions/FeatureCollection'
     properties:
@@ -286,24 +293,30 @@ definitions:
       properties:
         type: object
         properties:
-          id_mnhn:
+          name:
             type: string
-          nom:
+          type:
             type: string
-          url:
+          zip_codes:
+            type: string
+          title:
+            type: string
+          deleted:
+            type: string
+          children: 
             type: string
       geometry:
         $ref: '#/definitions/MultiPolygon'              
 
   FeatureCollectionGrid:
-    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureDivision`
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCollectionGrid`
     allOf:
       - $ref: '#/definitions/FeatureCollection'
     properties:
       features:
         type: array
         items:
-          $ref: '#/definitions/FeaturGrid'
+          $ref: '#/definitions/FeatureGrid'
 
   
   # import definitions

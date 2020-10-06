@@ -50,10 +50,6 @@ function createErProxy(featureTypeName,typeSearch){
 
                 }
             }
-            if(params.code_ean) {
-                params.id = params.code_ean;
-            }
-            params = _.omit(params,'code_ean');
             params = _.omit(params,'name');
             params = _.omit(params,'type');
             /* Value default pour _limit an _start */
@@ -141,6 +137,7 @@ router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErPro
 */
 
 var gridValidators = erValidators.concat([
+    check('name').optional().isString(),
     check('title').optional().isString(),
     check('type').optional().isString(),
     check('zip_codes').optional().matches(/^\d{5}$/).withMessage('zip_codes doit contenir 5 caractères')
