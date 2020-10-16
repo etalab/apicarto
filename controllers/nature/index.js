@@ -27,74 +27,41 @@ function createFluxExterne(featureTypeName){
      * GetFeature params 
      */
     var queryParams = this.getDefaultParams();
-    queryParams['request']  = 'GetFeature';
-    queryParams['typename'] = typeName;
     queryParams['outputFormat'] = 'application/json';
-    queryParams['srsName'] = 'CRS:84';
-    if (typeof params._limit !== 'undefined') {
-        queryParams['count'] = params._limit;
-    }
-    if (typeof params._start !== 'undefined') {
-        queryParams['startIndex'] = params._start;
-    }
     
-
-<wfs:GetFeature service="WFS" version="2.0.0"
-    xmlns:wfs="http://www.opengis.net/wfs/2.0"
-    xmlns:fes="http://www.opengis.net/fes/2.0"
-    xmlns:gml="http://www.opengis.net/gml/3.2"
-    xmlns:dreal=" https://georchestra.ac-corse.fr/geoserver/wfs?service=wfs"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.opengis.net/wfs/2.0
-                        http://schemas.opengis.net/wfs/2.0/wfs.xsd
-                        http://www.opengis.net/gml/3.2
-                        http://schemas.opengis.net/gml/3.2.1/gml.xsd">
-    <wfs:Query typeNames="dreal:fsoum_25">
-        <fes:Filter>
-            <fes:Not>
-                <fes:Disjoint>
-                    <fes:ValueReference>sf:the_geom</fes:ValueReference>
-                    <!-- gml:id is mandatory on GML 3.2 geometry elements -->
-                    <gml:Polygon
-                            gml:id="polygon.1"
-                            srsName='http://www.opengis.net/def/crs/EPSG/0/4326'>
-                        <gml:exterior>
-                            <gml:LinearRing>
-                                <!-- pairs must form a closed ring -->
-                                <gml:posList>590431 4915204 590430
-                                    4915205 590429 4915204 590430
-                                    4915203 590431 4915204</gml:posList>
-                            </gml:LinearRing>
-                        </gml:exterior>
-                    </gml:Polygon>
-                </fes:Disjoint>
-            </fes:Not>
-        </fes:Filter>
-    </wfs:Query>
-</wfs:GetFeature>
+    
+   queryParams['filter']='<wfs:GetFeature service="WFS" version="2.0.0">'
+   queryParams['filter'] +='outputFormat="application/json';
+   queryParams['filter'] +='xmlns:wfs="http://www.opengis.net/wfs/2.0"';
+   queryParams['filter'] +='xmlns:fes="http://www.opengis.net/fes/2.0"';
+   queryParams['filter'] +='xmlns:gml="http://www.opengis.net/gml/3.2"';
+   queryParams['filter'] +='xmlns:dreal=" https://georchestra.ac-corse.fr/geoserver/wfs?service=wfs"';
+   queryParams['filter'] += 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance';
+   queryParams['filter'] += 'xsi:schemaLocation="http://www.opengis.net/wfs/2.0';
+   queryParams['filter'] +='http://schemas.opengis.net/wfs/2.0/wfs.xsd';
+   queryParams['filter'] += 'http://www.opengis.net/gml/3.2';
+   queryParams['filter'] += 'http://schemas.opengis.net/gml/3.2.1/gml.xsd>"';
+   queryParams['filter'] +=<'wfs:Query typeNames="dreal:fsoum_25">';
+   queryParams['filter'] +='<fes:Filter>';
+        queryParams['filter'] += '<fes:Not>'
+        queryParams['filter'] += '<fes:Disjoint>'
+        queryParams['filter'] += '<fes:ValueReference>dreal:geom</fes:ValueReference>'
+        queryParams['filter'] += '<gml:Polygon'
+        queryParams['filter'] +='gml:id="MultiPolygon.1';
+        queryParams['filter'] +='srsName="http://www.opengis.net/def/crs/EPSG/0/4326">';
+        queryParams['filter'] +='<gml:exterior>';
+        queryParams['filter'] +='<gml:LinearRing>';
+        queryParams['filter'] += '<gml:posList>-0.288863182067871 48.963666607295977,-0.299592018127441 48.959299208576141,-0.296330451965332 48.955325952385039,-0.282125473022461 48.950675995388366,-0.279722213745117 48.967019382922331,-0.288863182067871 48.963666607295977</gml:posList>';
+        queryParams['filter'] += '</gml:LinearRing>';
+        queryParams['filter'] += '</gml:exterior>';
+        queryParams['filter'] += '</gml:Polygon>';
+        queryParams['filter'] += '</fes:Disjoint>';
+        queryParams['filter'] += '</fes:Not>';
+        queryParams['filter'] += '</fes:Filter>';
+        queryParams['filter'] +='</wfs:Query>';
+        queryParams['filter'] +='</wfs:GetFeature>';
 
 
-
-
-    <wfs:GetFeature service="WFS" version="1.1.0"
-  xmlns:dreal=" https://georchestra.ac-corse.fr/geoserver/wfs?service=wfs"
-  xmlns:wfs="http://www.opengis.net/wfs"
-  xmlns="http://www.opengis.net/ogc"
-  xmlns:gml="http://www.opengis.net/gml"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.opengis.net/wfs
-                      http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">
-  <wfs:Query typeName="dreal:states">
-    <Filter>
-      <Intersects>
-        <PropertyName>the_geom</PropertyName>
-          <gml:Point srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
-            <gml:coordinates>-74.817265,40.5296504</gml:coordinates>
-          </gml:Point>
-        </Intersects>
-      </Filter>
-  </wfs:Query>
-</wfs:GetFeature>
  
     /*
      * bbox and attribute filter as POST parameter
