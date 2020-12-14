@@ -36,13 +36,13 @@
     "express-validator": "^5.3.1",
     "flatted": "^2.0.1",
     "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#fix_https_geom",
-    "lodash": "^4.17.15",
+    "handlebars": "^4.7.6",
+    "lodash": "^4.17.20",
     "pg": "^7.11.0",
     "pg-format": "^1.0.4",
     "shelljs": "^0.8.3",
     "swagger-ui-dist": "^3.13.6",
-    "uuid": "^3.3.2",
-    "handlebars": "^4.7.6"
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

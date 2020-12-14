@@ -8,7 +8,8 @@ const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 const parseInseeCode = require('../../helper/parseInseeCode');
 
-const erWfsClient = require('../../middlewares/erWfsClient');
+//const erWfsClient = require('../../middlewares/erWfsClient');
+const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 
@@ -19,7 +20,7 @@ const _ = require('lodash');
  */
 function createErProxy(featureTypeName,typeSearch){
     return [
-        erWfsClient,
+        gppWfsClient,
         validateParams,
         function(req,res){
             var params = matchedData(req);
@@ -57,7 +58,7 @@ function createErProxy(featureTypeName,typeSearch){
              if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-            req.erWfsClient.getFeatures(featureTypeName, params)
+            req.gppWfsClient.getFeatures(featureTypeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
                 })
@@ -97,7 +98,7 @@ var corsOptionsGlobal = function(origin,callback) {
 
 
 var erValidators = [
-    //check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
+    check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric()
 ];
@@ -113,8 +114,8 @@ var productValidators = erValidators.concat([
     
 ]);
 
-router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product_view','product'));
-router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product_view','product'));
+router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view ','product'));
+router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view ','product'));
 
 /**
  * Récupération des information sur les category dans le flux product_view
@@ -127,8 +128,8 @@ var categoryValidators = erValidators.concat([
     check('category_id').optional().isString()
 ]);
 
-router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product_view','category'));
-router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product_view','category'));
+router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view' ,'category'));
+router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view ','category'));
 
 
 /**
@@ -143,8 +144,8 @@ var gridValidators = erValidators.concat([
     check('zip_codes').optional().matches(/^\d{5}$/).withMessage('zip_codes doit contenir 5 caractères')
 ]);
 
-router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid_view','grid'));
-router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid_view','grid'));
+router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('PLAGE_ER_WFS:grid_view','grid'));
+router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('PLAGE_ER_WFS:grid_view','grid'));
 
 
 module.exports=router;
