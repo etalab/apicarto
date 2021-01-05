@@ -1,4 +1,3 @@
-'use strict';
 var Router = require('express').Router;
 var router = new Router();
 var cors = require('cors');
@@ -7,38 +6,17 @@ const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
-
-const gppWfsClient = require('../../middlewares/gppWfsClient');
-
+var corseWfsClient = require('../../lib/ClientDreal.js');
 const _ = require('lodash');
 
-function geoportailRequest(options, done) {
-    request(options, function(err, response, body) {
-        if (err) return done(err);
-        if (response.statusCode !== 200) {
-            const error = new Error('Géoportail returned an error: ' + response.statusCode);
-            error.responseBody = body;
-            error.statusCode = response.statusCode;
-            return done(error);
-        }
-        if (options.expectedFormat &&
-            response.headers['content-type'] &&
-            !response.headers['content-type'].includes(options.expectedFormat)) {
-            const error = new Error(`Géoportail returned an unexpected format: ${response.headers['content-type']}. Expected: ${options.expectedFormat}`);
-            error.responseBody = body;
-            return done(error);
-        }
-        done(null, body);
-    });
-}
 
 /**
  * Creation d'une chaîne de proxy sur le geoportail
  * @param {String} featureTypeName le nom de la couche WFS
  */
-function createNaturaProxy(featureTypeName){
+function createCorseProxy(featureTypeName){
     return [
-        gppWfsClient,
+        corseWfsClient,
         validateParams,
         function(req,res){
             var params = matchedData(req);
@@ -48,7 +26,7 @@ function createNaturaProxy(featureTypeName){
              if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-            req.gppWfsClient.getFeatures(featureTypeName, params)
+            req.corseWfsClient.getFeatures(featureTypeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
                 })
@@ -95,35 +73,27 @@ var natureValidators = [
 ];
 
 
-/**
-* Recherche flux geoorchectra corse pour les Forêts bénéficiant du régime forestier
-* Flux externe
-*/
+var corseValidators = natureValidators.concat([
+    check('ccod_frt').optional().isString(),
+    check('llib_frt').optional().isString(),
+    check('propriete').optional().isString(),
+    check('s_sig_ha').optional().isString(),
+    check('dpt').optional().isString(),
+    check('nom_fore').optional().isString()
 
-router.get('/foretcorse',cors(corsOptionsGlobal),natureValidators,corseNaturaProxy('dreal:fsoum_25'));
+]);
 
-router.post('/foretcorse',cors(corsOptionsGlobal),natureValidators, corseNaturaProxy('dreal:fsoum_25'));
+router.get('/foretcorse',cors(corsOptionsGlobal),corseValidators, createCorseProxy('dreal:fsoum_25'));
+router.post('/foretcorse',cors(corsOptionsGlobal),corseValidators, createCorseProxy('dreal:fsoum_25'));
 
 /**
 * Recherche flux geoorchectra corse pour les Forêts bénéficiant du régime forestier
 *
 */
 
-router.get('/pechecorse',cors(corsOptionsGlobal),natureValidators, corseNaturaProxy('dreal:res_pech25'));
-router.post('/pechecorse',cors(corsOptionsGlobal),natureValidators, corseNaturaProxy('dreal:res_pech25'));
+router.get('/pechecorse',cors(corsOptionsGlobal),corseValidators, createCorseProxy('dreal:res_pech25'));
+router.post('/pechecorse',cors(corsOptionsGlobal),corseValidators, createCorseProxy('dreal:res_pech25'));
 
 
-/**
-     * Récupération des divisions pour une commune.
-     *
-     * Paramètres : code_dep=25 et code_com=349
-     *
-     
-    router.get('/parcelle', prepareParamsCadastre, function (req, res, next) {
-        cadastreClient.getParcelles(req.cadastreParams, function (err, featureCollection) {
-            if (err) return next(err);
-            res.json(featureCollection);
-        });
-    });*/
 
 module.exports=router;

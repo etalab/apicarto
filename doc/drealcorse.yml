@@ -1,0 +1,155 @@
+swagger: '2.0'
+info:
+  title: Module Nature
+  description: >
+
+    Le service d'interrogation du module nature  permet d'obtenir les informations  sur différentes couches réserves naturelles et natura 2000.
+    
+    Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
+
+    Toutes les requêtes du module cadastre peuvent se faire en POST ou en GET. 
+
+    Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+
+    Attention à la différence des autres modules apicarto, toutes les couches n'ont pas des référentiels sur EPSG:4326.
+    
+    Veuillez vérifier le référentiel par défaut en faisant un getCapabilities avec votre clé:
+
+    https://wxs.ign.fr/VOTRECLE/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities
+
+    
+    ## Clé WFS géoportail (apikey)
+    
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+
+      Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
+      
+
+      Si vous souhaitez utiliser les différentes ressources de ce modules vous devez commander les flux "Ressources WFS Géoportail" ci-dessous:
+      
+      * PROTECTEDAREAS.SIC:sic  (Sites Natura 2000 au titre de la directive Habitat)
+      * PROTECTEDAREAS.ZPS:zps  (Sites NATURA 2000 au titre de la Directive Oiseaux)
+      * PROTECTEDAREAS.RNC:rnc  (Réserves Naturelles de Corse)
+      * PROTECTEDAREAS.ZNIEFF1:znieff1 (Zones écologiques de nature remarquable (ZNIEFF1))
+      * PROTECTEDAREAS.ZNIEFF2:znieff2  (Zones écologiques de nature remarquable (ZNIEFF2))
+      * PROTECTEDAREAS.PN:pn (Parcs nationnaux)
+      * PROTECTEDAREAS.PNR:pnr (Parcs nationaux régionaux)
+
+  
+  contact:
+    name: Apicarto Dreal Corse
+
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /drealcorse/foretcorse:
+    get:
+      summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
+      description: Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - foretcorse
+      parameters:
+
+        - name: ccod_frt
+          in: query
+          type: string
+          required: false
+
+        - name: llib_frt
+          in: query
+          type: string
+          required: false
+        
+        - name: propriete
+          in: query
+          type: string
+          required: false
+
+        - name: s_sig_ha
+          in: query
+          type: string
+          required: false
+        
+        - name: nom_fore
+          in: query
+          type: string
+          required: false
+        
+        - name: dpt
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+        
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionCorseAutre'
+  
+
+definitions:
+
+  #---------------------------------------------------
+  # /nature/
+  #---------------------------------------------------
+            
+  FeatureCorseAutre:
+    description: 'Nature autres'
+    allOf:
+      - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          id_mnhn:
+            type: string
+          nom:
+            type: string
+          url:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'              
+
+  FeatureCollectionCorseAutre:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureDivision`
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureCorseAutre'
+
+  
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+  Point:
+    $ref: './schema/geojson.yml#definitions/Point'
