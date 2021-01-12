@@ -6,14 +6,15 @@ const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
-var corseWfsClient = require('../../lib/ClientDreal.js');
+//var corseWfsClient = require('../../lib/ClientDreal.js');
+const drealCorseWfsClient = require('../../middlewares/drealCorsewfsClient');
 const _ = require('lodash');
 
 
 /**
  * Creation d'une chaîne de proxy sur le geoportail
  * @param {String} featureTypeName le nom de la couche WFS
- */
+
 function createCorseProxy(featureTypeName){
     return [
         corseWfsClient,
@@ -21,11 +22,11 @@ function createCorseProxy(featureTypeName){
         function(req,res){
             var params = matchedData(req);
 
-            /* Value default pour _limit an _start */
+            /* Value default pour _limit an _start 
              if ( typeof params._start == 'undefined' ) {params._start = 0;}
              if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
-            /* requête WFS GPP*/
+            /* requête WFS GPP
             req.corseWfsClient.getFeatures(featureTypeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
@@ -37,7 +38,34 @@ function createCorseProxy(featureTypeName){
             }
         ];
     }
-
+*/
+   
+    
+    
+    
+    /**
+     * Creation d'une chaîne de proxy sur le geoportail
+     * @param {String} featureTypeName le nom de la couche WFS
+     */
+    function createCorseProxy(featureTypeName){
+        return [
+            drealCorseWfsClient,
+            validateParams,
+            function(req,res){
+                var params = matchedData(req);
+                console.log(params);
+                /* requête WFS GPP*/
+                req.drealCorseWfsClient.getFeatures(featureTypeName, params)
+                    .then(function(featureCollection) {
+                        res.json(featureCollection);
+                    })
+                    .catch(function(err) {
+                        res.status(500).json(err);
+                    })
+                    ;
+                }
+            ];
+        }
 
 var corsOptionsGlobal = function(origin,callback) {
 	var corsOptions;

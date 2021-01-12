@@ -1,11 +1,8 @@
 const debug = require('debug')('apicarto');
-const fluxExterneCorse= require('../lib/ClientDreal.js');
-
+const GeoportalWfsClient = require('geoportal-wfs-client');
 
 /*
- * Middleware pour la création du client WFS geoportail
- * 
- * TODO permettre la définition de la clé au niveau du serveur
+ * middleware pour la création du client geoportail
  */
 module.exports = function(req, res, next) {
     var referer = 'http://localhost';
@@ -14,9 +11,10 @@ module.exports = function(req, res, next) {
     if ( req.headers.referer ){
         referer = req.headers.referer ;
     }
-console.log("je suis dans wfs client");
-    req.drealCorsewfsClient = new fluxExterneCorse({
-        'url' : 'https://georchestra.ac-corse.fr/geoserver/wfs',
+
+    req.drealCorseWfsClient = new GeoportalWfsClient({
+        'apiKey':  'geoserver',
+        'url' : 'https://georchestra.ac-corse.fr/{apiKey}/wfs',
         'headers':{
             Referer: referer,
             'User-Agent': 'apicarto'
