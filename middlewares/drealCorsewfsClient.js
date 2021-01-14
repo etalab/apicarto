@@ -13,6 +13,7 @@ module.exports = function(req, res, next) {
     }
 
     req.drealCorseWfsClient = new GeoportalWfsClient({
+        'geometryFieldName': 'geom',
         'apiKey':  'geoserver',
         'url' : 'https://georchestra.ac-corse.fr/{apiKey}/wfs',
         'headers':{
