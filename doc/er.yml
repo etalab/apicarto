@@ -37,7 +37,7 @@ paths:
           in: query
           description: Clé WFS géoportail
           type: string
-          required: false
+          required: true
 
         - name: code_ean
           in: query
@@ -96,7 +96,7 @@ paths:
           in: query
           description: Clé WFS géoportail
           type: string
-          required: false
+          required: true
 
         - name: name
           in: query
@@ -160,7 +160,7 @@ paths:
           in: query
           description: Clé WFS géoportail
           type: string
-          required: false
+          required: true
 
         - name: name
           in: query

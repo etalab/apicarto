@@ -8,8 +8,8 @@ const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 const parseInseeCode = require('../../helper/parseInseeCode');
 
-//const erWfsClient = require('../../middlewares/erWfsClient');
-const gppWfsClient = require('../../middlewares/gppWfsClient');
+const gppWfsClient= require('../../middlewares/erWfsClient');
+//const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 
@@ -24,6 +24,13 @@ function createErProxy(featureTypeName,typeSearch){
         validateParams,
         function(req,res){
             var params = matchedData(req);
+            if (typeof req.query.apikey == 'undefined') {
+                return res.status(400).send({
+                    code: 400,
+                    message: 'La clé ign (apikey) doit être renseignée'
+                })
+            }
+            params = _.omit(params,'apikey');
             if (typeSearch == 'category')  {
                 if (params.name && params.type) {
                     if(params.type == 's') { 
@@ -114,8 +121,8 @@ var productValidators = erValidators.concat([
     
 ]);
 
-router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view ','product'));
-router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view ','product'));
+router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view','product'));
+router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view','product'));
 
 /**
  * Récupération des information sur les category dans le flux product_view
@@ -129,7 +136,7 @@ var categoryValidators = erValidators.concat([
 ]);
 
 router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view' ,'category'));
-router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view ','category'));
+router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view','category'));
 
 
 /**
