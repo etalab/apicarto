@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Module Nature
+  title: Module Ressources Corse
   description: >
 
     Le service d'interrogation du module corse  permet d'obtenir les informations  sur différentes couches fournis par la Dreal Corse
@@ -21,7 +21,7 @@ produces:
 basePath: /api
 
 paths:
-  /drealcorse/foretcorse:
+  /corse/foretcorse:
     get:
       summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
       description: Retourne un résultat de Type "FeatureCollection"
@@ -72,19 +72,13 @@ paths:
             $ref: '#/definitions/FeatureCollectionCorseForet'
 
   paths:
-  /drealcorse/pechecorse:
+  /corse/pechecorse:
     get:
       summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
       description: Retourne un résultat de Type "FeatureCollection"
       tags:
         - foretcorse
       parameters:
-
-        - name: designatio
-          in: query
-          type: string
-          required: false
-        
         - name: dpt
           in: query
           type: string

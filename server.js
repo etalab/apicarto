@@ -76,7 +76,7 @@ app.use('/api/nature',require('./controllers/nature'));
 app.use('/api/wfs-geoportail/',require('./controllers/wfs-geoportail'));
 
 /* Module Dreal Corse */
-app.use('/api/drealcorse/',require('./controllers/corse'));
+app.use('/api/corse/',require('./controllers/corse'));
 
 app.listen(port);
 
