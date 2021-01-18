@@ -22,7 +22,6 @@ function createWfsProxy() {
         function(req,res){
             var params = matchedData(req);
             var featureTypeName= params.source;
-            console.log('value:'+req.query.apikey);
             if (typeof req.query.apikey == 'undefined') {
                 return res.status(400).send({
                     code: 400,

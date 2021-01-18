@@ -73,7 +73,10 @@ app.use('/api/rpg',require('./controllers/rpg'));
 app.use('/api/nature',require('./controllers/nature'));
 
 /* Module all module IGN */
-app.use('/api/wfs-geoportail/',require('./controllers/wfs-geoportail'));
+app.use('/api/wfs-geoportail',require('./controllers/wfs-geoportail'));
+
+/* Module Espace Revendeur */
+app.use('/api/er',require('./controllers/er'));
 
 /* Module Dreal Corse */
 app.use('/api/corse/',require('./controllers/corse'));
