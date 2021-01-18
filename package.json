@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@mapbox/geojsonhint": "^2.1.0",
+    "terraformer-wkt-parser": "^1.1.2",
     "@turf/turf": "^5.1.6",
     "async": "^2.6.0",
     "body-parser": "^1.14.1",
@@ -42,7 +43,9 @@
     "pg-format": "^1.0.4",
     "shelljs": "^0.8.3",
     "swagger-ui-dist": "^3.13.6",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "request": "^2.65.0",
+    "request-promise": "^4.2.5"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

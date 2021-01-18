@@ -78,6 +78,9 @@ app.use('/api/wfs-geoportail',require('./controllers/wfs-geoportail'));
 /* Module Espace Revendeur */
 app.use('/api/er',require('./controllers/er'));
 
+/* Module Dreal Corse */
+app.use('/api/corse/',require('./controllers/corse'));
+
 app.listen(port);
 
 module.exports = app;
