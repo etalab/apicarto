@@ -3,7 +3,7 @@ info:
   title: Module Espace revendeur
   description: >
 
-    Le service d'interrogation du module nature  permet d'obtenir les informations  sur différentes couches de l'espace revendeurr.
+    Le service d'interrogation du module er  permet d'obtenir les informations  sur différentes couches de l'espace revendeur
     
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
@@ -13,9 +13,15 @@ info:
     
     ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+      Ce service se repose sur l'appel à des services WFS qui nécessite une clé pour l'utilisation
 
       Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
+
+       Lors de votre demande de clé IGN, vous devez commander les flux ci dessous :
+          
+      * PLAGE_ER_WFS:product_view
+      * PLAGE_ER_WFS:grid_view
+      
   
   contact:
     name: Apicarto Espace revendeur
