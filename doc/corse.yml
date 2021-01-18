@@ -1,0 +1,187 @@
+swagger: '2.0'
+info:
+  title: Module Ressources Corse
+  description: >
+
+    Le service d'interrogation du module corse  permet d'obtenir les informations  sur différentes couches fournis par la Dreal Corse
+    
+    Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
+
+    Toutes les requêtes du module cadastre peuvent se faire en POST ou en GET. 
+
+    Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+    
+  
+  contact:
+    name: Apicarto Dreal Corse
+
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /corse/foretcorse:
+    get:
+      summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
+      description: Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - foretcorse
+      parameters:
+
+        - name: ccod_frt
+          in: query
+          type: string
+          required: false
+
+        - name: llib_frt
+          in: query
+          type: string
+          required: false
+        
+        - name: propriete
+          in: query
+          type: string
+          required: false
+
+        - name: s_sig_ha
+          in: query
+          type: string
+          required: false
+        
+        - name: nom_fore
+          in: query
+          type: string
+          required: false
+        
+        - name: dpt
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+        
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionCorseForet'
+
+  paths:
+  /corse/pechecorse:
+    get:
+      summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
+      description: Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - foretcorse
+      parameters:
+        - name: dpt
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+        
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionCorsePeche'
+  
+
+definitions:
+
+ #---------------------------------------------------
+  # /Corse Forêt/
+  #---------------------------------------------------
+            
+  FeatureCorseForet:
+    description: 'Corse Forêt'
+    allOf:
+      - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          ccod_frt:
+            type: string
+          llib_frt:
+            type: string
+          propriete:
+            type: string
+          s_sig_ha:
+            type: number
+          nom_fore:
+            type: string
+          dept: 
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'  
+
+
+  #---------------------------------------------------
+  # /corse Pêche
+  #---------------------------------------------------
+            
+  FeatureCorsePeche:
+    description: 'Dreal Corse Pêche'
+    allOf:
+      - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          designatio:
+            type: string
+          dpt:
+            type: string
+          date_arr:
+            type: string
+          date_fin:
+            type: string
+          id_repe:
+            type: integer
+          st_length:
+            type: number
+      geometry:
+        $ref: '#/definitions/MultiPolygon'              
+
+  FeatureCollectionCorsePeche:
+    description: Une `FeatureCollection`
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureCorsePeche'
+
+  FeatureCollectionCorseForet:
+    description: Une `FeatureCollection`
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureCorseForet'
+
+  # import definitions
+  FeatureCollection:
+    $ref: './schema/geojson.yml#definitions/FeatureCollection'
+  Feature:
+    $ref: './schema/geojson.yml#definitions/Feature'
+  Geometry:
+    $ref: './schema/geojson.yml#definitions/Geometry'
+  MultiPolygon:
+    $ref: './schema/geojson.yml#definitions/MultiPolygon'
+  Point:
+    $ref: './schema/geojson.yml#definitions/Point'

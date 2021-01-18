@@ -75,6 +75,8 @@ app.use('/api/nature',require('./controllers/nature'));
 /* Module all module IGN */
 app.use('/api/wfs-geoportail/',require('./controllers/wfs-geoportail'));
 
+/* Module Dreal Corse */
+app.use('/api/corse/',require('./controllers/corse'));
 
 app.listen(port);
 

@@ -8,8 +8,8 @@ const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 
 const gppWfsClient = require('../../middlewares/gppWfsClient');
-
 const _ = require('lodash');
+
 
 
 /**
@@ -137,5 +137,7 @@ router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy(
 
 router.get('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
 router.post('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
+
+
 
 module.exports=router;
