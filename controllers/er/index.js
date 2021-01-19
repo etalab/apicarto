@@ -34,14 +34,14 @@ function createErProxy(featureTypeName,typeSearch){
             if (typeSearch == 'category')  {
                 if (params.name && params.type) {
                     if(params.type == 's') { 
-                        // Recherche sur segment_titl
-                        params.segment_ti = params.name;
+                        // Recherche sur segment_title
+                        params.segment_title = params.name;
                     } else if (params.type == 't') {
-                        //Recherche sur segment_ti
-                        params.theme_titl = params.name;
+                        //Recherche sur theme_title
+                        params.theme_title = params.name;
                     }else if (params.type == 'c') {
-                        // Recherche sur collection
-                        params.collection = params.name;
+                        // Recherche sur collection_title
+                        params.collection_title = params.name;
                    } else {
                         return res.status(400).send({
                             code: 400,
@@ -57,9 +57,10 @@ function createErProxy(featureTypeName,typeSearch){
                     }
 
                 }
+                /* Suppression des paramètres après transformations */
+                params = _.omit(params,'name');
+                params = _.omit(params,'type');
             }
-            params = _.omit(params,'name');
-            params = _.omit(params,'type');
             /* Value default pour _limit an _start */
              if ( typeof params._start == 'undefined' ) {params._start = 0;}
              if( typeof params._limit == 'undefined') {params._limit = 1000;}

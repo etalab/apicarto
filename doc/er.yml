@@ -106,9 +106,7 @@ paths:
 
         - name: name
           in: query
-          description: Code insee de la commune sur 5 caractères
           type: string
-          pattern: '\d{5}'
           required: false
 
         - name: title
@@ -175,6 +173,7 @@ paths:
 
         - name: type
           in: query
+          description: Les valeurs autorisées sont t ou c ou s
           type: string
           required: false
 
