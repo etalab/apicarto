@@ -31,6 +31,8 @@ function createErProxy(featureTypeName,typeSearch){
                 })
             }
             params = _.omit(params,'apikey');
+            /** Gestion de la requete categorie */
+            
             if (typeSearch == 'category')  {
                 if (params.name && params.type) {
                     if(params.type == 's') { 
@@ -60,6 +62,14 @@ function createErProxy(featureTypeName,typeSearch){
                 /* Suppression des paramètres après transformations */
                 params = _.omit(params,'name');
                 params = _.omit(params,'type');
+            }
+
+            /** Gestion de la requete Grid */
+            if (typeSearch == 'grid') {
+                if (params.title) {
+                    params.title = params.title.toUpperCase();
+                }
+
             }
             /* Value default pour _limit an _start */
              if ( typeof params._start == 'undefined' ) {params._start = 0;}
@@ -149,7 +159,7 @@ var gridValidators = erValidators.concat([
     check('name').optional().isString(),
     check('title').optional().isString(),
     check('type').optional().isString(),
-    check('zip_codes').optional().matches(/^\d{5}$/).withMessage('zip_codes doit contenir 5 caractères')
+    check('zip_codes').optional().isString()
 ]);
 
 router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('PLAGE_ER_WFS:grid_view','grid'));
