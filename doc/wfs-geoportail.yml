@@ -29,8 +29,6 @@ info:
 
       Exemple pour le champ source : CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle
     
-  version: '1.0'
-
 
 consumes:
   - application/json
