@@ -8,8 +8,7 @@ const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 const parseInseeCode = require('../../helper/parseInseeCode');
 
-const gppWfsClient= require('../../middlewares/erWfsClient');
-//const gppWfsClient = require('../../middlewares/gppWfsClient');
+const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 
@@ -50,6 +49,9 @@ function createErProxy(featureTypeName,typeSearch){
                             message: 'Le champ type contient uniquement les valeurs t, c ou s'
                             });
                     }
+                    /* Suppression des paramètres après transformations */
+                    params = _.omit(params,'name');
+                    params = _.omit(params,'type');
                 } else {
                     if(params.name || params.type) {
                     return res.status(400).send({
@@ -59,9 +61,7 @@ function createErProxy(featureTypeName,typeSearch){
                     }
 
                 }
-                /* Suppression des paramètres après transformations */
-                params = _.omit(params,'name');
-                params = _.omit(params,'type');
+                
             }
 
             /** Gestion de la requete Grid */
@@ -117,6 +117,7 @@ var corsOptionsGlobal = function(origin,callback) {
 
 var erValidators = [
     check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
+    check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric()
 ];
@@ -126,7 +127,6 @@ var productValidators = erValidators.concat([
     check('code_article').optional().isString(),
     check('name').optional().isString(),
     check('sale').optional().isNumeric(),
-    check('geom').optional().custom(isGeometry),
     check('type').optional().isString(),
     check('publication_date').optional().isString()
     
