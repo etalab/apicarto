@@ -89,7 +89,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/FeatureCollection'
+            $ref: '#/definitions/FeatureProduct'
 
   /er/grid:
     get:
@@ -150,7 +150,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/FeatureCollection'
+            $ref: '#/definitions/FeatureGrid'
 
   /er/category:
     get:
@@ -158,8 +158,6 @@ paths:
       description: |
         Retourne un résultat de Type "FeatureCollection"
 
-      tags:
-        - Category
       parameters:
 
         - name: apikey
@@ -202,11 +200,13 @@ paths:
           type: integer
           required: false
   
+      tags:
+        - category
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/FeatureProduct'
+            $ref: '#/definitions/FeatureCategory'
 
 
 definitions:
@@ -216,7 +216,7 @@ definitions:
   #---------------------------------------------------
   
   FeatureProduct:
-    description: 'Pour la recherche produits'
+    description: 'Products'
     allOf:
     - $ref: '#/definitions/Feature'
     properties:
@@ -325,6 +325,82 @@ definitions:
         items:
           $ref: '#/definitions/FeatureGrid'
 
+  #---------------------------------------------------
+  # /er/category
+  #---------------------------------------------------
+  
+  FeatureCategory:
+    description: 'Category'
+    allOf:
+    - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          code_ean:
+            type: string
+          code_article:
+            type: string
+          name:
+            type: string
+          name_complement:
+            type: string
+          front_image:
+            type: string
+          back_image:
+            type: string
+          edition_number:
+            type: string
+          publication_date:
+            type: string
+          status:
+            type: string
+          replacement:
+            type: string
+          dimension:
+            type: string
+          scale:
+            type: string
+          complement:
+            type: string
+          category_id:
+            type: string
+          segment_title:
+            type: string
+          segment_slug:
+            type: string
+          theme_title:
+            type: string
+          theme_slug:
+            type: string
+          collection_title:
+            type: string
+          collection_slug:
+            type: string
+          background_color:
+            type: string
+          border_color:
+            type: string
+          pricecode:
+            type: string
+          price:
+            type: string
+          price_exlcuding_vat:
+            type: string
+          vat:
+            type: string
+          geometry:
+        $ref: '#/definitions/MultiPolygon'
+
+  FeatureCollectionCategory:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCollectionCategory'` 
+    allOf:
+    - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureCategory'
   
   # import definitions
   FeatureCollection:
