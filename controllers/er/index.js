@@ -8,8 +8,7 @@ const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 const parseInseeCode = require('../../helper/parseInseeCode');
 
-const gppWfsClient= require('../../middlewares/erWfsClient');
-//const gppWfsClient = require('../../middlewares/gppWfsClient');
+const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 
@@ -31,23 +30,28 @@ function createErProxy(featureTypeName,typeSearch){
                 })
             }
             params = _.omit(params,'apikey');
+            /** Gestion de la requete categorie */
+            
             if (typeSearch == 'category')  {
                 if (params.name && params.type) {
                     if(params.type == 's') { 
-                        // Recherche sur segment_titl
-                        params.segment_ti = params.name;
+                        // Recherche sur segment_title
+                        params.segment_title = params.name;
                     } else if (params.type == 't') {
-                        //Recherche sur segment_ti
-                        params.theme_titl = params.name;
+                        //Recherche sur theme_title
+                        params.theme_title = params.name;
                     }else if (params.type == 'c') {
-                        // Recherche sur collection
-                        params.collection = params.name;
+                        // Recherche sur collection_title
+                        params.collection_title = params.name;
                    } else {
                         return res.status(400).send({
                             code: 400,
                             message: 'Le champ type contient uniquement les valeurs t, c ou s'
                             });
                     }
+                    /* Suppression des paramètres après transformations */
+                    params = _.omit(params,'name');
+                    params = _.omit(params,'type');
                 } else {
                     if(params.name || params.type) {
                     return res.status(400).send({
@@ -57,9 +61,21 @@ function createErProxy(featureTypeName,typeSearch){
                     }
 
                 }
+                
             }
-            params = _.omit(params,'name');
-            params = _.omit(params,'type');
+
+            /** Gestion de la requete Grid */
+            if (typeSearch == 'grid') {
+                if (params.title) {
+                    params.title = params.title.toUpperCase();
+                }
+                if (params.zip_codes) {
+                    params.zip_codes = '"[\\"'+ params.zip_codes.replace(',' , ',\\"') + '\\"]"';
+                    console.log(params.zip_codes);
+
+                }
+
+            }
             /* Value default pour _limit an _start */
              if ( typeof params._start == 'undefined' ) {params._start = 0;}
              if( typeof params._limit == 'undefined') {params._limit = 1000;}
@@ -106,6 +122,7 @@ var corsOptionsGlobal = function(origin,callback) {
 
 var erValidators = [
     check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
+    check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric()
 ];
@@ -115,7 +132,6 @@ var productValidators = erValidators.concat([
     check('code_article').optional().isString(),
     check('name').optional().isString(),
     check('sale').optional().isNumeric(),
-    check('geom').optional().custom(isGeometry),
     check('type').optional().isString(),
     check('publication_date').optional().isString()
     
@@ -148,7 +164,7 @@ var gridValidators = erValidators.concat([
     check('name').optional().isString(),
     check('title').optional().isString(),
     check('type').optional().isString(),
-    check('zip_codes').optional().matches(/^\d{5}$/).withMessage('zip_codes doit contenir 5 caractères')
+    check('zip_codes').optional().isString()
 ]);
 
 router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('PLAGE_ER_WFS:grid_view','grid'));
