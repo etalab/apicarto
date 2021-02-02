@@ -6,5 +6,4 @@ coverage/
 tmp
 .DS_Store
 
-processes.json
-production.env
+.env
