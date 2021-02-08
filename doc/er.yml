@@ -3,17 +3,17 @@ info:
   title: Module Espace revendeur
   description: >
 
-    Le service d'interrogation du module er  permet d'obtenir les informations  sur différentes couches de l'espace revendeur
+    Le service d'interrogation du module "er"  permet d'obtenir les informations  sur différentes couches de l'espace revendeur
     
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
-    Toutes les requêtes du module cadastre peuvent se faire en POST ou en GET. 
+    Toutes les requêtes du module "er" peuvent se faire en POST ou en GET. 
 
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
     
     ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS qui nécessite une clé pour l'utilisation
+      Ce service repose sur l'appel des services WFS Géoportail qui nécessite une clé pour l'utilisation
 
       Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
 
@@ -37,6 +37,8 @@ paths:
       summary: Recherche des produits de l'espace revendeurs
       description: |
         Retourne un résultat de Type "FeatureCollection".
+      tags:
+        - product
       parameters:
 
         - name: apikey
@@ -83,13 +85,12 @@ paths:
           type: integer
           required: false
 
-      tags:
-        - product
+      
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/FeatureProduct'
+            $ref: '#/definitions/FeatureCollectionProduct'
 
   /er/grid:
     get:
@@ -150,7 +151,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/FeatureGrid'
+            $ref: '#/definitions/FeatureCollectionGrid'
 
   /er/category:
     get:
@@ -206,7 +207,7 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/FeatureCategory'
+            $ref: '#/definitions/FeatureCollectionCategory'
 
 
 definitions:
@@ -275,19 +276,10 @@ definitions:
             type: string
           vat:
             type: string
-          geometry:
-        $ref: '#/definitions/MultiPolygon'
+    geometry:
+      $ref: '#/definitions/MultiPolygon'
 
-  FeatureCollectionProduct:
-    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCollectionProduit` 
-    allOf:
-    - $ref: '#/definitions/FeatureCollection'
-    properties:
-      features:
-        type: array
-        items:
-          $ref: '#/definitions/FeatureProduct'
-
+ 
   #---------------------------------------------------
   # /er/grid
   #---------------------------------------------------
@@ -312,18 +304,8 @@ definitions:
             type: string
           children: 
             type: string
-      geometry:
-        $ref: '#/definitions/MultiPolygon'              
-
-  FeatureCollectionGrid:
-    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCollectionGrid`
-    allOf:
-      - $ref: '#/definitions/FeatureCollection'
-    properties:
-      features:
-        type: array
-        items:
-          $ref: '#/definitions/FeatureGrid'
+    geometry:
+      $ref: '#/definitions/MultiPolygon'              
 
   #---------------------------------------------------
   # /er/category
@@ -389,7 +371,7 @@ definitions:
             type: string
           vat:
             type: string
-          geometry:
+      geometry:
         $ref: '#/definitions/MultiPolygon'
 
   FeatureCollectionCategory:
@@ -401,7 +383,27 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/FeatureCategory'
-  
+
+  FeatureCollectionGrid:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCollectionGrid`
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureGrid'
+
+  FeatureCollectionProduct:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureCollectionProduit` 
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureProduct'
+
   # import definitions
   FeatureCollection:
     $ref: './schema/geojson.yml#definitions/FeatureCollection'

@@ -3,11 +3,11 @@ info:
   title: Module Ressources Corse
   description: >
 
-    Le service d'interrogation du module corse  permet d'obtenir les informations  sur différentes couches fournis par la Dreal Corse
+    Le service d'interrogation du module "corse"  permet d'obtenir les informations  sur différentes couches fournis par la Dreal Corse
     
     Toutes les réponses sont au format GeoJSON et de type FeatureCollection.
 
-    Toutes les requêtes du module cadastre peuvent se faire en POST ou en GET. 
+    Toutes les requêtes du module "corse" peuvent se faire en POST ou en GET. 
 
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
     
@@ -74,10 +74,10 @@ paths:
   paths:
   /corse/pechecorse:
     get:
-      summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
+      summary: Recherche des zones de pêche en Corse
       description: Retourne un résultat de Type "FeatureCollection"
       tags:
-        - foretcorse
+        - pechecorse
       parameters:
         - name: dpt
           in: query
