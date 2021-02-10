@@ -71,8 +71,6 @@ function createErProxy(featureTypeName,typeSearch){
                 }
                 if (params.zip_codes) {
                     params.zip_codes = '"[\\"'+ params.zip_codes.replace(',' , ',\\"') + '\\"]"';
-                    console.log(params.zip_codes);
-
                 }
 
             }
