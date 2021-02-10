@@ -99,7 +99,7 @@ paths:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend la source de donnée issue de geochestra.ac-fr à interroger en paramètre d'entrée
+        Prend la source de donnée issue de https://georchestra.ac-corse.fr/geoserver/ à interroger en paramètre d'entrée
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       tags:
         - Touslesflux
