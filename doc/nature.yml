@@ -388,68 +388,6 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/FeatureCollectionNatureAutre'
-
-  /nature/foretcorse:
-    get:
-      summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
-      description: Retourne un résultat de Type "FeatureCollection"
-      tags:
-        - Forêts bénéficiant du régime forestier en Corse
-      parameters:
-
-        - name: ccod_frt
-          in: query
-          type: string
-          required: false
-
-        - name: llib_frt
-          in: query
-          type: string
-          required: false
-        
-        - name: propriete
-          in: query
-          type: string
-          required: false
-
-        - name: s_sig_ha
-          in: query
-          type: string
-          required: false
-        
-        - name: nom_fore
-          in: query
-          type: string
-          required: false
-        
-        - name: dpt
-          in: query
-          type: string
-          required: false
-
-        - name: geom
-          in: query
-          description: Géométrie au format GeoJson
-          schema:
-            $ref: '#/definitions/Geometry'
-          
-        - name: _limit
-          in: query
-          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
-          type: integer
-          required: false
-          
-        - name: _start
-          in: query
-          description: Position pour le début de la recherche
-          type: integer
-          required: false
-        
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/FeatureCollectionNatureAutre'
   
 
 definitions:
