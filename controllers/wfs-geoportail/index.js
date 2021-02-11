@@ -49,7 +49,6 @@ function createWfsProxy() {
                     res.json(featureCollection);
                 })
                 .catch(function(err) {
-                    console.log(err);
                     res.status(500).json(err);
                 })
             ;

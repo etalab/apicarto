@@ -26,7 +26,7 @@ paths:
       summary: Recherche des zones en Corse sur les Forêts bénéficiant du régime forestier
       description: Retourne un résultat de Type "FeatureCollection"
       tags:
-        - foretcorse
+        - Foret Corse
       parameters:
 
         - name: ccod_frt
@@ -71,13 +71,12 @@ paths:
           schema:
             $ref: '#/definitions/FeatureCollectionCorseForet'
 
-  paths:
   /corse/pechecorse:
     get:
       summary: Recherche des zones de pêche en Corse
       description: Retourne un résultat de Type "FeatureCollection"
       tags:
-        - pechecorse
+        - Peche Corse
       parameters:
         - name: dpt
           in: query
@@ -95,6 +94,31 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/FeatureCollectionCorsePeche'
+
+  /corse/search:
+    get:
+      description: |
+        Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
+        Prend la source de donnée issue de https://georchestra.ac-corse.fr/geoserver/ à interroger en paramètre d'entrée
+      Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - Touslesflux
+      parameters:
+        - name: source
+          in: query
+          description: Source des données geochestra.ac-corse
+          type: string
+          required: true
+
+        - name: geom
+          in: query
+          required: true
+          schema:
+            $ref: "#/definitions/Geometry"
+        
+      responses:
+        '200':
+          description: Success
   
 
 definitions:
