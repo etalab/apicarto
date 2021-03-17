@@ -1,7 +1,7 @@
 swagger: '2.0'
 
 info:
-  title: Module RPG (Version Beta)
+  title: Module RPG
   description: >
 
     Le service d’interrogation du RPG permet d’obtenir des informations du registre parcellaire graphique intersectant une géométrie (ponctuelle ou surfacique).
@@ -92,12 +92,12 @@ paths:
           required: false
 
       tags:
-        - RPG avant 2014 (version bêta)
+        - RPG avant 2015
       responses:
         '200':
           description: "Succès"
           schema:
-            $ref: "#/definitions/FeatureCollectionRPGAvant2014"
+            $ref: "#/definitions/FeatureCollectionRPGAvant2015"
 
   /rpg/v2:
     get:
@@ -143,7 +143,7 @@ paths:
           required: false
 
       tags:
-        - RPG à partir de 2015 (Version bêta)
+        - RPG à partir de 2015
       responses:
         '200':
           description: "Succès"
@@ -193,8 +193,8 @@ definitions:
         items:
           $ref: '#/definitions/FeatureRPGApartirde2015'
 
-  FeatureRPGAvant2014:
-    description: "Objet géographique RPG avant 2014" 
+  FeatureRPGAvant2015:
+    description: "Objet géographique RPG avant 2015" 
     type: object
     allOf:
       - $ref: "#/definitions/Feature"
@@ -224,7 +224,7 @@ definitions:
       geometry:
         $ref: '#/definitions/MultiPolygon'
 
-  FeatureCollectionRPGAvant2014:
+  FeatureCollectionRPGAvant2015:
     description: "Liste d'objet géographique RPG"
     type: object
     properties:
