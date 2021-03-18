@@ -63,11 +63,6 @@ paths:
           type: string
           required: false
 
-        - name: sitename
-          in: query
-          type: string
-          required: false
-
         - name: geom
           in: query
           description: Géométrie au format GeoJson
@@ -108,11 +103,6 @@ paths:
           required: false
 
         - name: sitecode
-          in: query
-          type: string
-          required: false
-
-        - name: sitename
           in: query
           type: string
           required: false
@@ -163,11 +153,6 @@ paths:
           in: query
           type: string
           required: false
-
-        - name: nom
-          in: query
-          type: string
-          required: false
           
         - name: geom
           in: query
@@ -211,11 +196,6 @@ paths:
           required: false
 
         - name: id_mnhn
-          in: query
-          type: string
-          required: false
-
-        - name: nom
           in: query
           type: string
           required: false
@@ -264,11 +244,6 @@ paths:
           type: string
           required: false
 
-        - name: nom
-          in: query
-          type: string
-          required: false
-
         - name: geom
           in: query
           description: Géométrie au format GeoJson
@@ -312,11 +287,6 @@ paths:
           type: string
           required: false
 
-        - name: nom
-          in: query
-          type: string
-          required: false
-
         - name: geom
           in: query
           description: Géométrie au format GeoJson
@@ -356,11 +326,6 @@ paths:
           required: false
 
         - name: id_mnhn
-          in: query
-          type: string
-          required: false
-
-        - name: nom
           in: query
           type: string
           required: false
