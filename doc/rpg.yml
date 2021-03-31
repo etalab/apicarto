@@ -1,7 +1,7 @@
 swagger: '2.0'
 
 info:
-  title: Module RPG (Version Beta)
+  title: Module RPG
   description: >
 
     Le service d’interrogation du RPG permet d’obtenir des informations du registre parcellaire graphique intersectant une géométrie (ponctuelle ou surfacique).
@@ -27,7 +27,7 @@ info:
       Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - RPG" ci-dessous suivant l'année désirée:
           
       * RPG.2010:rpg_2010, RPG.2011:rpg_2011, RPG.2012:rpg_2012, RPG.2013:rpg_2013
-      * RPG.2014:ilots_anonymes (à venir)
+      * RPG.2014:ilots_anonymes
       * RPG.2015:parcelles_graphiques
       * RPG.2016:parcelles_graphiques
       * RPG.2017:parcelles_graphiques
@@ -53,7 +53,7 @@ paths:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend une date qui sera une valeur comprise entre 2010 et 2013 inclus
+        Prend une date qui sera une valeur comprise entre 2010 et 2014 inclus
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
         - name: apikey
@@ -92,18 +92,18 @@ paths:
           required: false
 
       tags:
-        - RPG avant 2014 (version bêta)
+        - RPG avant 2015
       responses:
         '200':
           description: "Succès"
           schema:
-            $ref: "#/definitions/FeatureCollectionRPGAvant2014"
+            $ref: "#/definitions/FeatureCollectionRPGAvant2015"
 
   /rpg/v2:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend une date qui sera une valeur comprise entre 2015 et 2018 inclus
+        Prend une date qui sera une valeur comprise entre 2015 et 2019 inclus
         
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
@@ -143,7 +143,7 @@ paths:
           required: false
 
       tags:
-        - RPG à partir de 2015 (Version bêta)
+        - RPG à partir de 2015
       responses:
         '200':
           description: "Succès"
@@ -193,8 +193,8 @@ definitions:
         items:
           $ref: '#/definitions/FeatureRPGApartirde2015'
 
-  FeatureRPGAvant2014:
-    description: "Objet géographique RPG avant 2014" 
+  FeatureRPGAvant2015:
+    description: "Objet géographique RPG avant 2015" 
     type: object
     allOf:
       - $ref: "#/definitions/Feature"
@@ -224,7 +224,7 @@ definitions:
       geometry:
         $ref: '#/definitions/MultiPolygon'
 
-  FeatureCollectionRPGAvant2014:
+  FeatureCollectionRPGAvant2015:
     description: "Liste d'objet géographique RPG"
     type: object
     properties:

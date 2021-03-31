@@ -531,24 +531,6 @@ paths:
           schema:
             $ref: '#/definitions/FeatureCollection'
 
-  /gpu/all:
-    get:
-      summary:  Récupération de l’ensemble des couches décrites ci-dessus
-      description: |
-        Prend en entrée une géométrie au format JSON et retourne une featureCollection contenant toutes les couches du gpu qui intersectent la géométrie.
-      tags:
-        - All
-      parameters:
-        - in: query
-          name: geom
-          type: object
-          required: false
-          description: Géométrie GeoJSON utilisée pour la recherche
-
-      responses:
-        '200':
-          description: Success
-
 definitions:
 
   # TODO FeatureMunicility FeatureCollectionMunicipality
