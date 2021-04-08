@@ -1,6 +1,6 @@
 {
   "name": "apicarto",
-  "version": "2.1.9",
+  "version": "2.3.6",
   "main": "index.js",
   "scripts": {
     "import": "npm run import-inao-appellation",
@@ -22,38 +22,38 @@
     "node": ">=6"
   },
   "dependencies": {
-    "@mapbox/geojsonhint": "^2.1.0",
+    "@mapbox/geojsonhint": "^3.0.0",
     "terraformer-wkt-parser": "^1.1.2",
-    "@turf/turf": "^5.1.6",
+    "@turf/turf": "^6.3.0",
     "async": "^2.6.0",
-    "body-parser": "^1.14.1",
-    "bunyan": "^1.5.1",
+    "body-parser": "^1.19.0",
+    "bunyan": "^1.8.15",
     "circular-json": "^0.5.9",
     "codes-postaux": "^3.3.0",
-    "cors": "^2.7.1",
-    "debug": "^3.1.0",
+    "cors": "^2.8.5",
+    "debug": "^4.3.1",
     "ejs": "^2.7.4",
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
-    "flatted": "^2.0.1",
-    "geoportal-wfs-client": "git+https://github.com/IGNF/geoportal-wfs-client.git#fix_https_geom",
-    "handlebars": "^4.7.6",
-    "lodash": "^4.17.20",
-    "pg": "^7.11.0",
+    "flatted": "3.1.1",
+    "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#v0.3.0",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "pg": "^8.5.1",
     "pg-format": "^1.0.4",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.4",
     "swagger-ui-dist": "^3.13.6",
     "uuid": "^3.3.2",
     "request": "^2.65.0",
     "request-promise": "^4.2.5"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
+    "eslint": "^7.23.0",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.1",
     "mocha": "^7.1.2",
     "nock": "^9.2.5",
     "supertest": "^3.0.0",
-    "unit.js": "^2.1.0"
+    "unit.js": "^2.1.1"
   }
 }
