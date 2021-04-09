@@ -7,8 +7,6 @@ const isGeometry = require('../../checker/isGeometry');
 const validateParams = require('../../middlewares/validateParams');
 
 var pgClient = require('../../middlewares/pgClient');
-
-var format = require('pg-format');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
 
@@ -56,8 +54,7 @@ router.post('/appellation-viticole', [
         `, params.geom);
     
     req.pgClient.query(sqlCommunes,function(err,result){  
-        if (err)
-        return next(err);
+        if (err) return next(err);
         req.intersectedCommunes = result.rows;   
         req.pgClient.query(buildSQLQuery({
             geometry: params.geom,
@@ -71,26 +68,25 @@ router.post('/appellation-viticole', [
                 return res.status(404).send({ status: 'No Data' });
             }
     
-			return res.send({
-				type: 'FeatureCollection',
-				features: result.rows.map(function (row) {
-					const feature = {
-						type: 'Feature',
-						geometry: JSON.parse(row.geom),
-					properties: _.omit(row, 'geom')
-					};
-					if (row.granularite === 'commune' && !row.instruction_obligatoire) {
+            return res.send({
+                type: 'FeatureCollection',
+                features: result.rows.map(function (row) {
+                    const feature = {
+                        type: 'Feature',
+                        geometry: JSON.parse(row.geom),
+                        properties: _.omit(row, 'geom')
+                    };
+                    if (row.granularite === 'commune' && !row.instruction_obligatoire) {
                         const commune = _.find(req.intersectedCommunes, { insee: row.insee });
                         feature.properties.area = commune.intersect_area;
-						feature.properties.contains = commune.contains;
-						feature.geometry = JSON.parse(commune.geom);
-					}
-                
-					return feature;
-				})
-			});
-		});
-	});
+                        feature.properties.contains = commune.contains;
+                        feature.geometry = JSON.parse(commune.geom);
+                    }
+                    return feature;
+                })
+            });
+        });
+    });
 });
 
 module.exports = router;

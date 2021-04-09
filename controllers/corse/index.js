@@ -5,7 +5,7 @@ const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
-const {isGeometry,isCodeInsee} = require('../../checker');
+const {isGeometry} = require('../../checker');
 const drealCorseWfsClient = require('../../middlewares/drealCorsewfsClient');
 const _ = require('lodash');
     
@@ -53,24 +53,24 @@ function createAllCorseProxy(){
 
 
 var corsOptionsGlobal = function(origin,callback) {
-	var corsOptions;
-	if (origin) {
-		corsOptions = {
-			origin: origin,
-		    optionsSuccessStatus: 200,
-	        methods: 'GET,POST',
-	        credentials: true
-        }
+    var corsOptions;
+    if (origin) {
+        corsOptions = {
+            origin: origin,
+            optionsSuccessStatus: 200,
+            methods: 'GET,POST',
+            credentials: true
+        };
     } else {
-		corsOptions = {
-			origin : '*',
-			optionsSuccessStatus : 200,
-			methods:  'GET,POST',
-			credentials: true
-		}
-	}
- callback(null, corsOptions);
-}
+        corsOptions = {
+            origin : '*',
+            optionsSuccessStatus : 200,
+            methods:  'GET,POST',
+            credentials: true
+        };
+    }
+    callback(null, corsOptions);
+};
 
 /**
  * Permet d'alerter en cas de paramètre ayant changer de nom
@@ -98,14 +98,14 @@ router.get('/foretcorse',cors(corsOptionsGlobal),corseForetValidators, createCor
 router.post('/foretcorse',cors(corsOptionsGlobal),corseForetValidators, createCorseProxy('dreal:fsoum_25'));
 
 /**
-* Recherche flux geoorchectra corse pour les Forêts bénéficiant du régime forestier
+*Recherche flux geoorchectra corse pour les Forêts bénéficiant du régime forestier
 *
 */
 
 var corsePecheValidators = natureValidators.concat([
     check('dpt').optional().isString()
 
-])
+]);
 
 router.get('/pechecorse',cors(corsOptionsGlobal),corsePecheValidators, createCorseProxy('dreal:res_pech25'));
 router.post('/pechecorse',cors(corsOptionsGlobal),corsePecheValidators, createCorseProxy('dreal:res_pech25'));

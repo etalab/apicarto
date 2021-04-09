@@ -24,8 +24,8 @@ function createNaturaProxy(featureTypeName){
             var params = matchedData(req);
 
             /* Value default pour _limit an _start */
-             if ( typeof params._start == 'undefined' ) {params._start = 0;}
-             if( typeof params._limit == 'undefined') {params._limit = 1000;}
+            if ( typeof params._start == 'undefined' ) {params._start = 0;}
+            if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
             req.gppWfsClient.getFeatures(featureTypeName, params)
@@ -34,32 +34,31 @@ function createNaturaProxy(featureTypeName){
                 })
                 .catch(function(err) {
                     res.status(500).json(err);
-                })
-                ;
-            }
-        ];
-    }
+                });
+        }
+    ];
+}
 
 
 var corsOptionsGlobal = function(origin,callback) {
-	var corsOptions;
-	if (origin) {
-		corsOptions = {
-			origin: origin,
-		    optionsSuccessStatus: 200,
-	        methods: 'GET,POST',
-	        credentials: true
-        }
+    var corsOptions;
+    if (origin) {
+        corsOptions = {
+            origin: origin,
+            optionsSuccessStatus: 200,
+            methods: 'GET,POST',
+            credentials: true
+        };
     } else {
-		corsOptions = {
-			origin : '*',
-			optionsSuccessStatus : 200,
-			methods:  'GET,POST',
-			credentials: true
-		}
-	}
- callback(null, corsOptions);
-}
+        corsOptions = {
+            origin : '*',
+            optionsSuccessStatus : 200,
+            methods:  'GET,POST',
+            credentials: true
+        };
+    }
+    callback(null, corsOptions);
+};
 
 /**
  * Permet d'alerter en cas de paramètre ayant changer de nom

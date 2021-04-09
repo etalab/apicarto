@@ -70,24 +70,24 @@ const mapping = {
 
 
 var corsOptionsGlobal = function(origin,callback) {
-	var corsOptions;
-	if (origin) {
-		corsOptions = {
-			origin: origin,
-		    optionsSuccessStatus: 200,
-	        methods: 'GET,POST',
-	        credentials: true
-        }
+    var corsOptions;
+    if (origin) {
+        corsOptions = {
+            origin: origin,
+            optionsSuccessStatus: 200,
+            methods: 'GET,POST',
+            credentials: true
+        };
     } else {
-		corsOptions = {
-			origin : '*',
-			optionsSuccessStatus : 200,
-			methods:  'GET,POST',
-			credentials: true
-		}
-	}
- callback(null, corsOptions);
-}
+        corsOptions = {
+            origin : '*',
+            optionsSuccessStatus : 200,
+            methods:  'GET,POST',
+            credentials: true
+        };
+    }
+    callback(null, corsOptions);
+};
 /* Définition des tests paramètres */
 var legacyValidators = [
     check('geom').optional().custom(isGeometry)
@@ -103,7 +103,7 @@ var partitionValidators = legacyValidators.concat([
 
 var categoriesValidators = partitionValidators.concat([
     check('categorie').optional().isString()
-])
+]);
 
 router.get('/municipality', cors(corsOptionsGlobal),communeValidators, createGpuProxy(mapping['municipality']));
 router.post('/municipality',cors(corsOptionsGlobal), communeValidators, createGpuProxy(mapping['municipality']));
