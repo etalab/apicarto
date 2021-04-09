@@ -235,7 +235,7 @@ definitions:
       features:
         type: array
         items:
-          $ref: '#/definitions/FeatureRPGAvant2014'
+          $ref: '#/definitions/FeatureRPGAvant2015'
           
           
 # import definitions
