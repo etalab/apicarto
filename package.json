@@ -7,7 +7,7 @@
     "import-inao-appellation": "node datasets/inao-appellation/import.js",
     "test": "npm run lint && npm run test-unit",
     "test-unit": "NODE_ENV=test istanbul cover _mocha -- --recursive -t 10000",
-    "lint": "eslint controllers/**/*.js middlewares/**/*/js helpers/**/*/js *.js test/**/*.js lib/**/*.js",
+    "lint": "eslint controllers/**/*.js middlewares/*.js helper/**/*.js *.js test/**/*.js lib/**/*.js",
     "start": "node server | bunyan"
   },
   "contributors": [
@@ -25,7 +25,7 @@
     "@mapbox/geojsonhint": "^3.0.0",
     "terraformer-wkt-parser": "^1.1.2",
     "@turf/turf": "^6.3.0",
-    "async": "^2.6.0",
+    "async": "^3.2.0",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.15",
     "circular-json": "^0.5.9",
@@ -42,7 +42,7 @@
     "pg": "^8.5.1",
     "pg-format": "^1.0.4",
     "shelljs": "^0.8.4",
-    "swagger-ui-dist": "^3.13.6",
+    "swagger-ui-dist": "^3.46.0",
     "uuid": "^3.3.2",
     "request": "^2.65.0",
     "request-promise": "^4.2.5"

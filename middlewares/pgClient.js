@@ -22,7 +22,6 @@ module.exports = function(req, res, next) {
         };        
         next();
     }).catch(function(err){
-        console.log(err);
         res.status(500).json({
             'code': 500,
             'message': 'Erreur de la connexion à la base de données'
