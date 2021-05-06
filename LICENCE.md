@@ -1,4 +1,4 @@
-# APICARTO
+# API Carto
 
 This software is released under the licence CeCILL-B (Free BSD compatible)
 

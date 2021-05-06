@@ -7,7 +7,7 @@
 
 ## Prérequis
 
-Pour faire fonctionner APICarto, vous avez besoin de :
+Pour faire fonctionner API Carto, vous avez besoin de :
 
 * [Node.js](https://nodejs.org) v6+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
 * PostgreSQL v9.4+
@@ -15,13 +15,13 @@ Pour faire fonctionner APICarto, vous avez besoin de :
 * [ogr2ogr](http://www.gdal.org/ogr2ogr.html) v1.11+
 * wget (inclus dans la plupart des distributions Linux)
 
-Sous Ubuntu 14.04 :
+Sous Ubuntu :
 ```bash
 # Installer ogr2ogr
 apt-get install gdal-bin
 
 # Installer PostgreSQL et PostGIS
-apt-get postgresql postgis postgresql-9.4-postgis-2.1
+apt-get postgresql postgis postgresql-13-postgis-3
 ```
 
 Sous Mac OS X :
@@ -50,7 +50,7 @@ La connexion à la base postgresql est configurée à l'aide des variables d'env
 
 ### Configuration de la clé géoportail
 
-Les modules faisant appel aux flux geoportail supportent un paramètre `apikey` en paramètre de requête. Il est toutefois possible de déployer un serveur APICARTO où les utilisateurs n'ont pas besoin de fournir ce paramètre :
+Les modules faisant appel aux flux geoportail supportent un paramètre `apikey` en paramètre de requête. Il est toutefois possible de déployer un serveur API Carto où les utilisateurs n'ont pas besoin de fournir ce paramètre :
 
 | Variable              | Description                   | Valeur par défaut        |
 |-----------------------|-------------------------------|--------------------------|
@@ -62,7 +62,7 @@ L'ordre de priorité dans l'utilisation des variables est le suivant :
 * Pour la clé d'API, on utilise d'abord `apikey`, puis la variable d'environnement `GEOPORTAL_API_KEY`
 * Pour le referer, si le paramètre `apikey` est utilisé, on utilise le referer de la requête. Sinon, on utilise `GEOPORTAL_REFERER` et en dernier recours la valeur par défaut.
 
-Remarque : Vous n'êtes pas obligé de créer une clé protégée par referer, vous pouvez aussi spécifier une protection par IP (celui du serveur hébergeant APICARTO) ou par User-Agent ('apicarto')
+Remarque : Vous n'êtes pas obligé de créer une clé protégée par referer, vous pouvez aussi spécifier une protection par IP (celui du serveur hébergeant API Carto) ou par User-Agent ('apicarto')
 
 
 ## Sources de données
@@ -72,7 +72,6 @@ Remarque : Vous n'êtes pas obligé de créer une clé protégée par referer, v
 | bdparcellaire    | Base de données cadastrale                                         | http://professionnels.ign.fr/bdparcellaire                                                             |
 | adminexpress     | Découpage administratif du territoire métropolitain et ultra-marin | http://professionnels.ign.fr/adminexpress                                                              |
 | osm-commune      | Découpage administratif issu de openstreetmap                      | https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/#  |
-| inao-appellation | Appellation viticoles INAO                                         | https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/#_            |
 | codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/etalab/codes-postaux#sources                                                   |
 
 

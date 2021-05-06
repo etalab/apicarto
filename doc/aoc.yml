@@ -1,13 +1,13 @@
 swagger: '2.0'
 
 info:
-  title: APICarto AOC
+  title: API Carto AOC
   description: >
     Le module AOC permet de récupérer les AOC viticoles de l'INAO intersectant une géométrie GeoJSON.
 
     Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
    
-     Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleAoc_v1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
+     Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleAoc.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
      Dernière mise à jour des données : 23 Avril 2021
 

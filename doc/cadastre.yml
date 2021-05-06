@@ -17,11 +17,11 @@ info:
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
     
-    Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleCadastre_v1_1.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
+    Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleCadastre.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
     ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur API Carto, il faut passer une clé IGN en paramètre sous le nom `apikey`.
 
       Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr .
       
@@ -77,7 +77,7 @@ info:
       * L'attribut *source_ign* est actuellement par défaut (valeur non remplie) interprété comme BD Parcellaire, en janvier 2022 l'API évoluera et ce sera la valeur Parcellaire Express qui sera prise par défaut. 
   
   contact:
-    name: Apicarto Cadastre
+    name: API Carto Cadastre
 
 produces:
   - application/json
