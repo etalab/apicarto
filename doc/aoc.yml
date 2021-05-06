@@ -1,15 +1,43 @@
 swagger: '2.0'
 
 info:
-  title: API Carto AOC
+  title: API Carto Appellations viticoles
   description: >
-    Le module AOC permet de récupérer les AOC viticoles de l'INAO intersectant une géométrie GeoJSON.
+    Le module AOC permet de récupérer les AOC viticoles de l’INAO intersectant une géométrie GeoJSON.
 
-    Les données sources sont les [Délimitation Parcellaire des AOC Viticoles de l'INAO](https://www.data.gouv.fr/fr/datasets/delimitation-parcellaire-des-aoc-viticoles-de-linao/)
+    Le module utilise une base de données entretenue par FranceAgriMer. Cette base de données regroupe :
+    
+    * Les zones d’appellation d’origine contrôlées (AOC)
+    
+    * Les zones d’indications géographiques protégées (IGP)
+    
+    * Les zones viticoles sans indication géographique (VSIG)
+
    
-     Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleAoc.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
+     Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUser_moduleAoc.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
      Dernière mise à jour des données : 23 Avril 2021
+
+    ## Géométrie
+
+    La géométrie doit être exprimée en valeur décimale dans le référentiel WGS84.
+
+
+    **Exemples de géométrie** : (référentiel EPSG:4326) 
+
+      * Point : 
+        
+        `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+
+      * MultiPolygon : 
+        
+        `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+      
+      * Surface trouée : 
+          
+        `{"type":"Polygon","coordinates":[[[1.2,48.85],[1.3,48.85],[1.3,48.9],[1.2,48.9],[1.2,48.85]],[[1.23,48.86],[1.23,48.88],[1.26,48.88],[1.26,48.86],[1.23,48.86]]]}`
+   
+
 
 consumes:
   - application/json
@@ -35,7 +63,7 @@ paths:
             $ref: "#/definitions/Geometry"
 
       tags:
-        - Appellations
+        - Appellations viticoles
       responses:
         '200':
           description: "Succès"

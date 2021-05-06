@@ -15,7 +15,7 @@ info:
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
 
-    Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUsers_moduleRPG.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
+    Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUser_moduleRPG.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
   
 
     ## Clé WFS géoportail (apikey)
