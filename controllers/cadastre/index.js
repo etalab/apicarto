@@ -29,7 +29,7 @@ function createCadastreProxy(featureTypeName){
                 if(params.source_ign.toUpperCase() == "PCI") {
                     featureTypeNameFinal = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
                 } else if(params.source_ign.toUpperCase() == "BDP") {
-                    featureTypeNameFinal = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G');
+                    featureTypeNameFinal = featureTypeName;
                 }  else {
                     return res.status(400).send({
                         code: 400,
