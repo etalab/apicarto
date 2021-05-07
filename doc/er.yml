@@ -24,7 +24,7 @@ info:
       
   
   contact:
-    name: Apicarto Espace revendeur
+    name: API Carto Espace revendeur
 
 produces:
   - application/json

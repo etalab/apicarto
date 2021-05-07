@@ -10,12 +10,12 @@
     <% include partial/menu.ejs %>
 
         <div class="container">
-            <h1>APICARTO - Documentation Technique</h1>
+            <h1>API Carto - Documentation Technique</h1>
 
             <h2>Les principes</h2>
             <br/>
             <ul>
-				<li> L’API CARTO est une API Rest compatible avec la spécification OpenAPI.</li>
+				<li> L’API Carto est une API Rest compatible avec la spécification OpenAPI.</li>
                 <li>Le format utilisé est JSON/GeoJSON</li>
                 <li>La projection utilisée est WGS84 (coordonnées en longitude,latitude)</li>
                 <li>Les API offrent des opérations génériques de filtrage simple:
@@ -68,7 +68,7 @@
                         </td>
                     </tr>
 					 <tr>
-                        <td>AOC</td>
+                        <td>Appellations viticoles</td>
                         <td>
                             API d'accès aux appellations viticoles
                         </td>
@@ -92,6 +92,15 @@
                         </td>
                         <td class="text-right">
                             <a class="btn btn-primary" href="/api/doc/rpg">API</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>WFS-Geoportail (Version bêta)</td>
+                        <td>
+                            API d'accès à n'importe quel flux WFS du Géoportail
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/api/doc/wfs-geoportail">API</a>
                         </td>
                     </tr>
 
@@ -135,7 +144,7 @@
             <p><b>Remarques</b> :
                 <ul>
                     <li>Version=flux traduit généralement une mise à jour en continue</li>
-                    <li>APICARTO conserve la licence des sources de données</li>
+                    <li>API Carto conserve la licence des sources de données</li>
                 </ul>
             </p>
 
@@ -143,12 +152,12 @@
 
             <h3>Les bibliothèques JavaScript</h3>
 
-            <p>Les bibliothèques ci-après sont complémentaires à APICARTO :
+            <p>Les bibliothèques ci-après sont complémentaires à API Carto :
 
                 <ul>
                     <li>Les bibliothèques de <b>calcul géométrique</b> peuvent être utilisées en amont et en aval des appels aux API pour calculer des surfaces, des unions de géométrie, calcul d'intersection, etc.</li>
                     <li>Les bibliothèques de <b>représentation cartographique</b> permettent de visualiser et d'éditer les données en entrée et sortie des API.</li>
-                    <li>Les bibliothèques d'<b>accès à des services et des données</b> apportent des fonctionnalités complémentaires à APICARTO</li>
+                    <li>Les bibliothèques d'<b>accès à des services et des données</b> apportent des fonctionnalités complémentaires à API Carto</li>
                 </ul>
 
             </p>
@@ -198,7 +207,7 @@
                         </td>
                         <td class="text-center">Accès aux services/données</td>
                         <td>
-                            Bibliothèque simplifiant l'accès aux services WFS du géoportail (APICARTO générique sous forme d'un client JavaScript)
+                            Bibliothèque simplifiant l'accès aux services WFS du géoportail (API Carto générique sous forme d'un client JavaScript)
                         </td>
                     </tr>
 

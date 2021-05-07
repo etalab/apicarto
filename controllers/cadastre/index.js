@@ -28,11 +28,13 @@ function createCadastreProxy(featureTypeName){
             if ((params.source_ign) && (featureTypeName != 'BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad') && (featureTypeName != 'CADASTRALPARCELS.PARCELLAIRE_EXPRESSG:feuille')) {
                 if(params.source_ign.toUpperCase() == "PCI") {
                     featureTypeNameFinal = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
-                } else {
+                } else if(params.source_ign.toUpperCase() == "BDP") {
+                    featureTypeNameFinal = featureTypeName;
+                }  else {
                     return res.status(400).send({
                         code: 400,
-                        message: 'Erreur de valeur pour une recherche sur la couche PCI EXPRESS'
-                     });
+                        message: 'Pour une recherche sur la couche PCI EXPRESS : la valeur doit être PCI.Pour une recherche sur la couche BD Parcellaire: la valeur doit être BDP.'
+                    });
 
                 }
             }
@@ -56,8 +58,8 @@ function createCadastreProxy(featureTypeName){
             }
 
             /* Value default pour _limit an _start */
-             if ( typeof params._start == 'undefined' ) {params._start = 0;}
-             if( typeof params._limit == 'undefined') {params._limit = 1000;}
+            if ( typeof params._start == 'undefined' ) {params._start = 0;}
+            if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
             req.gppWfsClient.getFeatures(featureTypeNameFinal, params)
@@ -75,32 +77,31 @@ function createCadastreProxy(featureTypeName){
                 })
                 .catch(function(err) {
                     res.status(500).json(err);
-                })
-            ;
+                });
         }
     ];
 }
 
 
 var corsOptionsGlobal = function(origin,callback) {
-	var corsOptions;
-	if (origin) {
-		corsOptions = {
-			origin: origin,
-		    optionsSuccessStatus: 200,
-	        methods: 'GET,POST',
-	        credentials: true
-        }
+    var corsOptions;
+    if (origin) {
+        corsOptions = {
+            origin: origin,
+            optionsSuccessStatus: 200,
+            methods: 'GET,POST',
+            credentials: true
+        };
     } else {
-		corsOptions = {
-			origin : '*',
-			optionsSuccessStatus : 200,
-			methods:  'GET,POST',
-			credentials: true
-		}
-	}
- callback(null, corsOptions);
-}
+        corsOptions = {
+            origin : '*',
+            optionsSuccessStatus : 200,
+            methods:  'GET,POST',
+            credentials: true
+        };
+    }
+    callback(null, corsOptions);
+};
 
 /**
  * Permet d'alerter en cas de paramètre ayant changer de nom
@@ -113,7 +114,7 @@ var legacyValidators = [
     check('codearr').optional().custom(function(){return false;}).withMessage('Le paramètre "codearr" a été remplacé par "code_arr" pour éviter des renommages dans les données et chaînage de requête'),
     check('dep').optional().custom(function(){return false;}).withMessage('Le paramètre "dep" a été remplacé par "code_dep" pour éviter des renommages dans les données et chaînage de requête'),
     check('insee').optional().custom(function(){return false;}).withMessage('Le paramètre "insee" a été remplacé par "code_insee" pour éviter des renommages dans les données et chaînage de requête'),
-    check('source_ign').optional().isString().isLength({min:3,max:3}).withMessage('La seule valeur possible est PCI pour utiliser les couches PCI-Express')
+    check('source_ign').optional().isString().isLength({min:3,max:3}).withMessage('Les seules valeurs possibles sont: PCI pour utiliser les couches PCI-Express ou BDP pour utiliser les couches BD Parcellaires')
 ];
 
 var communeValidators = legacyValidators.concat([

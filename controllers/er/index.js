@@ -5,8 +5,7 @@ const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
-const {isGeometry,isCodeInsee} = require('../../checker');
-const parseInseeCode = require('../../helper/parseInseeCode');
+const {isGeometry} = require('../../checker');
 
 const gppWfsClient = require('../../middlewares/gppWfsClient');
 
@@ -27,7 +26,7 @@ function createErProxy(featureTypeName,typeSearch){
                 return res.status(400).send({
                     code: 400,
                     message: 'La clé ign (apikey) doit être renseignée'
-                })
+                });
             }
             params = _.omit(params,'apikey');
             /** Gestion de la requete categorie */
@@ -43,20 +42,20 @@ function createErProxy(featureTypeName,typeSearch){
                     }else if (params.type == 'c') {
                         // Recherche sur collection_title
                         params.collection_title = params.name;
-                   } else {
+                    } else {
                         return res.status(400).send({
                             code: 400,
                             message: 'Le champ type contient uniquement les valeurs t, c ou s'
-                            });
-                    }
+                        });
+                    } 
                     /* Suppression des paramètres après transformations */
                     params = _.omit(params,'name');
                     params = _.omit(params,'type');
                 } else {
                     if(params.name || params.type) {
-                    return res.status(400).send({
-                        code: 400,
-                        message: 'Les 2 champs name et type doivent être renseignés pour cette recherche spécfique. Pour Le champ type les valeurs acceptées sont t,c ou s'
+                        return res.status(400).send({
+                            code: 400,
+                            message: 'Les 2 champs name et type doivent être renseignés pour cette recherche spécfique. Pour Le champ type les valeurs acceptées sont t,c ou s'
                         });
                     }
 
@@ -75,8 +74,8 @@ function createErProxy(featureTypeName,typeSearch){
 
             }
             /* Value default pour _limit an _start */
-             if ( typeof params._start == 'undefined' ) {params._start = 0;}
-             if( typeof params._limit == 'undefined') {params._limit = 1000;}
+            if ( typeof params._start == 'undefined' ) {params._start = 0;}
+            if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
             req.gppWfsClient.getFeatures(featureTypeName, params)
@@ -85,32 +84,31 @@ function createErProxy(featureTypeName,typeSearch){
                 })
                 .catch(function(err) {
                     res.status(500).json(err);
-                })
-                ;
+                });
         }
     ];
 }
 
 
 var corsOptionsGlobal = function(origin,callback) {
-	var corsOptions;
-	if (origin) {
-		corsOptions = {
-			origin: origin,
-		    optionsSuccessStatus: 200,
-	        methods: 'GET,POST',
-	        credentials: true
-        }
+    var corsOptions;
+    if (origin) {
+        corsOptions = {
+            origin: origin,
+            optionsSuccessStatus: 200,
+            methods: 'GET,POST',
+            credentials: true
+        };
     } else {
-		corsOptions = {
-			origin : '*',
-			optionsSuccessStatus : 200,
-			methods:  'GET,POST',
-			credentials: true
-		}
-	}
- callback(null, corsOptions);
-}
+        corsOptions = {
+            origin : '*',
+            optionsSuccessStatus : 200,
+            methods:  'GET,POST',
+            credentials: true
+        };
+    }
+    callback(null, corsOptions);
+};
 
 /**
  * Récuperation des produits de l'espace revendeur

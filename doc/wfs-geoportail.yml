@@ -1,33 +1,60 @@
 swagger: '2.0'
 
 info:
-  title: Module pour rechercher dans tous les flux WFS Géoportail (Version Beta)
+  title: Module pour rechercher dans tous les flux WFS Géoportail (Version Bêta)
   description: >
 
-    Ce module permet d'interroger toute couche WFS du géoportail exprimée dans le référentiel géographique EPSG:4326. Il permet d'intersecter le flux et la géométrie passés en paramètre. 
+    Ce module permet d’intersecter toute couche WFS du géoportail exprimée dans le référentiel géographique WGS84 **EPSG:4326** avec la géométrie passée en paramètre.
     
+    Un tri sémantique sur un attribut devra être fait en aval par l'application cliente.
+
     Note : les flux exprimés dans un référentiel autre que EPSG:4326 ne sont pas interrogeables via ce module actuellement
 
     Toutes les requêtes du module peuvent se faire en POST ou en GET. 
 
-    
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
+
+    
+    Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUser_moduleWfsGeoportail.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
     ## Clé WFS géoportail (apikey)
     
       Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. 
-      Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+      Si cette clé n'est pas définie sur le serveur API Carto, il faut passer une clé IGN en paramètre sous le nom `apikey`.
 
       Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr .
-      Vous ne pourrez interroger que les couches dont vous avez les droits sur votre clé IGN.
-      Attention il faut bien vérifier la représentation géométrique de chaque couche pour passer la géométrie dans le bon référentiel.
+      Vous ne pourrez interroger que les couches dont vous avez paramétré l'accès sur votre clé de géoservices IGN.
+      La sécurisation de la clé se fait par referer.
 
-      Exemple de géométrie : (référentiel EPSG:4326)
+    ## Couche source
 
-      * Point : `{"type": "Point","coordinates":[-1.691634,48.104237]}`
-      * MultiPolygon : `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+      Les couches WFS disponibles sur le géoportail peuvent être listée via l’URL [https://wxs.ign.fr/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities](https://wxs.ign.fr/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities) 
 
-      Exemple pour le champ source : CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle
+      Actuellement seules les couches exprimées dans le référentiel WGS84 (EPSG:4326) peuvent être utilisées. 
+      Il est possible de vérifier le référentiel d’une couche en consultant la valeur de la balise `<DefaultCRS>`. 
+
+      Valeur du référentiel géographique (CRS) des flux utilisables par le module : `<DefaultCRS>urn:ogc:def:crs:EPSG::4326</DefaultCRS>`
+      
+      Le nom technique de la couche source doit être utilisé. Celui-ci est indiqué par la balise `<Name>`.
+
+      **Exemple pour le champ *source*** : CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle
+      
+      ## Géométrie
+
+      **Exemples de géométrie** : (référentiel EPSG:4326)
+
+      * Point :
+        
+         `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+
+      * MultiPolygon : 
+
+         `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+      
+      * Polygone troué : 
+      
+         `{"type":"Polygon","coordinates":[[[1.2,48.85],[1.3,48.85],[1.3,48.9],[1.2,48.9],[1.2,48.85]],[[1.23,48.86],[1.23,48.88],[1.26,48.88],[1.26,48.86],[1.23,48.86]]]}`
+      
     
 
 consumes:

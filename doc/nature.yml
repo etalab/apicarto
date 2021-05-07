@@ -11,7 +11,7 @@ info:
 
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
-    Attention à la différence des autres modules apicarto, toutes les couches n'ont pas des référentiels sur EPSG:4326.
+    Attention à la différence des autres modules API Carto, toutes les couches n'ont pas des référentiels sur EPSG:4326.
     
     Veuillez vérifier le référentiel par défaut en faisant un getCapabilities avec votre clé:
 
@@ -20,7 +20,7 @@ info:
     
     ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur APICARTO, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur API Carto, il faut passer une clé IGN en paramètre sous le nom `apikey`.
 
       Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
       
@@ -37,7 +37,7 @@ info:
 
   
   contact:
-    name: Apicarto Nature
+    name: API Carto Nature
 
 produces:
   - application/json

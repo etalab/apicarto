@@ -5,7 +5,7 @@ const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
-const {isGeometry,isCodeInsee} = require('../../checker');
+const {isGeometry} = require('../../checker');
 
 const gppWfsClient = require('../../middlewares/gppWfsClient');
 
@@ -23,7 +23,7 @@ function createRpgProxy(valeurSearch) {
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            var FeatureTypeName= '';
+            var featureTypeName= '';
             /*  Modification année dans le flux */
             if (valeurSearch == 'v1') {
                 if ((params.annee >= firstYearRPG) && (params.annee <= 2014))  {
@@ -33,9 +33,9 @@ function createRpgProxy(valeurSearch) {
                         featureTypeName = 'RPG.' + params.annee + ':rpg_' + params.annee;
                     }
                 } else {
-                        return res.status(400).send({
-                            code: 400,
-                            message: 'Année Invalide : Valeur uniquement entre ' + firstYearRPG + ' et 2014'
+                    return res.status(400).send({
+                        code: 400,
+                        message: 'Année Invalide : Valeur uniquement entre ' + firstYearRPG + ' et 2014'
                     });  
                 }
             } else {
@@ -45,7 +45,7 @@ function createRpgProxy(valeurSearch) {
                     return res.status(400).send({
                         code: 400,
                         message: 'Année Invalide : Valeur uniquement entre 2015 et ' + lastYearRPG
-                     });
+                    });
 
                 }
             }
@@ -53,8 +53,8 @@ function createRpgProxy(valeurSearch) {
             params = _.omit(params,'annee');
 
             /* Value default pour _limit an _start */
-             if ( typeof params._start == 'undefined' ) {params._start = 0;}
-             if( typeof params._limit == 'undefined') {params._limit = 1000;}
+            if ( typeof params._start == 'undefined' ) {params._start = 0;}
+            if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
             req.gppWfsClient.getFeatures(featureTypeName, params)
@@ -80,24 +80,24 @@ function createRpgProxy(valeurSearch) {
 
 
 var corsOptionsGlobal = function(origin,callback) {
-	var corsOptions;
-	if (origin) {
-		corsOptions = {
-			origin: origin,
-		    optionsSuccessStatus: 200,
-	        methods: 'GET,POST',
-	        credentials: true
-        }
+    var corsOptions;
+    if (origin) {
+        corsOptions = {
+            origin: origin,
+            optionsSuccessStatus: 200,
+            methods: 'GET,POST',
+            credentials: true
+        };
     } else {
-		corsOptions = {
-			origin : '*',
-			optionsSuccessStatus : 200,
-			methods:  'GET,POST',
-			credentials: true
-		}
-	}
- callback(null, corsOptions);
-}
+        corsOptions = {
+            origin : '*',
+            optionsSuccessStatus : 200,
+            methods:  'GET,POST',
+            credentials: true
+        };
+    }
+    callback(null, corsOptions);
+};
 
 /**
  * Permet d'alerter en cas de paramètre ayant changer de nom
