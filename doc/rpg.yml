@@ -26,7 +26,10 @@ info:
       
       Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - RPG" ci-dessous suivant l'année désirée:
           
-      * RPG.2010:rpg_2010, RPG.2011:rpg_2011, RPG.2012:rpg_2012, RPG.2013:rpg_2013
+      * RPG.2010:rpg_2010
+      * RPG.2011:rpg_2011
+      * RPG.2012:rpg_2012
+      * RPG.2013:rpg_2013
       * RPG.2014:ilots_anonymes
       * RPG.2015:parcelles_graphiques
       * RPG.2016:parcelles_graphiques
