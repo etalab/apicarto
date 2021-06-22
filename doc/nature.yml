@@ -11,30 +11,51 @@ info:
 
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
-    Attention à la différence des autres modules API Carto, toutes les couches n'ont pas des référentiels sur EPSG:4326.
-    
-    Veuillez vérifier le référentiel par défaut en faisant un getCapabilities avec votre clé:
+    Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUser_moduleNature.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
-    https://wxs.ign.fr/VOTRECLE/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities
-
-    
     ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur API Carto, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. 
+      Cette clé doit être renseignée dans le paramètre *apikey*.
 
       Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
       
+      Vous ne pourrez interroger que les couches dont vous avez paramétré l'accès sur votre clé de géoservices IGN.
+      La sécurisation de la clé se fait par referer.
 
       Si vous souhaitez utiliser les différentes ressources de ce modules vous devez commander les flux "Ressources WFS Géoportail" ci-dessous:
       
       * PROTECTEDAREAS.SIC:sic  (Sites Natura 2000 au titre de la directive Habitat)
       * PROTECTEDAREAS.ZPS:zps  (Sites NATURA 2000 au titre de la Directive Oiseaux)
+      * PROTECTEDAREAS.RNN:rnn (réserves naturelles hors Corse)
       * PROTECTEDAREAS.RNC:rnc  (Réserves Naturelles de Corse)
       * PROTECTEDAREAS.ZNIEFF1:znieff1 (Zones écologiques de nature remarquable (ZNIEFF1))
       * PROTECTEDAREAS.ZNIEFF2:znieff2  (Zones écologiques de nature remarquable (ZNIEFF2))
-      * PROTECTEDAREAS.PN:pn (Parcs nationnaux)
+      * PROTECTEDAREAS.PN:pn (Parcs nationaux)
       * PROTECTEDAREAS.PNR:pnr (Parcs nationaux régionaux)
 
+
+    ## Géométrie
+
+    Bien que la géométrie des flux utilisés soit exprimée dans le référentiel WebMercator EPSG:3857, la géométrie doit être exprimée en valeur décimale dans le référentiel **WGS84 (EPSG:4326)**.
+    
+    La réponse en retour de l'API est elle aussi exprimée en WGS84.
+
+
+    **Exemple de géométrie** : (référentiel EPSG:4326)
+
+      * Point: 
+        
+        `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+
+      * MultiPolygon: 
+        
+        `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+      
+      * Polygone troué: 
+          
+        `{"type":"Polygon","coordinates":[[[1.2,48.85],[1.3,48.85],[1.3,48.9],[1.2,48.9],[1.2,48.85]],[[1.23,48.86],[1.23,48.88],[1.26,48.88],[1.26,48.86],[1.23,48.86]]]}`
+  
   
   contact:
     name: API Carto Nature
@@ -178,6 +199,55 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/FeatureCollectionNatureAutre'
+
+
+  /nature/rnn:
+    get:
+      summary: Recherche d'informations sur les réserves naturelles hors Corse
+      description: |
+        Retourne un résultat de Type "FeatureCollection"
+
+      tags:
+        - Réserves naturelles hors corse
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+    
+      
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureAutre'
+  
+
 
   /nature/znieff1:
     get:

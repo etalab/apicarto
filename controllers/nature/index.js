@@ -1,14 +1,19 @@
 var Router = require('express').Router;
 var router = new Router();
 var cors = require('cors');
+var format = require('pg-format');
 const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 
-const gppWfsClient = require('../../middlewares/gppWfsClient');
+const gppWfsClient = require('../../middlewares/naturegppWfsClient');
+var pgClient = require('../../middlewares/pgClient');
 const _ = require('lodash');
+const meta = require("@turf/meta");
+const proj4 = require('proj4');
+
 
 
 
@@ -20,15 +25,29 @@ function createNaturaProxy(featureTypeName){
     return [
         gppWfsClient,
         validateParams,
-        function(req,res){
+        pgClient, 
+        function(req,res,next){
             var params = matchedData(req);
+            var geomFinal = params.geom;
+            
+    const input = JSON.parse(params.geom);
+    proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
+    // http://epsg.io/3857.js
+    proj4.defs("EPSG:3857","+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
+    const transform = proj4("EPSG:4326","EPSG:3857");
+    meta.coordEach(input,function(c){
+        let newC = transform.forward(c);
+        c[0] = newC[0];
+        c[1] = newC[1];
+    });
+    params.geom=input;
 
             /* Value default pour _limit an _start */
-            if ( typeof params._start == 'undefined' ) {params._start = 0;}
+            if ( typeof params._start == 'undefined' ) { params._start = 0;}
             if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-            req.gppWfsClient.getFeatures(featureTypeName, params)
+          req.gppWfsClient.getFeatures(featureTypeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
                 })

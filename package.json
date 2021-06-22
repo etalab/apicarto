@@ -24,7 +24,8 @@
   "dependencies": {
     "@mapbox/geojsonhint": "^3.0.0",
     "terraformer-wkt-parser": "^1.1.2",
-    "@turf/turf": "^6.3.0",
+    "@turf/meta": "6.4.0",
+    "@turf/turf": "^6.4.0",
     "async": "^3.2.0",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.15",
@@ -36,7 +37,7 @@
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
     "flatted": "3.1.1",
-    "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#v0.3.0",
+    "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#issue_17",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
     "pg": "^8.5.1",
@@ -45,7 +46,8 @@
     "swagger-ui-dist": "^3.46.0",
     "uuid": "^3.3.2",
     "request": "^2.65.0",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "proj4": "^2.7.2"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
