@@ -26,21 +26,21 @@ function createNaturaProxy(featureTypeName){
         gppWfsClient,
         validateParams,
         pgClient, 
-        function(req,res,next){
+        function(req,res){
             var params = matchedData(req);
             var geomFinal = params.geom;
             
-    const input = JSON.parse(params.geom);
-    proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
-    // http://epsg.io/3857.js
-    proj4.defs("EPSG:3857","+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
-    const transform = proj4("EPSG:4326","EPSG:3857");
-    meta.coordEach(input,function(c){
-        let newC = transform.forward(c);
-        c[0] = newC[0];
-        c[1] = newC[1];
-    });
-    params.geom=input;
+            const input = JSON.parse(params.geom);
+            proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
+            // http://epsg.io/3857.js
+            proj4.defs("EPSG:3857","+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
+            const transform = proj4("EPSG:4326","EPSG:3857");
+            meta.coordEach(input,function(c){
+                let newC = transform.forward(c);
+                c[0] = newC[0];
+                c[1] = newC[1];
+            });
+            params.geom=input;
 
             /* Value default pour _limit an _start */
             if ( typeof params._start == 'undefined' ) { params._start = 0;}
@@ -124,8 +124,22 @@ var reserveValidators = natureValidators.concat([
     check('nom').optional().isString()
 ]);
 
+/**
+* Récupération des couches reserves naturelles Corse
+*
+*/
+
 router.get('/rnc', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNC:rnc'));
 router.post('/rnc', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNC:rnc'));
+
+/**
+* Récupération des couches reserves naturelles hors Corse
+*
+*/
+
+
+router.get('/rnn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNN:rnn'));
+router.post('/rnn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNN:rnn'));
 
 /**
 * Récupération des couches Zones écologiques de nature remarquable
