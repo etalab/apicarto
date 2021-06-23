@@ -1,7 +1,6 @@
 var Router = require('express').Router;
 var router = new Router();
 var cors = require('cors');
-var format = require('pg-format');
 const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
@@ -9,7 +8,6 @@ const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 
 const gppWfsClient = require('../../middlewares/naturegppWfsClient');
-var pgClient = require('../../middlewares/pgClient');
 const _ = require('lodash');
 const meta = require("@turf/meta");
 const proj4 = require('proj4');
@@ -25,10 +23,8 @@ function createNaturaProxy(featureTypeName){
     return [
         gppWfsClient,
         validateParams,
-        pgClient, 
         function(req,res){
             var params = matchedData(req);
-            var geomFinal = params.geom;
             
             const input = JSON.parse(params.geom);
             proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
