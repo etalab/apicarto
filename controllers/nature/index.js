@@ -137,7 +137,6 @@ router.post('/rnc', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy
 *
 */
 
-
 router.get('/rnn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNN:rnn'));
 router.post('/rnn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNN:rnn'));
 
@@ -147,8 +146,6 @@ router.post('/rnn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy
 */
 router.get('/znieff1',cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF1:znieff1'));
 router.post('/znieff1', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF1:znieff1'));
-
-
 
 router.get('/znieff2', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF2:znieff2'));
 router.post('/znieff2', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF2:znieff2'));
@@ -161,7 +158,6 @@ router.post('/znieff2', cors(corsOptionsGlobal),reserveValidators, createNaturaP
 router.get('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pn'));
 router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pn'));
 
-
 /**
 * Récupération des couches Parcs naturels régionaux
 *
@@ -170,6 +166,12 @@ router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy(
 router.get('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
 router.post('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
 
+/**
+* Récupération des couches réserves nationales de chasse et de faune sauvage
+*
+*/
 
+router.get('/rncf', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNCF:rncfs_fxx'));
+router.post('/rncf', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNCF:rncfs_fxx'));
 
 module.exports=router;

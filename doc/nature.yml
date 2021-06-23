@@ -34,6 +34,7 @@ info:
       * PROTECTEDAREAS.ZNIEFF2:znieff2  (Zones écologiques de nature remarquable (ZNIEFF2))
       * PROTECTEDAREAS.PN:pn (Parcs nationaux)
       * PROTECTEDAREAS.PNR:pnr (Parcs nationaux régionaux)
+      * PROTECTEDAREAS.RNCF:rncfs_fxx (réserves nationales de chasse et de faune sauvage)
 
 
     ## Géométrie
@@ -51,7 +52,7 @@ info:
 
       * MultiPolygon: 
         
-        `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+        `{"type":"MultiPolygon","coordinates":[[[[4.786510231,44.799284413],[4.786771607,44.798883751],[4.786676692,44.798561391],[4.772889036,44.772781791],[4.773604638,44.773095271],[4.774237621,44.773471358],[4.775128276,44.773922006],[4.777617941,44.774676002],[4.778277786,44.774720598],[4.778921904,44.774676543],[4.786510231,44.799284413]]]]}`
       
       * Polygone troué: 
           
@@ -426,6 +427,50 @@ paths:
             $ref: '#/definitions/FeatureCollectionNatureAutre'
   
 
+  /nature/rncf:
+    get:
+      summary: Recherche des réserves nationales de chasse et de faune sauvage
+      description: Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - Réserves nationales de chasse et de faune sauvage
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+        
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureChassePeche'
+
+
 definitions:
 
   #---------------------------------------------------
@@ -491,6 +536,86 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/FeatureNatureAutre'
+
+
+   #---------------------------------------------------
+   # /Chasse et peche
+   #---------------------------------------------------
+            
+  FeatureNatureChassePeche:
+    description: 'Nature autres'
+    allOf:
+      - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          id_local:
+            type: string
+          id_mnhn:
+            type: string
+          nom_site:
+            type: string
+          date_crea:
+            type: string
+          modif_adm:
+            type: string
+          modif_geo:
+            type: string
+          url_fiche:
+            type: string
+          surf_off:
+            type: string
+          acte_deb:
+            type: string
+          gest_site:
+            type: string
+          operateur:
+            type: string
+          precision:
+            type: string
+          src_geom:
+            type: string
+          src_annee:
+            type: string
+          marin:
+            type: string
+          p1_nature:
+            type: string
+          p2_culture:
+            type: string
+          p3_paysage:
+            type: string
+          p4_geologi:
+            type: string
+          p5_speleo:
+            type: string
+          p6_archeo:
+            type: string
+          p7_paleob:
+            type: string
+          p8_anthrop:
+            type: string
+          p9_science:
+            type: string
+          p10_public:
+            type: string
+          p11_dd:
+            type: string
+          p12_autre:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'              
+
+  FeatureCollectionNatureChassePeche:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureDivision`
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureNatureChassePeche'
 
   
   # import definitions
