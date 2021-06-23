@@ -7,8 +7,11 @@ const { matchedData } = require('express-validator/filter');
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 
-const gppWfsClient = require('../../middlewares/gppWfsClient');
+const gppWfsClient = require('../../middlewares/naturegppWfsClient');
 const _ = require('lodash');
+const meta = require("@turf/meta");
+const proj4 = require('proj4');
+
 
 
 
@@ -22,13 +25,25 @@ function createNaturaProxy(featureTypeName){
         validateParams,
         function(req,res){
             var params = matchedData(req);
+            
+            const input = JSON.parse(params.geom);
+            proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
+            // http://epsg.io/3857.js
+            proj4.defs("EPSG:3857","+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
+            const transform = proj4("EPSG:4326","EPSG:3857");
+            meta.coordEach(input,function(c){
+                let newC = transform.forward(c);
+                c[0] = newC[0];
+                c[1] = newC[1];
+            });
+            params.geom=input;
 
             /* Value default pour _limit an _start */
-            if ( typeof params._start == 'undefined' ) {params._start = 0;}
+            if ( typeof params._start == 'undefined' ) { params._start = 0;}
             if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-            req.gppWfsClient.getFeatures(featureTypeName, params)
+          req.gppWfsClient.getFeatures(featureTypeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
                 })
@@ -105,8 +120,21 @@ var reserveValidators = natureValidators.concat([
     check('nom').optional().isString()
 ]);
 
+/**
+* Récupération des couches reserves naturelles Corse
+*
+*/
+
 router.get('/rnc', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNC:rnc'));
 router.post('/rnc', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNC:rnc'));
+
+/**
+* Récupération des couches reserves naturelles hors Corse
+*
+*/
+
+router.get('/rnn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNN:rnn'));
+router.post('/rnn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNN:rnn'));
 
 /**
 * Récupération des couches Zones écologiques de nature remarquable
@@ -114,8 +142,6 @@ router.post('/rnc', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy
 */
 router.get('/znieff1',cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF1:znieff1'));
 router.post('/znieff1', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF1:znieff1'));
-
-
 
 router.get('/znieff2', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF2:znieff2'));
 router.post('/znieff2', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.ZNIEFF2:znieff2'));
@@ -128,7 +154,6 @@ router.post('/znieff2', cors(corsOptionsGlobal),reserveValidators, createNaturaP
 router.get('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pn'));
 router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pn'));
 
-
 /**
 * Récupération des couches Parcs naturels régionaux
 *
@@ -137,6 +162,12 @@ router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy(
 router.get('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
 router.post('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
 
+/**
+* Récupération des couches réserves nationales de chasse et de faune sauvage
+*
+*/
 
+router.get('/rncf', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNCF:rncfs_fxx'));
+router.post('/rncf', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.RNCF:rncfs_fxx'));
 
 module.exports=router;

@@ -11,30 +11,53 @@ info:
 
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
 
-    Attention à la différence des autres modules API Carto, toutes les couches n'ont pas des référentiels sur EPSG:4326.
     
-    Veuillez vérifier le référentiel par défaut en faisant un getCapabilities avec votre clé:
+    Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUser_moduleNature.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
-    https://wxs.ign.fr/VOTRECLE/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities
-
-    
     ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur API Carto, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. 
+      Cette clé doit être renseignée dans le paramètre *apikey*.
 
       Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
       
+      Vous ne pourrez interroger que les couches dont vous avez paramétré l'accès sur votre clé de géoservices IGN.
+      La sécurisation de la clé se fait par referer.
 
       Si vous souhaitez utiliser les différentes ressources de ce modules vous devez commander les flux "Ressources WFS Géoportail" ci-dessous:
       
       * PROTECTEDAREAS.SIC:sic  (Sites Natura 2000 au titre de la directive Habitat)
       * PROTECTEDAREAS.ZPS:zps  (Sites NATURA 2000 au titre de la Directive Oiseaux)
+      * PROTECTEDAREAS.RNN:rnn (réserves naturelles hors Corse)
       * PROTECTEDAREAS.RNC:rnc  (Réserves Naturelles de Corse)
       * PROTECTEDAREAS.ZNIEFF1:znieff1 (Zones écologiques de nature remarquable (ZNIEFF1))
       * PROTECTEDAREAS.ZNIEFF2:znieff2  (Zones écologiques de nature remarquable (ZNIEFF2))
-      * PROTECTEDAREAS.PN:pn (Parcs nationnaux)
+      * PROTECTEDAREAS.PN:pn (Parcs nationaux)
       * PROTECTEDAREAS.PNR:pnr (Parcs nationaux régionaux)
+      * PROTECTEDAREAS.RNCF:rncfs_fxx (réserves nationales de chasse et de faune sauvage)
 
+
+    ## Géométrie
+
+    Bien que la géométrie des flux utilisés soit exprimée dans le référentiel WebMercator EPSG:3857, la géométrie doit être exprimée en valeur décimale dans le référentiel **WGS84 (EPSG:4326)**.
+    
+    La réponse en retour de l'API est elle aussi exprimée en WGS84.
+
+
+    **Exemple de géométrie** : (référentiel EPSG:4326)
+
+      * Point: 
+        
+        `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+
+      * MultiPolygon: 
+        
+        `{"type":"MultiPolygon","coordinates":[[[[4.786510231,44.799284413],[4.786771607,44.798883751],[4.786676692,44.798561391],[4.772889036,44.772781791],[4.773604638,44.773095271],[4.774237621,44.773471358],[4.775128276,44.773922006],[4.777617941,44.774676002],[4.778277786,44.774720598],[4.778921904,44.774676543],[4.786510231,44.799284413]]]]}`
+      
+      * Polygone troué: 
+          
+        `{"type":"Polygon","coordinates":[[[1.2,48.85],[1.3,48.85],[1.3,48.9],[1.2,48.9],[1.2,48.85]],[[1.23,48.86],[1.23,48.88],[1.26,48.88],[1.26,48.86],[1.23,48.86]]]}`
+  
   
   contact:
     name: API Carto Nature
@@ -178,6 +201,55 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/FeatureCollectionNatureAutre'
+
+
+  /nature/rnn:
+    get:
+      summary: Recherche d'informations sur les réserves naturelles hors Corse
+      description: |
+        Retourne un résultat de Type "FeatureCollection"
+
+      tags:
+        - Réserves naturelles hors corse
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+          
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+    
+      
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureAutre'
+  
+
 
   /nature/znieff1:
     get:
@@ -355,6 +427,50 @@ paths:
             $ref: '#/definitions/FeatureCollectionNatureAutre'
   
 
+  /nature/rncf:
+    get:
+      summary: Recherche des réserves nationales de chasse et de faune sauvage
+      description: Retourne un résultat de Type "FeatureCollection"
+      tags:
+        - Réserves nationales de chasse et de faune sauvage
+      parameters:
+
+        - name: apikey
+          in: query
+          description: Clé WFS géoportail
+          type: string
+          required: false
+
+        - name: id_mnhn
+          in: query
+          type: string
+          required: false
+
+        - name: geom
+          in: query
+          description: Géométrie au format GeoJson
+          schema:
+            $ref: '#/definitions/Geometry'
+          
+        - name: _limit
+          in: query
+          description: Limite de résultats à afficher (chiffre entre 1 et 1000)
+          type: integer
+          required: false
+          
+        - name: _start
+          in: query
+          description: Position pour le début de la recherche
+          type: integer
+          required: false
+        
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/FeatureCollectionNatureChassePeche'
+
+
 definitions:
 
   #---------------------------------------------------
@@ -420,6 +536,86 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/FeatureNatureAutre'
+
+
+   #---------------------------------------------------
+   # /Chasse et peche
+   #---------------------------------------------------
+            
+  FeatureNatureChassePeche:
+    description: 'Nature autres'
+    allOf:
+      - $ref: '#/definitions/Feature'
+    properties:
+      properties:
+        type: object
+        properties:
+          id_local:
+            type: string
+          id_mnhn:
+            type: string
+          nom_site:
+            type: string
+          date_crea:
+            type: string
+          modif_adm:
+            type: string
+          modif_geo:
+            type: string
+          url_fiche:
+            type: string
+          surf_off:
+            type: string
+          acte_deb:
+            type: string
+          gest_site:
+            type: string
+          operateur:
+            type: string
+          precision:
+            type: string
+          src_geom:
+            type: string
+          src_annee:
+            type: string
+          marin:
+            type: string
+          p1_nature:
+            type: string
+          p2_culture:
+            type: string
+          p3_paysage:
+            type: string
+          p4_geologi:
+            type: string
+          p5_speleo:
+            type: string
+          p6_archeo:
+            type: string
+          p7_paleob:
+            type: string
+          p8_anthrop:
+            type: string
+          p9_science:
+            type: string
+          p10_public:
+            type: string
+          p11_dd:
+            type: string
+          p12_autre:
+            type: string
+      geometry:
+        $ref: '#/definitions/MultiPolygon'              
+
+  FeatureCollectionNatureChassePeche:
+    description: Une `FeatureCollection` contenant uniquement des features de type `FeatureDivision`
+    allOf:
+      - $ref: '#/definitions/FeatureCollection'
+    properties:
+      features:
+        type: array
+        items:
+          $ref: '#/definitions/FeatureNatureChassePeche'
 
   
   # import definitions
