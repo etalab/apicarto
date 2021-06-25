@@ -28,13 +28,13 @@ info:
       
       * PROTECTEDAREAS.SIC:sic  (Sites Natura 2000 au titre de la directive Habitat)
       * PROTECTEDAREAS.ZPS:zps  (Sites NATURA 2000 au titre de la Directive Oiseaux)
-      * PROTECTEDAREAS.RNN:rnn (réserves naturelles hors Corse)
+      * PROTECTEDAREAS.RNN:rnn (Réserves naturelles hors Corse)
       * PROTECTEDAREAS.RNC:rnc  (Réserves Naturelles de Corse)
       * PROTECTEDAREAS.ZNIEFF1:znieff1 (Zones écologiques de nature remarquable (ZNIEFF1))
       * PROTECTEDAREAS.ZNIEFF2:znieff2  (Zones écologiques de nature remarquable (ZNIEFF2))
       * PROTECTEDAREAS.PN:pn (Parcs nationaux)
-      * PROTECTEDAREAS.PNR:pnr (Parcs nationaux régionaux)
-      * PROTECTEDAREAS.RNCF:rncfs_fxx (réserves nationales de chasse et de faune sauvage)
+      * PROTECTEDAREAS.PNR:pnr (Parcs naturels régionaux)
+      * PROTECTEDAREAS.RNCF:rncfs_fxx (Réserves nationales de chasse et de faune sauvage)
 
 
     ## Géométrie
@@ -385,10 +385,10 @@ paths:
 
   /nature/pnr:
     get:
-      summary: Recherche des zones dans les parcs nationaux régionaux
+      summary: Recherche des zones dans les  parcs naturels régionaux
       description: Retourne un résultat de Type "FeatureCollection"
       tags:
-        - Parcs nationaux régionaux
+        - Parcs naturels régionaux
       parameters:
 
         - name: apikey

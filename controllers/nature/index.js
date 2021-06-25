@@ -1,18 +1,16 @@
 var Router = require('express').Router;
 var router = new Router();
 var cors = require('cors');
-const { check, param } = require('express-validator/check');
-const { matchedData } = require('express-validator/filter');
 
-const validateParams = require('../../middlewares/validateParams');
-const {isGeometry,isCodeInsee} = require('../../checker');
-
-const gppWfsClient = require('../../middlewares/naturegppWfsClient');
 const _ = require('lodash');
 const meta = require("@turf/meta");
 const proj4 = require('proj4');
 
-
+const { check } = require('express-validator/check');
+const {isGeometry} = require('../../checker');
+const { matchedData } = require('express-validator/filter');
+const validateParams = require('../../middlewares/validateParams');
+const gppWfsClient = require('../../middlewares/naturegppWfsClient');
 
 
 /**
@@ -114,10 +112,8 @@ router.post('/natura-habitat',cors(corsOptionsGlobal),naturaValidators, createNa
  * 
  */
 
-
 router.get('/natura-oiseaux', cors(corsOptionsGlobal),naturaValidators, createNaturaProxy('PROTECTEDAREAS.ZPS:zps'));
 router.post('/natura-oiseaux', cors(corsOptionsGlobal),naturaValidators, createNaturaProxy('PROTECTEDAREAS.ZPS:zps'));
-
 
 /**
 * Récupération des couches sur les réserves naturelle Corse
@@ -167,8 +163,8 @@ router.post('/pn', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy(
 *
 */
 
-router.get('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
-router.post('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PN:pnr'));
+router.get('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PNR:pnr'));
+router.post('/pnr', cors(corsOptionsGlobal),reserveValidators, createNaturaProxy('PROTECTEDAREAS.PNR:pnr'));
 
 /**
 * Récupération des couches réserves nationales de chasse et de faune sauvage
