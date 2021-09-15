@@ -1,6 +1,6 @@
 {
   "name": "apicarto",
-  "version": "2.3.6",
+  "version": "v2.3.9",
   "main": "index.js",
   "scripts": {
     "import": "npm run import-inao-appellation",
@@ -37,7 +37,7 @@
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
     "flatted": "3.1.1",
-    "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#issue_17",
+    "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#master",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
     "pg": "^8.5.1",
@@ -47,7 +47,10 @@
     "uuid": "^3.3.2",
     "request": "^2.65.0",
     "request-promise": "^4.2.5",
-    "proj4": "^2.7.2"
+    "proj4": "^2.7.2",
+    "axios": "^0.21.4",
+    "http-proxy-agent": "^4.0.1",
+    "https-proxy-agent": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^7.23.0",

@@ -7,7 +7,7 @@ const { matchedData } = require('express-validator/filter');
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry} = require('../../checker');
 
-const gppWfsClient = require('../../middlewares/gppWfsClient');
+const erWfsClient = require('../../middlewares/erWfsClient');
 
 const _ = require('lodash');
 
@@ -18,7 +18,7 @@ const _ = require('lodash');
  */
 function createErProxy(featureTypeName,typeSearch){
     return [
-        gppWfsClient,
+        erWfsClient,
         validateParams,
         function(req,res){
             var params = matchedData(req);
@@ -78,7 +78,7 @@ function createErProxy(featureTypeName,typeSearch){
             if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-            req.gppWfsClient.getFeatures(featureTypeName, params)
+            req.erWfsClient.getFeatures(featureTypeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
                 })
