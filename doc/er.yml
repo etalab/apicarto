@@ -57,6 +57,11 @@ paths:
           type: string
           required: false
         
+        - name: name
+          in: query
+          type: string
+          required: false
+          
         - name: sale
           in: query
           type: string
@@ -72,7 +77,19 @@ paths:
           description: Géométrie au format GeoJson
           schema:
             $ref: '#/definitions/Geometry'
-            
+
+        - name: date_maj_deb
+          in: query
+          description: Date début de mise à jour sous la forme AAAA-MM-JJ
+          type: string
+          require: false
+
+        - name: date_maj_fin
+          in: query
+          description: Date fin de mise à jour sous la forme AAAA-MM-JJ
+          type: string
+          require: false
+        
         - name: _limit
           in: query
           description: Limite de résultats à afficher(chiffre entre 1 et 1000)
@@ -109,7 +126,8 @@ paths:
           in: query
           description: Code insee de la commune sur 5 caractères
           type: string
-          pattern: '\d{5}'
+          minLength: 5
+          maxLength: 5
           required: false
 
         - name: title

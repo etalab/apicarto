@@ -1,5 +1,5 @@
 const debug = require('debug')('apicarto');
-const GeoportalWfsClient = require('geoportal-wfs-client');
+const GeoportalWfsClientEr = require('../lib/ClientEr.js');
 
 
 /*
@@ -10,7 +10,6 @@ const GeoportalWfsClient = require('geoportal-wfs-client');
 module.exports = function(req, res, next) {
     /* gestion des variables d'environnement et valeur par défaut */
     var options = {
-        'defaultCRS': 'EPSG:3857',
         apiKey:  process.env.GEOPORTAL_API_KEY,
         url: 'https://wxs.ign.fr/{apiKey}/geoportail/wfs',
         headers:{
@@ -45,7 +44,7 @@ module.exports = function(req, res, next) {
         });
     }
 
-    req.gppWfsClient = new GeoportalWfsClient(options);
+    req.erWfsClient = new GeoportalWfsClientEr(options);
 
     next();
 };
