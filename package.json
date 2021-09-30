@@ -37,7 +37,7 @@
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
     "flatted": "3.1.1",
-    "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#master",
+    "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#v0.4.0",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
     "pg": "^8.5.1",

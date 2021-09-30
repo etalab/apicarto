@@ -30,7 +30,25 @@ function createErProxy(featureTypeName,typeSearch){
             }
             params = _.omit(params,'apikey');
             /** Gestion de la requete categorie */
-            
+            if((params.date_maj_deb) && (params.date_maj_fin)) {
+                params.field_date = params.date_maj_deb +'T00:00:00Z;'+ params.date_maj_fin+'T23:59:59Z';
+                params = _.omit(params,'date_maj_deb');
+                params = _.omit(params,'date_maj_fin');
+
+            } else {
+                if((params.date_maj_deb) || (params.date_maj_fin)) {
+                    return res.status(400).send({
+                        code: 400,
+                        message: 'Utilisation des dates avec une date de fin et une date de debut avec moins de 6 mois entre les 2 dates.'
+                    });
+                }
+            }
+            //For module Product utilisation parametre name pour la recherche
+            if ((typeSearch == 'product') && (params.name)) {
+                params.name = params.name.toUpperCase();  
+            }
+
+            // For module Category Gestion du parametre name
             if (typeSearch == 'category')  {
                 if (params.name && params.type) {
                     if(params.type == 's') { 
@@ -89,7 +107,6 @@ function createErProxy(featureTypeName,typeSearch){
     ];
 }
 
-
 var corsOptionsGlobal = function(origin,callback) {
     var corsOptions;
     if (origin) {
@@ -120,7 +137,9 @@ var erValidators = [
     check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),
-    check('_start').optional().isNumeric()
+    check('_start').optional().isNumeric(),
+    check('date_maj_deb').optional().isString(), // Param ne servant que pour admin
+    check('date_maj_fin').optional().isString() // Param ne servant que pour admin
 ];
 
 var productValidators = erValidators.concat([
