@@ -3,8 +3,6 @@ var router = new Router();
 var cors = require('cors');
 
 const _ = require('lodash');
-const meta = require("@turf/meta");
-const proj4 = require('proj4');
 
 const { check } = require('express-validator/check');
 const {isGeometry} = require('../../checker');
