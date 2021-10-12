@@ -45,7 +45,8 @@ function createErProxy(featureTypeName,typeSearch){
             }
             //For module Product utilisation parametre name pour la recherche
             if ((typeSearch == 'product') && (params.name)) {
-                params.name = params.name.toUpperCase();  
+                params.namepr = params.name.toUpperCase();
+                params = _.omit(params,'name');
             }
 
             // For module Category Gestion du parametre name
