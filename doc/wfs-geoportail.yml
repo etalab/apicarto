@@ -19,12 +19,8 @@ info:
 
     ## Clé WFS géoportail (apikey)
     
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. 
-      Si cette clé n'est pas définie sur le serveur API Carto, il faut passer une clé IGN en paramètre sous le nom `apikey`.
-
-      Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr .
-      Vous ne pourrez interroger que les couches dont vous avez paramétré l'accès sur votre clé de géoservices IGN.
-      La sécurisation de la clé se fait par referer.
+     Pour des raisons techniques le service demande toujours une clé dans le paramètre apikey. Il est recommandé d'utiliser les clés génériques dont la description est disponible sur [le site géoservices](https://geoservices.ign.fr/services-web-experts).
+     Une prochaine évolution permettra de s'affranchir de cette contrainte.
 
     ## Couche source
 
@@ -41,6 +37,8 @@ info:
       
       ## Géométrie
 
+      La géometrie doit être exprimée en valeur décimale dans le référentiel WGS84
+
       **Exemples de géométrie** : (référentiel EPSG:4326)
 
       * Point :
@@ -55,8 +53,10 @@ info:
       
          `{"type":"Polygon","coordinates":[[[1.2,48.85],[1.3,48.85],[1.3,48.9],[1.2,48.9],[1.2,48.85]],[[1.23,48.86],[1.23,48.88],[1.26,48.88],[1.26,48.86],[1.23,48.86]]]}`
       
-    
+      * Linéaire :
 
+         `{"type":"LineString","coordinates":[[4.681549,47.793784],[4.741974,47.788248]]}`
+      
 consumes:
   - application/json
 produces:

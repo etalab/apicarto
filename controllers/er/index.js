@@ -29,25 +29,37 @@ function createErProxy(featureTypeName,typeSearch){
                 });
             }
             params = _.omit(params,'apikey');
-            /** Gestion de la requete categorie */
-            if((params.date_maj_deb) && (params.date_maj_fin)) {
-                params.field_date = params.date_maj_deb +'T00:00:00Z;'+ params.date_maj_fin+'T23:59:59Z';
-                params = _.omit(params,'date_maj_deb');
-                params = _.omit(params,'date_maj_fin');
-
-            } else {
-                if((params.date_maj_deb) || (params.date_maj_fin)) {
-                    return res.status(400).send({
-                        code: 400,
-                        message: 'Utilisation des dates avec une date de fin et une date de debut avec moins de 6 mois entre les 2 dates.'
-                    });
+            /** Gestion de la requete product */
+             
+            if (typeSearch == 'product') {
+                //For module Product utilisation parametre name pour la recherche
+                if (params.name) {
+                    params.namepr = params.name.toUpperCase();
+                    params = _.omit(params,'name');
                 }
-            }
-            //For module Product utilisation parametre name pour la recherche
-            if ((typeSearch == 'product') && (params.name)) {
-                params.namepr = params.name.toUpperCase();
-                params = _.omit(params,'name');
-            }
+                if((params.date_maj_deb) && (params.date_maj_fin)) {
+                    params.field_date = params.date_maj_deb +'T00:00:00Z;'+ params.date_maj_fin+'T23:59:59Z';
+                    params = _.omit(params,'date_maj_deb');
+                    params = _.omit(params,'date_maj_fin');
+                    
+    
+                } else {
+                    if((params.date_maj_deb) || (params.date_maj_fin)) {
+                        return res.status(400).send({
+                            code: 400,
+                            message: 'Utilisation des dates avec une date de fin et une date de debut avec moins de 6 mois entre les 2 dates.'
+                        });
+                    }
+                }
+                //For _propertyNames, we need to transform the string in Array
+                if(params._propertyNames) {
+                    params._propertyNames = params._propertyNames.split(';');    
+                }
+                if((params.has_geometry) &&(!((params.field_date) || (params._limit)))) {
+                    params.has_geometry =true;
+                }
+
+           }
 
             // For module Category Gestion du parametre name
             if (typeSearch == 'category')  {
@@ -139,8 +151,7 @@ var erValidators = [
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric(),
-    check('date_maj_deb').optional().isString(), // Param ne servant que pour admin
-    check('date_maj_fin').optional().isString() // Param ne servant que pour admin
+    check('_propertyNames').optional().isString()
 ];
 
 var productValidators = erValidators.concat([
@@ -149,7 +160,10 @@ var productValidators = erValidators.concat([
     check('name').optional().isString(),
     check('sale').optional().isNumeric(),
     check('type').optional().isString(),
-    check('publication_date').optional().isString()
+    check('publication_date').optional().isString(),
+    check('date_maj_deb').optional().isString(), // Param ne servant que pour admin
+    check('date_maj_fin').optional().isString() // Param ne servant que pour admin
+
     
 ]);
 
