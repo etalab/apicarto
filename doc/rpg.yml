@@ -18,32 +18,58 @@ info:
     Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUser_moduleRPG.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
   
 
-    ## Clé WFS géoportail (apikey)
-    
-      Ce service se repose sur l'appel à des services WFS de l'API géoportail de l'IGN. Si cette clé n'est pas définie sur le serveur API Carto, il faut passer une clé IGN en paramètre sous le nom `apikey`.
+    Les millésimes disponibles sont :
 
-      Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr .
+
+    **RPG V1**
+     
+      RPG.2010:rpg_2010
+
+      RPG.2011:rpg_2011
+
+      RPG.2012:rpg_2012
       
-      Lors de votre demande de clé IGN, vous devez commander les flux "Ressources WFS Géoportail - RPG" ci-dessous suivant l'année désirée:
-          
-      * RPG.2010:rpg_2010
-      * RPG.2011:rpg_2011
-      * RPG.2012:rpg_2012
-      * RPG.2013:rpg_2013
-      * RPG.2014:ilots_anonymes
-      * RPG.2015:parcelles_graphiques
-      * RPG.2016:parcelles_graphiques
-      * RPG.2017:parcelles_graphiques
-      * RPG.2018:parcelles_graphiques
-      * RPG.2019:parcelles_graphiques
+      RPG.2013:rpg_2013
+
+      RPG.2014:ilots_anonymes
+
+    
+    **RPG V2** 
+
+      RPG.2015:parcelles_graphiques
+
+      RPG.2016:parcelles_graphiques
+
+      RPG.2017:parcelles_graphiques
+
+      RPG.2018:parcelles_graphiques
+
+      RPG.2019:parcelles_graphiques
 
 
-      Exemple de géométrie : (référentiel EPSG:4326)
+    **Exemple de géométrie** : (référentiel EPSG:4326)
 
-      * Point : `{"type": "Point","coordinates":[-1.691634,48.104237]}`
-      * MultiPolygon : `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
+      * Point : 
+        
+        `{"type": "Point","coordinates":[-1.691634,48.104237]}`
+      
+      * MultiPolygon : 
+        
+        `{"type":"MultiPolygon","coordinates":[[[[-0.288863182067871,48.963666607295977],[-0.299592018127441,48.959299208576141],[-0.296330451965332,48.955325952385039],[-0.282125473022461,48.950675995388366],[-0.279722213745117,48.967019382922331],[-0.288863182067871,48.963666607295977]]]]}`
 
+      * Polygone troué : 
+        
+        `{"type":"Polygon","coordinates":[[[1.2,48.85],[1.3,48.85],[1.3,48.9],[1.2,48.9],[1.2,48.85]],[[1.23,48.86],[1.23,48.88],[1.26,48.88],[1.26,48.86],[1.23,48.86]]]}`
 
+      * Linéaire :
+
+        `{"type":"LineString","coordinates":[[4.681549,47.793784],[4.741974,47.788248]]}`
+
+    ## Historique des changements:
+
+       * Suppression du paramètre *apikey*
+     
+     
 consumes:
   - application/json
 produces:
@@ -59,11 +85,6 @@ paths:
         Prend une date qui sera une valeur comprise entre 2010 et 2014 inclus
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: false
 
         - name: annee
           in: query
@@ -110,12 +131,7 @@ paths:
         
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: false
-
+      
         - name: annee
           in: query
           type: integer

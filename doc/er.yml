@@ -77,7 +77,7 @@ paths:
           description: Géométrie au format GeoJson
           schema:
             $ref: '#/definitions/Geometry'
-
+      
         - name: date_maj_deb
           in: query
           description: Date début de mise à jour sous la forme AAAA-MM-JJ
@@ -101,6 +101,13 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
+
+        - name: _propertyNames
+          in: query
+          description: liste des propriétes à afficher séparées par un ;
+          type: string
+          require: false
+           
 
       
       responses:
@@ -162,6 +169,13 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
+
+        - name: _propertyNames
+          in: query
+          description: liste des propriétes à afficher séparées par un ;
+          type: string
+          require: false
+           
     
       tags:
         - grid
@@ -218,6 +232,13 @@ paths:
           description: Position pour le début de la recherche
           type: integer
           required: false
+        
+        - name: _propertyNames
+          in: query
+          description: liste des propriétes à afficher séparées par un ;
+          type: string
+          require: false
+           
   
       tags:
         - category
@@ -294,6 +315,8 @@ definitions:
             type: string
           vat:
             type: string
+          has_geometry:
+            type: boolean
     geometry:
       $ref: '#/definitions/MultiPolygon'
 

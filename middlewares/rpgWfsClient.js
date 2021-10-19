@@ -10,8 +10,7 @@ const GeoportalWfsClient = require('geoportal-wfs-client');
 module.exports = function(req, res, next) {
     /* gestion des variables d'environnement et valeur par défaut */
     var options = {
-        'defaultCRS': 'EPSG:3857',
-        apiKey:  'environnement',
+        apiKey: 'agriculture',
         url: 'https://wxs.ign.fr/{apiKey}/geoportail/wfs',
         headers:{
             'User-Agent': 'apicarto',
@@ -23,7 +22,6 @@ module.exports = function(req, res, next) {
     if ( req.headers.referer ){
         options.headers.Referer = req.headers.referer ;
     }
- 
     req.gppWfsClient = new GeoportalWfsClient(options);
 
     next();
