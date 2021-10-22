@@ -90,6 +90,12 @@ paths:
           type: string
           require: false
         
+        - name: has_geometry
+          in: query
+          description: Recherche uniquement valeur avec géométrie ou non
+          type: boolean
+          require: false
+        
         - name: _limit
           in: query
           description: Limite de résultats à afficher(chiffre entre 1 et 1000)

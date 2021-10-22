@@ -51,16 +51,16 @@ function createErProxy(featureTypeName,typeSearch){
                         });
                     }
                 }
-                //For _propertyNames, we need to transform the string in Array
-                if(params._propertyNames) {
-                    params._propertyNames = params._propertyNames.split(';');    
-                }
+                
                 if((params.has_geometry) &&(!((params.field_date) || (params._limit)))) {
                     params.has_geometry =true;
                 }
 
            }
-
+           //For _propertyNames, we need to transform the string in Array
+            if(params._propertyNames) {
+                params._propertyNames = params._propertyNames.split(';');    
+            }
             // For module Category Gestion du parametre name
             if (typeSearch == 'category')  {
                 if (params.name && params.type) {
@@ -162,7 +162,8 @@ var productValidators = erValidators.concat([
     check('type').optional().isString(),
     check('publication_date').optional().isString(),
     check('date_maj_deb').optional().isString(), // Param ne servant que pour admin
-    check('date_maj_fin').optional().isString() // Param ne servant que pour admin
+    check('date_maj_fin').optional().isString(), // Param ne servant que pour admin
+    check('has_geometry').optional().isBoolean(),
 
     
 ]);
