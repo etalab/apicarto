@@ -34,12 +34,15 @@ function createErProxy(featureTypeName,typeSearch){
              * si true : affichage uniquement des résultats avec géométrie
              * si false: affichage des résultats avec ou sans géométrie
              */
-            
-            if((params.admin == 'Y')  && ((typeSearch == 'product') || (typeSearch == 'category'))) {
-                params.has_geometry=false;
-            } else {
-                params.has_geometry=true;
+
+            if((typeSearch == 'product') || (typeSearch == 'category')) {
+                if(params.admin == 'Y') {
+                    params.has_geometry=false;
+                } else {
+                    params.has_geometry=true;
+                }
             }
+
             params = _.omit(params,'admin');
 
             /** Gestion de la requete product */
