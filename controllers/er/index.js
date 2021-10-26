@@ -29,8 +29,20 @@ function createErProxy(featureTypeName,typeSearch){
                 });
             }
             params = _.omit(params,'apikey');
+            
+            /** Gestion affichage des valeurs avec has_geometrie
+             * si true : affichage uniquement des résultats avec géométrie
+             * si false: affichage des résultats avec ou sans géométrie
+             */
+            
+            if((params.admin == 'Y')  && ((typeSearch == 'product') || (typeSearch == 'category'))) {
+                params.has_geometry=false;
+            } else {
+                params.has_geometry=true;
+            }
+            params = _.omit(params,'admin');
+
             /** Gestion de la requete product */
-             
             if (typeSearch == 'product') {
                 //For module Product utilisation parametre name pour la recherche
                 if (params.name) {
@@ -51,12 +63,8 @@ function createErProxy(featureTypeName,typeSearch){
                         });
                     }
                 }
-                
-                if((params.has_geometry) &&(!((params.field_date) || (params._limit)))) {
-                    params.has_geometry =true;
-                }
+            } 
 
-           }
            //For _propertyNames, we need to transform the string in Array
             if(params._propertyNames) {
                 params._propertyNames = params._propertyNames.split(';');    
@@ -163,7 +171,7 @@ var productValidators = erValidators.concat([
     check('publication_date').optional().isString(),
     check('date_maj_deb').optional().isString(), // Param ne servant que pour admin
     check('date_maj_fin').optional().isString(), // Param ne servant que pour admin
-    check('has_geometry').optional().isBoolean(),
+    check('admin').optional().isAlphanumeric().isLength({min:1,max:1}).withMessage('Le champ admin doit être Y ou N')
 
     
 ]);
@@ -179,7 +187,8 @@ router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy(
 var categoryValidators = erValidators.concat([
     check('name').optional().isString(),
     check('type').optional().isAlphanumeric().isLength({min:1,max:1}).withMessage('Le type est sur 1 caractère'),
-    check('category_id').optional().isString()
+    check('category_id').optional().isString(),
+    check('admin').optional().isAlphanumeric().isLength({min:1,max:1}).withMessage('Le champ admin doit être Y ou N')
 ]);
 
 router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view' ,'category'));
