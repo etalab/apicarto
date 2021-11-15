@@ -68,7 +68,7 @@ function createErProxy(featureTypeName,typeSearch){
                 }
             } 
 
-           //For _propertyNames, we need to transform the string in Array
+            //For _propertyNames, we need to transform the string in Array
             if(params._propertyNames) {
                 params._propertyNames = params._propertyNames.split(';');    
             }

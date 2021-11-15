@@ -5,7 +5,7 @@ const { check } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 
 const validateParams = require('../../middlewares/validateParams');
-const {isGeometry,isCodeInsee} = require('../../checker');
+const {isGeometry} = require('../../checker');
 
 const gppWfsClient = require('../../middlewares/gppWfsClient');
 
