@@ -9,7 +9,7 @@
 
 Pour faire fonctionner API Carto, vous avez besoin de :
 
-* [Node.js](https://nodejs.org) v6+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
+* [Node.js](https://nodejs.org) v14+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
 * PostgreSQL v9.4+
 * PostGIS v2.1+
 * [ogr2ogr](http://www.gdal.org/ogr2ogr.html) v1.11+
@@ -72,7 +72,7 @@ Remarque : Vous n'êtes pas obligé de créer une clé protégée par referer, v
 | bdparcellaire    | Base de données cadastrale                                         | http://professionnels.ign.fr/bdparcellaire                                                             |
 | adminexpress     | Découpage administratif du territoire métropolitain et ultra-marin | http://professionnels.ign.fr/adminexpress                                                              |
 | osm-commune      | Découpage administratif issu de openstreetmap                      | https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/#  |
-| codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/etalab/codes-postaux#sources                                                   |
+| codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/BaseAdresseNationale/codes-postaux                                                   |
 
 
 

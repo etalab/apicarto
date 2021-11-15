@@ -1,6 +1,6 @@
 {
   "name": "apicarto",
-  "version": "v2.4.2",
+  "version": "v2.4.3",
   "main": "index.js",
   "scripts": {
     "import": "npm run import-inao-appellation",
@@ -19,7 +19,7 @@
   "repository": "IGNF/apicarto",
   "license": "CECILL-B",
   "engines": {
-    "node": ">=6"
+    "node": ">=14"
   },
   "dependencies": {
     "@mapbox/geojsonhint": "^3.0.0",
@@ -30,7 +30,7 @@
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.15",
     "circular-json": "^0.5.9",
-    "codes-postaux": "^3.3.0",
+    "codes-postaux": "^3.4.0",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "ejs": "^2.7.4",
