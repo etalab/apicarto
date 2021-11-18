@@ -19,8 +19,8 @@ info:
 
        Lors de votre demande de clé IGN, vous devez commander les flux ci dessous :
           
-      * PLAGE_ER_WFS:product_view
-      * PLAGE_ER_WFS:grid_view
+      * ESPACEREVENDEUR:product_view
+      * ESPACEREVENDEUR:grid_view
       
   
   contact:
