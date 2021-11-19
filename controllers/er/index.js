@@ -68,7 +68,7 @@ function createErProxy(featureTypeName,typeSearch){
                 }
             } 
 
-           //For _propertyNames, we need to transform the string in Array
+            //For _propertyNames, we need to transform the string in Array
             if(params._propertyNames) {
                 params._propertyNames = params._propertyNames.split(';');    
             }
@@ -179,8 +179,8 @@ var productValidators = erValidators.concat([
     
 ]);
 
-router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view','product'));
-router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('PLAGE_ER_WFS:product_view','product'));
+router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('ESPACEREVENDEUR:product_view','product'));
+router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('ESPACEREVENDEUR:product_view','product'));
 
 /**
  * Récupération des information sur les category dans le flux product_view
@@ -194,8 +194,8 @@ var categoryValidators = erValidators.concat([
     check('admin').optional().isAlphanumeric().isLength({min:1,max:1}).withMessage('Le champ admin doit être Y ou N')
 ]);
 
-router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view' ,'category'));
-router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('PLAGE_ER_WFS:product_view','category'));
+router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('ESPACEREVENDEUR:product_view' ,'category'));
+router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('ESPACEREVENDEUR:product_view','category'));
 
 
 /**
@@ -210,8 +210,8 @@ var gridValidators = erValidators.concat([
     check('zip_codes').optional().isString()
 ]);
 
-router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('PLAGE_ER_WFS:grid_view','grid'));
-router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('PLAGE_ER_WFS:grid_view','grid'));
+router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('ESPACEREVENDEUR:grid_view','grid'));
+router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('ESPACEREVENDEUR:grid_view','grid'));
 
 
 module.exports=router;

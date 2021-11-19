@@ -26,9 +26,9 @@ function createCadastreProxy(featureTypeName){
             var featureTypeNameFinal = featureTypeName;
 
             if ((params.source_ign) && (featureTypeName != 'BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad') && (featureTypeName != 'CADASTRALPARCELS.PARCELLAIRE_EXPRESSG:feuille')) {
-                if(params.source_ign.toUpperCase() == "PCI") {
+                if(params.source_ign.toUpperCase() == 'PCI') {
                     featureTypeNameFinal = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
-                } else if(params.source_ign.toUpperCase() == "BDP") {
+                } else if(params.source_ign.toUpperCase() == 'BDP') {
                     featureTypeNameFinal = featureTypeName;
                 }  else {
                     return res.status(400).send({
