@@ -10,7 +10,7 @@ const {isGeometry} = require('../../checker');
 const gppWfsClient = require('../../middlewares/rpgWfsClient');
 
 const _ = require('lodash');
-const lastYearRPG = 2019;
+const lastYearRPG = 2020;
 const firstYearRPG = 2010;
 
 /**

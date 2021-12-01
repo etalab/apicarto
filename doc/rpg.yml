@@ -46,6 +46,8 @@ info:
 
       RPG.2019:parcelles_graphiques
 
+      RPG.2020:parcelles_graphiques
+
 
     **Exemple de géométrie** : (référentiel EPSG:4326)
 
@@ -127,7 +129,7 @@ paths:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend une date qui sera une valeur comprise entre 2015 et 2019 inclus
+        Prend une date qui sera une valeur comprise entre 2015 et 2020 inclus
         
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
