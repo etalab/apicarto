@@ -52,7 +52,7 @@ info:
     **Informations importantes** 
 
       * Le produit BD Parcellaire est un produit historique qui n'est plus mis à jour. Il est donc fortement conseillé d'utiliser le produit Parcellaire Express qui bénéficie d'une mise à jour semestrielle. [Voir la documentation de comparaison des deux produits](https://geoservices.ign.fr/ressources_documentaires/Espace_documentaire/PARCELLAIRE_CADASTRAL/Parcellaire_Express_PCI/Comparatif_PEPCI_BDPARCELLAIRE.pdf).    
-      * L'attribut *source_ign* est actuellement par défaut (valeur non remplie) interprété comme BD Parcellaire, en janvier 2022 l'API évoluera et ce sera la valeur Parcellaire Express qui sera prise par défaut. 
+      * L'attribut *source_ign* est actuellement par défaut (valeur non remplie) interprété comme BD Parcellaire, en juin 2022 l'API évoluera et ce sera la valeur Parcellaire Express qui sera prise par défaut. 
   
     ## Historique des changements
 
