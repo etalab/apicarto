@@ -22,12 +22,6 @@ function createErProxy(featureTypeName,typeSearch){
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            if (typeof req.query.apikey == 'undefined') {
-                return res.status(400).send({
-                    code: 400,
-                    message: 'La clé ign (apikey) doit être renseignée'
-                });
-            }
             params = _.omit(params,'apikey');
             
             /** Gestion affichage des valeurs avec has_geometrie
@@ -158,7 +152,6 @@ var corsOptionsGlobal = function(origin,callback) {
 
 
 var erValidators = [
-    check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric(),
