@@ -22,7 +22,6 @@ module.exports = function(req, res, next) {
     if ( req.headers.referer ){
         options.headers.Referer = req.headers.referer ;
     }
-
     req.erWfsClient = new GeoportalWfsClientEr(options);
 
     next();

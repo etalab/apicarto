@@ -24,6 +24,14 @@ function createRpgProxy(valeurSearch) {
         function(req,res){
             var params = matchedData(req);
             var featureTypeName= '';
+            if(!params.geom) {
+                return res.status(400).send({
+                    code: 400,
+                    message: 'La géométrie est obligatoire pour cette recherche.'
+                   
+                }); 
+            }
+            params = _.omit(params,'apikey');
             /*  Modification année dans le flux */
             if (valeurSearch == 'v1') {
                 if ((params.annee >= firstYearRPG) && (params.annee <= 2014))  {
@@ -105,7 +113,7 @@ var corsOptionsGlobal = function(origin,callback) {
  * TODO Principe à valider (faire un middleware de renommage des paramètres si l'approche est trop violente)
  */
 var rpgValidators = [
-    check('annee').optional().isNumeric().isLength({min:4,max:4}).withMessage('Année sur 4 chiffres'),
+    check('annee').exists().isNumeric().isLength({min:4,max:4}).withMessage('Année sur 4 chiffres'),
     check('code_cultu').optional().isString(),
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),

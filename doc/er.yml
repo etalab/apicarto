@@ -273,13 +273,15 @@ definitions:
             type: string
           publication_date:
             type: string
-          status:
-            type: string
           replacement:
             type: string
           dimension:
             type: string
           scale:
+            type: string
+          editorial: string
+            type: string
+          sale:
             type: string
           complement:
             type: string
@@ -309,8 +311,38 @@ definitions:
             type: string
           vat:
             type: string
+          keywords:
+            type: string
+          ean_symb:
+            type: string
+          producer:
+            type: string
+          previous_publication_date:
+            type: string
+          er_visible_from:
+            type: string
+          er_visible_to:
+            type: string
+          updated_at:
+            type: string
+          deleted_at:
+            type: string
+          continent:
+            type: string
+          pays:
+            type: string
           has_geometry:
             type: boolean
+          departement:
+            type: string
+          region:
+            type: string
+          tva_type:
+            type: string
+          print_medium:
+            type: string
+          full_description:
+            type: string
     geometry:
       $ref: '#/definitions/MultiPolygon'
 
