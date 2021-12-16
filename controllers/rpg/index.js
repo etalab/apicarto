@@ -24,13 +24,6 @@ function createRpgProxy(valeurSearch) {
         function(req,res){
             var params = matchedData(req);
             var featureTypeName= '';
-            if(!params.geom) {
-                return res.status(400).send({
-                    code: 400,
-                    message: 'La géométrie est obligatoire pour cette recherche.'
-                   
-                }); 
-            }
             params = _.omit(params,'apikey');
             /*  Modification année dans le flux */
             if (valeurSearch == 'v1') {
@@ -85,7 +78,6 @@ function createRpgProxy(valeurSearch) {
         }
     ];
 }
-
 
 var corsOptionsGlobal = function(origin,callback) {
     var corsOptions;

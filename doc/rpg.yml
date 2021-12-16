@@ -101,7 +101,7 @@ paths:
 
         - name: geom
           in: query
-          required: true
+          required: false
           schema:
             $ref: "#/definitions/Geometry"
 
@@ -147,7 +147,7 @@ paths:
 
         - name: geom
           in: query
-          required: true
+          required: false
           schema:
             $ref: "#/definitions/Geometry"
 
