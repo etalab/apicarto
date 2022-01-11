@@ -279,7 +279,7 @@ definitions:
             type: string
           scale:
             type: string
-          editorial: string
+          editorial:
             type: string
           sale:
             type: string
