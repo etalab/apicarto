@@ -21,7 +21,7 @@ function createNaturaProxy(featureTypeName){
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            
+            params = _.omit(params,'apikey');
             // Tranformation de la géométrie dans le réferentiel 3857
            
             /* Value default pour _limit an _start */

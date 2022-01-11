@@ -24,6 +24,7 @@ function createRpgProxy(valeurSearch) {
         function(req,res){
             var params = matchedData(req);
             var featureTypeName= '';
+            params = _.omit(params,'apikey');
             /*  Modification année dans le flux */
             if (valeurSearch == 'v1') {
                 if ((params.annee >= firstYearRPG) && (params.annee <= 2014))  {
@@ -78,7 +79,6 @@ function createRpgProxy(valeurSearch) {
     ];
 }
 
-
 var corsOptionsGlobal = function(origin,callback) {
     var corsOptions;
     if (origin) {
@@ -105,7 +105,7 @@ var corsOptionsGlobal = function(origin,callback) {
  * TODO Principe à valider (faire un middleware de renommage des paramètres si l'approche est trop violente)
  */
 var rpgValidators = [
-    check('annee').optional().isNumeric().isLength({min:4,max:4}).withMessage('Année sur 4 chiffres'),
+    check('annee').exists().isNumeric().isLength({min:4,max:4}).withMessage('Année sur 4 chiffres'),
     check('code_cultu').optional().isString(),
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),

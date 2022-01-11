@@ -24,7 +24,7 @@ function createCadastreProxy(featureTypeName){
         function(req,res){
             var params = matchedData(req);
             var featureTypeNameFinal = featureTypeName;
-
+            params = _.omit(params,'apikey');
             if ((params.source_ign) && (featureTypeName != 'BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:divcad') && (featureTypeName != 'CADASTRALPARCELS.PARCELLAIRE_EXPRESSG:feuille')) {
                 if(params.source_ign.toUpperCase() == 'PCI') {
                     featureTypeNameFinal = featureTypeName.replace('BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G', 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS');
