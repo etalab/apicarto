@@ -10,17 +10,6 @@ info:
     Toutes les requêtes du module "er" peuvent se faire en POST ou en GET. 
 
     Sur cette page, vous pouvez uniquement tester les modules avec des requêtes en GET.
-    
-    ## Clé WFS géoportail (apikey)
-    
-      Ce service repose sur l'appel des services WFS Géoportail qui nécessite une clé pour l'utilisation
-
-      Pour obtenir une clé geoportail, vous devez vous connecter au site : https://geoservices.ign.fr.
-
-       Lors de votre demande de clé IGN, vous devez commander les flux ci dessous :
-          
-      * ESPACEREVENDEUR:product_view
-      * ESPACEREVENDEUR:grid_view
       
   
   contact:
