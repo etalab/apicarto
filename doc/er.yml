@@ -117,12 +117,6 @@ paths:
         Retourne un résultat de Type "FeatureCollection"
       parameters:
 
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: true
-
         - name: name
           in: query
           description: Code insee de la commune sur 5 caractères
@@ -186,12 +180,6 @@ paths:
         Retourne un résultat de Type "FeatureCollection"
 
       parameters:
-
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: true
 
         - name: name
           in: query
