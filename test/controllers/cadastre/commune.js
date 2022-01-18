@@ -4,8 +4,6 @@ const request = require('supertest');
 const expect = require('expect.js');
 const server = require('../../../server');
 
-var API_KEY = process.env.GEOPORTAL_API_KEY;
-
 describe('Testing /api/cadastre/commune', function() {
 
     describe('With invalid inputs', function() {
@@ -20,8 +18,6 @@ describe('Testing /api/cadastre/commune', function() {
         });
 
     });
-
-if ( typeof API_KEY !== 'undefined' ){
 
     /* filtrage par code insee */
     describe('/api/cadastre/commune?code_insee=55001',function(){
@@ -96,6 +92,5 @@ if ( typeof API_KEY !== 'undefined' ){
         });
     });
 
-} // API_KEY is defined
     
 });

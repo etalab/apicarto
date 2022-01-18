@@ -5,7 +5,6 @@ const expect = require('expect.js');
 
 const server = require('../../../server');
 
-var API_KEY = process.env.GEOPORTAL_API_KEY;
 
 describe('Testing /api/cadastre/division', function() {
 
@@ -28,8 +27,6 @@ describe('Testing /api/cadastre/division', function() {
         });
 
     });
-
-if ( typeof API_KEY !== 'undefined' ){
 
     describe('/api/cadastre/division?code_insee=94067&section=0A', function() {
         this.timeout(5000);
@@ -81,7 +78,5 @@ if ( typeof API_KEY !== 'undefined' ){
                 .end(done);
         });
     });
-
-} // API_KEY is defined
 
 });

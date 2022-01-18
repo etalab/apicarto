@@ -4,8 +4,6 @@ const request = require('supertest');
 
 const server = require('../../../server');
 
-var API_KEY = process.env.GEOPORTAL_API_KEY;
-
 describe('Testing /api/cadastre/parcelle', function() {
     this.timeout(5000);
 
