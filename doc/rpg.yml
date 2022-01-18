@@ -101,7 +101,7 @@ paths:
 
         - name: geom
           in: query
-          required: false
+          description: Le champ geom est obligatoire pour la recherche
           schema:
             $ref: "#/definitions/Geometry"
 
@@ -147,7 +147,7 @@ paths:
 
         - name: geom
           in: query
-          required: false
+          description: Le champ geom est obligatoire pour la recherche
           schema:
             $ref: "#/definitions/Geometry"
 
