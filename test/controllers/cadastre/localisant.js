@@ -5,8 +5,6 @@ const expect = require('expect.js');
 
 const server = require('../../../server');
 
-var API_KEY = process.env.GEOPORTAL_API_KEY;
-
 describe('Testing /api/cadastre/localisant', function() {
 
     describe('With invalid inputs', function() {
@@ -46,8 +44,6 @@ describe('Testing /api/cadastre/localisant', function() {
     });
 
 
-if ( typeof API_KEY !== 'undefined' ){
-
     it('/api/cadastre/localisant?code_insee=94067', function(){
         request(server)
             .get('/api/cadastre/localisant?code_insee=94067')
@@ -74,8 +70,5 @@ if ( typeof API_KEY !== 'undefined' ){
             })
             .end(done);
     });
-
-} // API_KEY is defined
-
 });
 

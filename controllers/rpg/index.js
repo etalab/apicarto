@@ -107,7 +107,7 @@ var corsOptionsGlobal = function(origin,callback) {
 var rpgValidators = [
     check('annee').exists().isNumeric().isLength({min:4,max:4}).withMessage('Année sur 4 chiffres'),
     check('code_cultu').optional().isString(),
-    check('geom').optional().custom(isGeometry),
+    check('geom').exists().custom(isGeometry).withMessage('La géométrie est invalide.'),
     check('_limit').optional().isNumeric(),
     check('_start').optional().isNumeric()
 ];

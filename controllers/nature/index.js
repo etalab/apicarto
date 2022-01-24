@@ -29,7 +29,7 @@ function createNaturaProxy(featureTypeName){
             if( typeof params._limit == 'undefined') {params._limit = 1000;}
            
             /* requête WFS GPP*/
-          req.gppWfsClient.getFeatures(featureTypeName, params)
+            req.gppWfsClient.getFeatures(featureTypeName, params)
                 .then(function(featureCollection) {
                     res.json(featureCollection);
                 })

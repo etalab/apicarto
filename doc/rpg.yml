@@ -70,6 +70,7 @@ info:
     ## Historique des changements:
 
        * Suppression du paramètre *apikey*
+       * La géométrie(champ geom) est obligatoire pour les recherches
      
      
 consumes:
@@ -84,7 +85,8 @@ paths:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend une date qui sera une valeur comprise entre 2010 et 2014 inclus
+        Prend une date qui sera une valeur comprise entre 2010 et 2014 inclus.
+        Les champs année et geom sont obligatoires.
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
 
@@ -101,7 +103,9 @@ paths:
 
         - name: geom
           in: query
-          required: false
+          description: Le champ geom est obligatoire pour la recherche
+          type: string
+          required: true
           schema:
             $ref: "#/definitions/Geometry"
 
@@ -129,7 +133,8 @@ paths:
     get:
       description: |
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
-        Prend une date qui sera une valeur comprise entre 2015 et 2020 inclus
+        Prend une date qui sera une valeur comprise entre 2015 et 2020 inclus.
+        Les champs année et geom sont obligatoires.
         
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
       parameters:
@@ -147,7 +152,9 @@ paths:
 
         - name: geom
           in: query
-          required: false
+          description: Le champ geom est obligatoire pour la recherche
+          type: string
+          required: true
           schema:
             $ref: "#/definitions/Geometry"
 
