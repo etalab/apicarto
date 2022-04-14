@@ -17,11 +17,6 @@ info:
     
     Consultez la [documentation utilisateur](https://apicarto.ign.fr/api/doc/pdf/docUser_moduleWfsGeoportail.pdf) pour plus d’informations sur les paramètres d’appel disponibles et le format des résultats.
 
-    ## Clé WFS géoportail (apikey)
-    
-     Pour des raisons techniques le service demande toujours une clé dans le paramètre apikey. Il est recommandé d'utiliser les clés génériques dont la description est disponible sur [le site géoservices](https://geoservices.ign.fr/services-web-experts).
-     Une prochaine évolution permettra de s'affranchir de cette contrainte.
-
     ## Couche source
 
       Les couches WFS disponibles sur le géoportail peuvent être listée via l’URL [https://wxs.ign.fr/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities](https://wxs.ign.fr/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities) 
@@ -57,6 +52,11 @@ info:
 
          `{"type":"LineString","coordinates":[[4.681549,47.793784],[4.741974,47.788248]]}`
       
+
+      ## Historique des changements
+
+      * Suppression du paramètre *apikey*
+
 consumes:
   - application/json
 produces:
@@ -71,13 +71,7 @@ paths:
         Prend une geometrie de type GeoJSON en paramètre d'entrée et renvoie les informations intersectant cette géométrie
         Prend la source de donnée WFS Géoportail à interroger en paramètre d'entrée
       Paramètres de sorties : Retourne un résultat de Type "FeatureCollection"
-      parameters:
-        - name: apikey
-          in: query
-          description: Clé WFS géoportail
-          type: string
-          required: true
-          
+      parameters:  
         - name: source
           in: query
           description: Source des données WFS Géoportail
