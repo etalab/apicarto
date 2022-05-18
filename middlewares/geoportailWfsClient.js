@@ -1,12 +1,8 @@
 const debug = require('debug')('apicarto');
 const GeoportalWfsClient = require('geoportal-wfs-client');
-const readline = require("readline");
-const fs = require("fs");
-const { exit } = require('process');
-const { indexOf } = require('lodash');
-var fileSearchKey = "./datasets/wfs-geoportail/data/ressources_cle_wfs.csv";
-
-console.log
+const readline = require('readline');
+const fs = require('fs');
+var fileSearchKey = './datasets/wfs-geoportail/data/ressources_cle_wfs.csv';
 
 function readFileKeys(path){
     return new Promise((resolve, reject) => {
@@ -51,17 +47,17 @@ module.exports = function(req, res, next) {
     var recupKey = '';
     let searchKeyIndice = -1;
     let i=0;
+    let lineSplit='';
     // Recherche de la clé
-   while (searchKeyIndice < 0) {
-       lineSplit = linesKey[i].split(";");
-       if (lineSplit[3] == req.query.source) {
-           searchKeyIndice = 1;
-           recupKey = lineSplit[1];
-       } else {
-           i = i + 1;
-       }
-
-   }
+    while (searchKeyIndice < 0) {
+        lineSplit = linesKey[i].split(';');
+        if (lineSplit[3] == req.query.source) {
+            searchKeyIndice = 1;
+            recupKey = lineSplit[1];
+        } else {
+            i = i + 1;
+        }
+    }
     /* gestion paramètre apikey */
     var hasUserKey = false;
     if ( recupKey ){
