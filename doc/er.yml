@@ -72,6 +72,18 @@ paths:
           description: Date fin de mise à jour sous la forme AAAA-MM-JJ
           type: string
           require: false
+
+        - name: publi_date_deb
+          in: query
+          description: Date de publication début sous la forme AAAA-MM-JJ
+          type: string
+          require: false
+
+        - name: publi_date_fin
+          in: query
+          description: Date de publication de fin sous la forme AAAA-MM-JJ
+          type: string
+          require: false
         
         - name: _limit
           in: query

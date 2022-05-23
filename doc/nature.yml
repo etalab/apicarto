@@ -91,7 +91,7 @@ paths:
 
   /nature/natura-oiseaux:
     get:
-      summary: Recherche d'informations sur les divisions parcellaires d'une commune
+      summary: Récupération de la géométrie pour natura 2000 au titre de la directive oiseaux
       description: |
         Retourne un résultat de Type "FeatureCollection"
       parameters:

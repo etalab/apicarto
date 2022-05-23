@@ -7,7 +7,7 @@ const { matchedData } = require('express-validator/filter');
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry} = require('../../checker');
 
-const gppWfsClient = require('../../middlewares/gppWfsClient');
+const gppWfsClient = require('../../middlewares/geoportailWfsClient');
 
 const _ = require('lodash');
 
@@ -22,14 +22,7 @@ function createWfsProxy() {
         function(req,res){
             var params = matchedData(req);
             var featureTypeName= params.source;
-            if (typeof req.query.apikey == 'undefined') {
-                return res.status(400).send({
-                    code: 400,
-                    message: 'La clé ign (apikey) doit être renseignée'
-                });
-            }
             params = _.omit(params,'source');
-            params = _.omit(params,'apikey');
             /* Value default pour _limit an _start */
             if ( typeof params._start == 'undefined' ) {params._start = 0;}
             if( typeof params._limit == 'undefined') {params._limit = 1000;}
@@ -83,7 +76,6 @@ var corsOptionsGlobal = function(origin,callback) {
  * TODO Principe à valider (faire un middleware de renommage des paramètres si l'approche est trop violente)
  */
 var moduleValidator = [
-    check('apikey').exists().withMessage('Le paramètre apikey correspondant à la clé ign est obligatoire'),
     check('source').exists().withMessage('Le paramètre source pour le nom de la couche WFS géoportail  est obligatoire'),
     check('geom').optional().custom(isGeometry),
     check('_limit').optional().isNumeric(),

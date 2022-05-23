@@ -50,13 +50,26 @@ function createErProxy(featureTypeName,typeSearch){
                     params.field_date = params.date_maj_deb +'T00:00:00Z;'+ params.date_maj_fin+'T23:59:59Z';
                     params = _.omit(params,'date_maj_deb');
                     params = _.omit(params,'date_maj_fin');
-                    
-    
                 } else {
                     if((params.date_maj_deb) || (params.date_maj_fin)) {
                         return res.status(400).send({
                             code: 400,
                             message: 'Utilisation des dates avec une date de fin et une date de debut avec moins de 6 mois entre les 2 dates.'
+                        });
+                    }
+                }
+
+                // For params publication_date select between 2 dates
+                
+                if((params.publi_date_deb) && (params.publi_date_fin)) {
+                    params.field_publication_date = params.publi_date_deb +'T00:00:00Z;'+ params.publi_date_fin+'T23:59:59Z';
+                    params = _.omit(params,'publi_date_deb');
+                    params = _.omit(params,'publi_date_fin');
+                } else {
+                    if((params.publi_date_deb) || (params.publi_date_fin)) {
+                        return res.status(400).send({
+                            code: 400,
+                            message: 'Utilisation des dates de publication avec une date de fin et une date de debut avec moins de 6 mois entre les 2 dates.'
                         });
                     }
                 }
@@ -94,9 +107,7 @@ function createErProxy(featureTypeName,typeSearch){
                             message: 'Les 2 champs name et type doivent être renseignés pour cette recherche spécfique. Pour Le champ type les valeurs acceptées sont t,c ou s'
                         });
                     }
-
-                }
-                
+                }    
             }
 
             /** Gestion de la requete Grid */
@@ -107,7 +118,6 @@ function createErProxy(featureTypeName,typeSearch){
                 if (params.zip_codes) {
                     params.zip_codes = '"[\\"'+ params.zip_codes.replace(',' , ',\\"') + '\\"]"';
                 }
-
             }
             /* Value default pour _limit an _start */
             if ( typeof params._start == 'undefined' ) {params._start = 0;}
@@ -167,8 +177,9 @@ var productValidators = erValidators.concat([
     check('publication_date').optional().isString(),
     check('date_maj_deb').optional().isString(), // Param ne servant que pour admin
     check('date_maj_fin').optional().isString(), // Param ne servant que pour admin
-    check('admin').optional().isAlphanumeric().isLength({min:1,max:1}).withMessage('Le champ admin doit être Y ou N')
-
+    check('admin').optional().isAlphanumeric().isLength({min:1,max:1}).withMessage('Le champ admin doit être Y ou N'),
+    check('publi_date_deb').optional().isString(), // Param ne servant que pour admin
+    check('publi_date_fin').optional().isString() // Param ne servant que pour admin
     
 ]);
 
