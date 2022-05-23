@@ -2,7 +2,7 @@ const debug = require('debug')('apicarto');
 const GeoportalWfsClient = require('geoportal-wfs-client');
 const readline = require('readline');
 const fs = require('fs');
-var fileSearchKey = './doc/data/ressources_cle_wfs2022-05-20.csv';
+var fileSearchKey = './middlewares/ressources_cle_wfs2022-05-20.csv';
 
 function readFileKeys(path){
     return new Promise((resolve, reject) => {
