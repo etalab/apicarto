@@ -53,6 +53,8 @@ info:
          `{"type":"LineString","coordinates":[[4.681549,47.793784],[4.741974,47.788248]]}`
       
 
+      <u>Avertissement :</u> actuellement certaines ressources, dont la BDTOPO, ne peuvent être utilisées à travers cette API bêta du fait de la configuration de leur champ géométrique. 
+
       ## Historique des changements
 
       * Suppression du paramètre *apikey*
