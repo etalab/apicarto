@@ -53,7 +53,12 @@ info:
          `{"type":"LineString","coordinates":[[4.681549,47.793784],[4.741974,47.788248]]}`
       
 
-      <u>Avertissement :</u> actuellement certaines ressources, dont la BDTOPO, ne peuvent être utilisées à travers cette API bêta du fait de la configuration de leur champ géométrique. 
+
+    **<u>Avertissement :**</u> Pour le fonctionnement de l’API, la géométrie de la couche doit être nommée « the_geom ». Certaines couches, en particulier celles de la BD Topo® ne respectent pas cette norme, ce qui interdit actuellement d’utiliser ces couches avec API Carto.
+      
+      Pour vérifier le nom du champ géométrique utilisez DescribeFeatureType avec l'exemple de la requête ci-dessous sur la couche CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle.
+      
+      [https://wxs.ign.fr/parcellaire/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&TYPENAME=CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle&outputFormat=application/json](https://wxs.ign.fr/parcellaire/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&TYPENAME=CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle&outputFormat=application/json) 
 
       ## Historique des changements
 
