@@ -10,8 +10,8 @@
 Pour faire fonctionner API Carto, vous avez besoin de :
 
 * [Node.js](https://nodejs.org) v14+ (utilisation de [nvm](https://github.com/creationix/nvm) recommandée)
-* PostgreSQL v9.4+
-* PostGIS v2.1+
+* PostgreSQL v12+
+* PostGIS v2.2+
 * [ogr2ogr](http://www.gdal.org/ogr2ogr.html) v1.11+
 * wget (inclus dans la plupart des distributions Linux)
 
@@ -48,23 +48,6 @@ La connexion à la base postgresql est configurée à l'aide des variables d'env
 | PGPASSWORD | Mot de passe de l'utilisateur |
 
 
-### Configuration de la clé géoportail
-
-Les modules faisant appel aux flux geoportail supportent un paramètre `apikey` en paramètre de requête. Il est toutefois possible de déployer un serveur API Carto où les utilisateurs n'ont pas besoin de fournir ce paramètre :
-
-| Variable              | Description                   | Valeur par défaut        |
-|-----------------------|-------------------------------|--------------------------|
-| GEOPORTAL_API_KEY     | Clé geoportail                | aucune                   |
-| GEOPORTAL_REFERER     | Permet d'écraser le referer   | http://localhost         |
-
-L'ordre de priorité dans l'utilisation des variables est le suivant :
-
-* Pour la clé d'API, on utilise d'abord `apikey`, puis la variable d'environnement `GEOPORTAL_API_KEY`
-* Pour le referer, si le paramètre `apikey` est utilisé, on utilise le referer de la requête. Sinon, on utilise `GEOPORTAL_REFERER` et en dernier recours la valeur par défaut.
-
-Remarque : Vous n'êtes pas obligé de créer une clé protégée par referer, vous pouvez aussi spécifier une protection par IP (celui du serveur hébergeant API Carto) ou par User-Agent ('apicarto')
-
-
 ## Sources de données
 
 | Nom              | Description                                                        | Source                                                                                                 |
@@ -99,10 +82,6 @@ psql -d "apicarto" -c "CREATE EXTENSION postgis"
 ```bash
 PGDATABASE=apicarto npm run import
 ```
-
-### Clé Géoportail IGN
-
-Certaines couches de données WFS utilisées par l'API sont en accès restreint (paramètre `apikey`). Veuillez contacter l'IGN via l'espace professionnel pour avoir accès à ces couches via une clé géoportail.
 
 ### Lancer le service
 
