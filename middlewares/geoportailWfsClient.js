@@ -1,4 +1,3 @@
-const debug = require('debug')('apicarto');
 const GeoportalWfsClient = require('geoportal-wfs-client');
 const readline = require('readline');
 const fs = require('fs');
@@ -21,7 +20,7 @@ function readFileKeys(path){
             resolve(lines);
         });
     });
-};
+}
 
 var linesKey =[];
 readFileKeys(fileSearchKey).then(function(result){

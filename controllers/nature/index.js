@@ -4,9 +4,9 @@ var cors = require('cors');
 
 const _ = require('lodash');
 
-const { check } = require('express-validator/check');
+const { check } = require('express-validator');
+const { matchedData } = require('express-validator');
 const {isGeometry} = require('../../checker');
-const { matchedData } = require('express-validator/filter');
 const validateParams = require('../../middlewares/validateParams');
 const gppWfsClient = require('../../middlewares/naturegppWfsClient');
 

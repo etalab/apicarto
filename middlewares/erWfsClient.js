@@ -1,4 +1,3 @@
-const debug = require('debug')('apicarto');
 const GeoportalWfsClientEr = require('../lib/ClientEr.js');
 
 
