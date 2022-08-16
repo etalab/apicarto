@@ -1,7 +1,7 @@
 data/
 node_modules/
 coverage/
-
+middlewares/pgClient.js
 *.log
 tmp
 .DS_Store
