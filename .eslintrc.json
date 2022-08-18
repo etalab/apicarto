@@ -17,7 +17,7 @@
             "always"
         ],
         "no-console": [
-            "off"
+            1
         ]
     },
     "env": {

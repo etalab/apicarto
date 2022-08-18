@@ -4,7 +4,7 @@ const fs = require('fs');
 var fileSearchKey = './middlewares/ressources_cle_wfs2022-05-20.csv';
 
 function readFileKeys(path){
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const rl = readline.createInterface({
             input: fs.createReadStream(path),
             output: process.stdout,
