@@ -46,8 +46,9 @@ describe('Testing /api/cadastre/division', function() {
                         com_abs: '000',
                         echelle: '500',
                         edition: 3,
+                        bbox: [2.41596,48.8463411,2.4189352,48.8493916],
+                        code_insee: '94067',
                         code_arr: '000',
-                        code_insee: '94067'
                     });
                 })
                 .end(done);
@@ -70,8 +71,9 @@ describe('Testing /api/cadastre/division', function() {
                         code_com: '056',
                         com_abs: '000',
                         echelle: '500',
-                        edition: 3,
+                        edition: 1,
                         code_arr: '112',
+                        bbox: [2.39897142,48.84503372,2.40345206,48.84809772],
                         code_insee: '75056'
                     });
                 })

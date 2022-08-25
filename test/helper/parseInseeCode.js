@@ -10,7 +10,6 @@ describe('#parseCodeInsee()', () => {
             '544477', // too long
             '2E001',
             '24A01',
-            '97801',
             '00000'
         ].forEach(invalidCode => {
             it(`should reject ${invalidCode}`, () => {
@@ -36,9 +35,9 @@ describe('#parseCodeInsee()', () => {
     });
 
     it('should parse DOM/TOM INSEE code', () => {
-        expect(parseInseeCode('97123')).to.eql({
-            code_dep: '971',
-            code_com: '23'
+        expect(parseInseeCode('97209')).to.eql({
+            code_dep: '97',
+            code_com: '209'
         });
     });
 

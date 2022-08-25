@@ -65,6 +65,8 @@ describe('Testing /api/cadastre/localisant', function() {
                     code_com: '001',
                     com_abs: '000',
                     code_arr: '000',
+                    idu: "55001000ZK0141",
+                    bbox:[5.50374285,48.52731102,5.50374285,48.52731102],
                     code_insee: '55001'
                 });
             })

@@ -5,13 +5,6 @@ const expect = require('expect.js');
 const server = require('../../../server');
 
 describe('/api/gpu/all', function() {
-    describe('without filtering parameter', function() {
-        it('should reply with 400', function(done) {
-            request(server)
-                .get('/api/gpu/all')
-                .expect(400, done);
-        });
-    });
 
     describe('with invalid geom', function() {
         it('should reply an error', function(done) {
@@ -33,7 +26,7 @@ describe('/api/gpu/all', function() {
                 .expect(res => {
                     //TODO vérifier les specs
                     expect(res.body).to.be.an('array');
-                    expect(res.body.length).to.equal(12);
+                    expect(res.body.length).to.equal(17);
                     res.body.forEach(function(featureCollection){
                         expect(featureCollection.type).to.equal('FeatureCollection');
                     });

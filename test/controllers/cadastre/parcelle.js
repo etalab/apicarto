@@ -43,14 +43,6 @@ describe('Testing /api/cadastre/parcelle', function() {
 
     });
 
-    describe('/api/cadastre/parcelle?code_insee=94067&section=0A', function() {
-        it('should return a FeatureCollection', function(done){
-            request(server)
-                .get('/api/cadastre/parcelle?code_insee=94067&section=0A')
-                .expect(200,done);
-        });
-    });
-
     describe('/api/cadastre/parcelle?code_insee=94067&section=0A&com_abs=410&numero=0112', function() {
         it('should work for insee 33290 et section=0A et numero=0112 et com_abs=410', function(done){
             request(server)
