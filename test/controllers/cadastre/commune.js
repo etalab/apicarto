@@ -2,7 +2,7 @@
 
 const request = require('supertest');
 const expect = require('expect.js');
-const server = require('../../../server');
+const app = require('../../../app');
 
 describe('Testing /api/cadastre/commune', function() {
 
@@ -10,7 +10,7 @@ describe('Testing /api/cadastre/commune', function() {
 
         describe('With invalid code_insee', function() {
             it('should reply with 400', function(done){
-                request(server)
+                request(app)
                     .get('/api/cadastre/commune?code_insee=not_valid')
                     .expect(400,done)
                 ;
@@ -22,7 +22,7 @@ describe('Testing /api/cadastre/commune', function() {
     /* filtrage par code insee */
     describe('/api/cadastre/commune?code_insee=55001',function(){
         it('should reply with 200', done => {
-            request(server)    
+            request(app)    
                 .get('/api/cadastre/commune?code_insee=55001')
                 .expect(res => {
                     const feature = res.body.features[0];
@@ -40,7 +40,7 @@ describe('Testing /api/cadastre/commune', function() {
     /* filtrage par code_dep */
     describe('/api/cadastre/commune?code_dep=94',function(){
         it('should reply a FeatureCollection with valid features', done => {
-            request(server)    
+            request(app)    
                 .get('/api/cadastre/commune?code_dep=94')
                 .expect(200)
                 .expect(res => {
@@ -54,7 +54,7 @@ describe('Testing /api/cadastre/commune', function() {
 
    describe('/api/cadastre/commune?geom={"type":"Point","coordinates":[4.7962,45.22456]}',function(){
         it('should reply a FeatureCollection with valid features', done => {
-            request(server)
+            request(app)
             .post('/api/cadastre/commune')
             .expect(200)
             .send({ 'geom': {"type":"Point","coordinates":[4.7962,45.22456]}})

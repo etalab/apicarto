@@ -3,7 +3,7 @@
 const request = require('supertest');
 const expect = require('expect.js');
 
-const server = require('../../../server');
+const app = require('../../../app');
 
 
 describe('Testing /api/cadastre/division', function() {
@@ -12,7 +12,7 @@ describe('Testing /api/cadastre/division', function() {
 
         describe('With invalid code_insee', function() {
             it('should reply with 400 for insee=testapi', function(done){
-                request(server)
+                request(app)
                     .get('/api/cadastre/division?code_insee=testapi')
                     .expect(400,done);
             });
@@ -20,7 +20,7 @@ describe('Testing /api/cadastre/division', function() {
 
         describe('With invalid section', function() {
             it('should reply with 400', function(done){
-                request(server)
+                request(app)
                     .get('/api/cadastre/division?code_insee=94067&section=invalid')
                     .expect(400,done);
             });
@@ -29,9 +29,8 @@ describe('Testing /api/cadastre/division', function() {
     });
 
     describe('/api/cadastre/division?code_insee=94067&section=0A', function() {
-        this.timeout(5000);
         it('should reply a FeatureCollection containing a valid Feature for insee=94067 and section=0A', done => {
-            request(server)
+            request(app)
                 .get('/api/cadastre/division?code_insee=94067&section=0A')
                 .expect(200)
                 .expect(res => {
@@ -57,7 +56,7 @@ describe('Testing /api/cadastre/division', function() {
 
     describe('/api/cadastre/division?code_insee=75056&code_arr=112&section=AA', function() {
         it('should reply a FeatureCollection containing a valid Feature for case Paris 12e', done => {
-            request(server)
+            request(app)
                 .get('/api/cadastre/division?code_insee=75056&code_arr=112&section=AA')
                 .expect(200)
                 .expect(res => {

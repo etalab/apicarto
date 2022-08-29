@@ -2,12 +2,12 @@
 const request = require('supertest');
 const expect = require('expect.js');
 
-const server = require('../../../server');
+const app = require('../../../app');
 
 describe('/api/gpu/municipality', function() {
     describe('without filtering parameter', function() {
         it('should reply with 400', function(done) {
-            request(server)
+            request(app)
                 .get('/api/gpu/municipality')
                 .expect(200)
                 .expect(res => {
@@ -19,7 +19,7 @@ describe('/api/gpu/municipality', function() {
 
     describe('with insee=25349', function() {
         it('should reply with a valid feature', function(done) {
-            request(server)
+            request(app)
                 .get('/api/gpu/municipality?insee=25349')
                 .expect(200)
                 .expect(res => {
@@ -34,7 +34,7 @@ describe('/api/gpu/municipality', function() {
 
     describe('with point at [1.654399,48.112235] (Rennes)', function() {
         it('should reply a FeatureCollection containing a valid Feature', function(done) {
-            request(server)
+            request(app)
                 .get('/api/gpu/municipality?geom={"type":"Point","coordinates":[1.654399,48.112235]}')
                 .expect(200)
                 .expect(res => {

@@ -4,7 +4,7 @@ const geojsonhint = require('@mapbox/geojsonhint').hint;
 const request = require('supertest');
 const expect = require('expect.js');
 
-const server = require('../../../server');
+const app = require('../../../app');
 
 function returnValidGeoJSON(res) {
     expect(geojsonhint(res.body).filter(function (hint) {
@@ -17,7 +17,7 @@ const bboxWithinAppellations = [-0.439, 44.694, -0.437, 44.696];
 const bboxOutsideFrance = [-6.086, 46.3, -5, 46.5];
 
 function makeRequest(geom) {
-    return request(server)
+    return request(app)
         .get('/api/aoc/appellation-viticole')
         .send({geom: geom});
 }

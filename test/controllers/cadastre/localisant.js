@@ -3,7 +3,7 @@
 const request = require('supertest');
 const expect = require('expect.js');
 
-const server = require('../../../server');
+const app = require('../../../app');
 
 describe('Testing /api/cadastre/localisant', function() {
 
@@ -11,7 +11,7 @@ describe('Testing /api/cadastre/localisant', function() {
 
         describe('With invalid code_insee', function() {
             it('should reply with 400 for insee=testapi', function(done){
-                request(server)
+                request(app)
                     .get('/api/cadastre/localisant?code_insee=testapi')
                     .expect(400,done);
             });
@@ -19,7 +19,7 @@ describe('Testing /api/cadastre/localisant', function() {
 
         describe('With invalid section', function() {
             it('should reply with 400', function(done){
-                request(server)
+                request(app)
                     .get('/api/cadastre/localisant?code_insee=94067&section=invalid')
                     .expect(400,done);
             });
@@ -27,7 +27,7 @@ describe('Testing /api/cadastre/localisant', function() {
 
         describe('With invalid code_arr', function() {
             it('should reply with 400', function(done){
-                request(server)
+                request(app)
                     .get('/api/cadastre/localisant?code_insee=94067&code_arr=invalid')
                     .expect(400,done);
             });
@@ -35,7 +35,7 @@ describe('Testing /api/cadastre/localisant', function() {
 
         describe('With invalid com_abs', function() {
             it('should reply with 400', function(done){
-                request(server)
+                request(app)
                     .get('/api/cadastre/localisant?code_insee=94067&com_abs=invalid')
                     .expect(400,done);
             });
@@ -45,13 +45,13 @@ describe('Testing /api/cadastre/localisant', function() {
 
 
     it('/api/cadastre/localisant?code_insee=94067', function(){
-        request(server)
+        request(app)
             .get('/api/cadastre/localisant?code_insee=94067')
             .expect(200);
     });
 
     it('/api/cadastre/localisant?code_insee=55001&section=ZK&numero=0141', done => {
-        request(server)    
+        request(app)    
             .get('/api/cadastre/localisant?code_insee=55001&section=ZK&numero=0141')
             .expect(res => {
                 const feature = res.body.features[0];
