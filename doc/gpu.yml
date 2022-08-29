@@ -320,12 +320,6 @@ paths:
         - SUP
       parameters:
         - in: query
-          name: geom
-          type: string
-          required: false
-          description: Géométrie GeoJSON utilisée pour la recherche
-
-        - in: query
           name: partition
           type: string
           required: false
