@@ -1,8 +1,8 @@
 var Router = require('express').Router;
 var router = new Router();
 var format = require('pg-format');
-const { check } = require('express-validator/check');
-const { matchedData } = require('express-validator/filter');
+const { check } = require('express-validator');
+const { matchedData } = require('express-validator');
 const isGeometry = require('../../checker/isGeometry');
 const validateParams = require('../../middlewares/validateParams');
 

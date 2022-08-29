@@ -1,5 +1,5 @@
 const bunyan = require('bunyan');
-const uuidV4 = require('uuid/v4');
+const { v4: uuidV4 } = require('uuid');
 const onFinished = require('on-finished');
 const _ = require('lodash');
 
