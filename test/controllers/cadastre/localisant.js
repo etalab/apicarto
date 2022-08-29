@@ -44,10 +44,10 @@ describe('Testing /api/cadastre/localisant', function() {
     });
 
 
-    it('/api/cadastre/localisant?code_insee=94067', function(){
+    it('/api/cadastre/localisant?code_insee=94067', function(done){
         request(app)
             .get('/api/cadastre/localisant?code_insee=94067')
-            .expect(200);
+            .expect(200,done);
     });
 
     it('/api/cadastre/localisant?code_insee=55001&section=ZK&numero=0141', done => {
