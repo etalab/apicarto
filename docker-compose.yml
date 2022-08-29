@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  api:
+    image: ignf/apicarto:latest
+    build:
+      context: .
+      args:
+        - http_proxy
+        - https_proxy
+        - HTTP_PROXY
+        - HTTPS_PROXY
+    networks:
+      - apicarto
+    ports:
+      # local exposure when traefik is not available
+      - "127.0.0.1:8091:8091"
+    depends_on:
+      - database
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apicarto.rule=Host(`apicarto.${HOST_HOSTNAME}`)"
+    restart: unless-stopped
+
+networks:
+  apicarto:
