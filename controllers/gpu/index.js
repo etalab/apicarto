@@ -2,8 +2,8 @@ var Router = require('express').Router;
 var cors = require('cors');
 var router = new Router();
 
-const { check } = require('express-validator/check');
-const { matchedData } = require('express-validator/filter');
+const { check } = require('express-validator');
+const { matchedData } = require('express-validator');
 const {isGeometry,isCodeInsee} = require('../../checker');
 const validateParams = require('../../middlewares/validateParams');
 

@@ -1,6 +1,4 @@
-const debug = require('debug')('apicarto');
 const GeoportalWfsClient = require('geoportal-wfs-client');
-
 
 /*
  * Middleware pour la création du client WFS geoportail

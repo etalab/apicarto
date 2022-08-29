@@ -1,4 +1,3 @@
-const debug = require('debug')('apicarto');
 const GeoportalWfsClient = require('geoportal-wfs-client');
 
 /*

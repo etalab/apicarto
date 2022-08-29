@@ -1,8 +1,8 @@
 const Router = require('express').Router;
 var router = new Router();
 
-const { check } = require('express-validator/check');
-const { matchedData } = require('express-validator/filter');
+const { check } = require('express-validator');
+const { matchedData } = require('express-validator');
 
 const validateParams = require('../../middlewares/validateParams');
 
