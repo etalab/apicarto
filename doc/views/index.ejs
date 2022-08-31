@@ -2,12 +2,12 @@
 <html>
 
 <head>
-    <% include partial/head.ejs %>
+    <%- include('partial/head.ejs') %>
 </head>
 
 <body>
 
-    <% include partial/menu.ejs %>
+    <%- include('partial/menu.ejs') %>
 
         <div class="container">
             <h1>API Carto - Documentation Technique</h1>
@@ -21,7 +21,7 @@
                 <li>Les API offrent des opérations génériques de filtrage simple:
                     <ul>
                         <li>Par attribut sous la forme (?nom_attribut=valeur)</li>
-                        <li>Par intersection géométrique (?geom=géométrie GeoJSON)</li>                        
+                        <li>Par intersection géométrique (?geom=géométrie GeoJSON)</li>
                     </ul>
                 </li>
             </ul>
@@ -284,7 +284,7 @@
 
         </div>
 
-        <% include partial/scripts.ejs %>
+        <%- include('partial/scripts.ejs') %>
 
 </body>
 
