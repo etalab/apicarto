@@ -1,5 +1,11 @@
 FROM node:16-alpine
 
+ENV PGHOST=db
+ENV PGDATABASE=apicarto
+ENV PGUSER=postgres
+ENV PGPASSWORD=postgis
+ENV PGPORT=5432
+
 ARG http_proxy=""
 ENV http_proxy=${http_proxy}
 ENV HTTP_PROXY=${http_proxy}

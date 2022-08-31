@@ -82,7 +82,7 @@ PGDATABASE=apicarto npm run import
 
 ### Lancer le service
 
-```
+```bash
 npm start
 ```
 
