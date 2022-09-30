@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+
+  api:
+    build:
+      context: .
+      args:
+        - http_proxy
+        - https_proxy
+        - HTTP_PROXY
+        - HTTPS_PROXY
+    networks:
+      - apicarto
+    environment:
+      - PGPASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      # pour http://localhost:8091/api/doc si traefik non installé
+      - "8091:8091"
+    depends_on:
+      - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apicarto.rule=Host(`apicarto.${HOST_HOSTNAME}`)"
+    restart: unless-stopped
+
+  db:
+    container_name: apicarto-db
+    image: postgis/postgis:13-3.2-alpine
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - apicarto
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  db-data:
+
+networks:
+  apicarto:
