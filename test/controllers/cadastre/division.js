@@ -5,6 +5,20 @@ const expect = require('expect.js');
 
 const app = require('../../../app');
 
+const EXPECTED_PROPERTIES = [
+	"bbox",
+	"code_arr",
+	"code_com",
+	"code_dep",
+	"code_insee",
+	"com_abs",
+	"echelle",
+	"edition",
+	"feuille",
+	"nom_com",
+	"section"
+];
+
 
 describe('Testing /api/cadastre/division', function() {
 
@@ -36,19 +50,10 @@ describe('Testing /api/cadastre/division', function() {
                 .expect(res => {
                     const feature = res.body.features[0];
                     expect(feature.geometry.type).to.eql('MultiPolygon');
-                    expect(feature.properties).to.eql({
-                        feuille: 1,
-                        section: '0A',
-                        code_dep: '94',
-                        nom_com: 'Saint-Mandé',
-                        code_com: '067',
-                        com_abs: '000',
-                        echelle: '500',
-                        edition: 3,
-                        bbox: [2.41596,48.8463411,2.4189352,48.8493916],
-                        code_insee: '94067',
-                        code_arr: '000',
-                    });
+                    let propertyNames = Object.keys(feature.properties);
+                    propertyNames.sort();
+                    expect(propertyNames).to.eql(EXPECTED_PROPERTIES);
+                    expect(feature.properties.nom_com).to.eql('Saint-Mandé');
                 })
                 .end(done);
         });
@@ -62,19 +67,21 @@ describe('Testing /api/cadastre/division', function() {
                 .expect(res => {
                     const feature = res.body.features[0];
                     expect(feature.geometry.type).to.eql('MultiPolygon');
-                    expect(feature.properties).to.eql({
-                        feuille: 1,
-                        section: 'AA',
-                        code_dep: '75',
-                        nom_com: 'Paris',
-                        code_com: '056',
-                        com_abs: '000',
-                        echelle: '500',
-                        edition: 1,
-                        code_arr: '112',
-                        bbox: [2.39897142,48.84503372,2.40345206,48.84809772],
-                        code_insee: '75056'
-                    });
+                    let propertyNames = Object.keys(feature.properties);
+                    propertyNames.sort();
+                    expect(propertyNames).to.eql(EXPECTED_PROPERTIES);
+
+                    expect(feature.properties.feuille).to.eql(1);
+                    expect(feature.properties.section).to.eql('AA');
+                    expect(feature.properties.code_dep).to.eql('75');
+                    expect(feature.properties.nom_com).to.eql('Paris');
+                    expect(feature.properties.code_com).to.eql('056');
+                    expect(feature.properties.com_abs).to.eql('000');
+                    expect(feature.properties.echelle).to.eql('500');
+                    expect(feature.properties.edition).to.eql('1');
+                    expect(feature.properties.code_arr).to.eql('112');
+                    // bbox: [2.39897142,48.84503372,2.40345206,48.84809772]
+                    expect(feature.properties.code_insee).to.eql('75056');
                 })
                 .end(done);
         });
