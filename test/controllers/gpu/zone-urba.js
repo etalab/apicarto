@@ -15,7 +15,7 @@ describe('/api/gpu/zone-urba', function() {
                     expect(res.body.features.length).to.eql(1);
                     const feature = res.body.features[0];
                     expect(feature.geometry.type).to.eql('MultiPolygon');
-                    expect(feature.properties.libelong).to.eql('Zone agricole');
+                    expect(feature.properties.libelle).to.eql('A');
                 })
                 .end(done);
             ;
