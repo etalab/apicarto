@@ -61,11 +61,6 @@ function createRpgProxy(valeurSearch) {
             req.gppWfsClient.getFeatures(featureTypeName, params)
                 /* uniformisation des attributs en sortie */
                 .then(function(featureCollection){
-                    featureCollection.features.forEach(function(feature){
-                        if ( ! feature.properties.code_insee ){
-                            feature.properties.code_insee = feature.properties.code_dep+feature.properties.code_com;
-                        }
-                    });
                     return featureCollection;
                 })
                 .then(function(featureCollection) {

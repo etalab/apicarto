@@ -204,8 +204,6 @@ definitions:
             type: string
           culture_d2:
             type: string
-          code_insee:
-            type: string
 
       geometry:
         $ref: '#/definitions/MultiPolygon'
@@ -245,8 +243,6 @@ definitions:
           surf_cultu:
             type: string
           code_cultu:
-            type: string
-          code_insee:
             type: string
           nom_cultu:
             type: string
