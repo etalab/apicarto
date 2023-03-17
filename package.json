@@ -30,7 +30,7 @@
     "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "bunyan": "^1.8.15",
-    "codes-postaux": "^3.6.0",
+    "codes-postaux": "^4.0.0",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
     "ejs": "^3.1.8",
