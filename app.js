@@ -78,4 +78,7 @@ app.use('/api/er',require('./controllers/er'));
 /* Module Dreal Corse */
 app.use('/api/corse/',require('./controllers/corse'));
 
+/* Endpoints dédié à la surveillance */
+app.use('/api/health/',require('./controllers/health'));
+
 module.exports = app;
