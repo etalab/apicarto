@@ -6,6 +6,11 @@ const cors = require('cors');
 
 var app = express();
 
+ /* Mentions légales */
+ app.get('/api/doc/mentions', function(req,res){
+    res.render('mentions');
+});
+
 /*------------------------------------------------------------------------------
  * common middlewares
  ------------------------------------------------------------------------------*/
@@ -50,7 +55,6 @@ app.get('/api/doc/:moduleName', function(req,res){
 /* -----------------------------------------------------------------------------
  * Routes
  -----------------------------------------------------------------------------*/
-
 /* Module cadastre */
 app.use('/api/cadastre',require('./controllers/cadastre'));
 
