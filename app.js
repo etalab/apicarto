@@ -6,8 +6,8 @@ const cors = require('cors');
 
 var app = express();
 
- /* Mentions légales */
- app.get('/api/doc/mentions', function(req,res){
+/* Mentions légales */
+app.get('/api/doc/mentions', function(req,res){
     res.render('mentions');
 });
 
