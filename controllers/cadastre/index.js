@@ -55,7 +55,13 @@ function createCadastreProxy(featureTypeName){
                     params = _.omit(params,'code_com');
                     params = _.omit(params,'code_dep');
                 }
-                if( typeof params._limit == 'undefined'|| params._limit > 500) {params._limit = 500;}
+                if( typeof params._limit == 'undefined') {params._limit = 500;}
+                if( params._limit > 500) {
+                    return res.status(400).send({
+                        code: 400,
+                        message: 'La valeur de l\'attribut "limit" doit être inférieur ou égal à 500.'
+                    });
+                }
             }
 
             /* Value default pour _limit an _start */
