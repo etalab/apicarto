@@ -101,7 +101,7 @@ paths:
             
         - name: _limit
           in: query
-          description: Limite de résultats à afficher(chiffre entre 1 et 1000)
+          description: Limite de résultats à afficher(chiffre entre 1 et 500)
           type: integer
           required: false
           

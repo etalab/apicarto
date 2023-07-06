@@ -48,12 +48,19 @@ function createCadastreProxy(featureTypeName){
                 params = _.omit(params,'code_insee');
             }
 
-            /* hack du couple code_dep et code_com dans le cas des communes */
+            /* hack du couple code_dep et code_com + limite réponse à 500 features dans le cas des communes  */
             if ( featureTypeNameFinal.endsWith('commune') ){
                 if ( params.code_dep && params.code_com ){
                     params.code_insee = params.code_dep + params.code_com ;
                     params = _.omit(params,'code_com');
                     params = _.omit(params,'code_dep');
+                }
+                if( typeof params._limit == 'undefined') {params._limit = 500;}
+                if( params._limit > 500) {
+                    return res.status(400).send({
+                        code: 400,
+                        message: 'La valeur de l\'attribut "limit" doit être inférieur ou égal à 500.'
+                    });
                 }
             }
 
@@ -103,7 +110,7 @@ var corsOptionsGlobal = function(origin,callback) {
     callback(null, corsOptions);
 };
 
-/**
+/**1000
  * Permet d'alerter en cas de paramètre ayant changer de nom
  * 
  * TODO Principe à valider (faire un middleware de renommage des paramètres si l'approche est trop violente)
