@@ -55,7 +55,7 @@ function createCadastreProxy(featureTypeName){
                     params = _.omit(params,'code_com');
                     params = _.omit(params,'code_dep');
                 }
-                if( typeof params._limit == 'undefined'|| params._limit > 500) {params._limit = 500;};
+                if( typeof params._limit == 'undefined'|| params._limit > 500) {params._limit = 500;}
             }
 
             /* Value default pour _limit an _start */
