@@ -59,8 +59,9 @@ info:
       * Suppression /cadastre/geometrie : récupération des parcelles avec calcul de surfaces
       * Uniformisation des noms d'attribut et paramètres de filtrage. Paramètre de filtrage = nom de l'attribut (codearr => code_arr, insee => code_insee, etc.)
       * Ajout de la possibilité d'utiliser les couches PCI EXPRESS ou les couches BD PARCELLAIRE
-      * Création de la valeur BDP pour l'attribut *source_ign*.
+      * Création de la valeur BDP pour l'attribut *source_ign*
       * Suppression du paramètre *apikey*
+      * Limitation à 500 réponses pour la recherche de communes
 
 
   contact:
