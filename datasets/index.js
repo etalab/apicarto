@@ -1,8 +1,6 @@
 module.exports = {
-    'bdparcellaire': require('./bdparcellaire/config'),
-    'pci' : require('./pci/config'),
-    'codes-postaux': require('./codes-postaux/config'),
-    //'inao-appellation': require('./inao-appellation/config'),
-    'gpu': require('./gpu/config'),
-    'rpg': require('./rpg/config')
+    'Géoportail': require('./geoportail/config'),
+    'GPU': require('./gpu/config'),
+    'Base adresse nationale': require('./base-adresse-nationale/config'),
+    'Base des appellations viticoles' : require('./appellations-viticoles/config')
 };
