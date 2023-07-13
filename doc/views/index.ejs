@@ -123,10 +123,10 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="col-xs-2">Nom</th>
+                        <th class="col-xs-1">Source</th>
                         <th class="col-xs-1">Version</th>
-                        <th>Description</th>
-                        <th class="col-xs-3"></th>
+                        <th class="col-xs-1">Modules</th>
+                        <th class="col-xs-1">Plus d'information</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -135,15 +135,16 @@
                         var dataset = datasets[datasetName];    
                     %>
                     <tr>
-                        <td><%= datasetName %><br />(<%= dataset.type %>)</td>
+                        <td><%= datasetName %></td>
                         <td><%= dataset.version %></td>
-                        <td>
-                            <%= dataset.description %>
-                            <br /><br />
-                            <a target="_blank" href="<%= dataset.url %>"><%= dataset.url %></a> 
+                        <td><%
+                            for ( var module in dataset.modules){ %>
+                                <%= dataset.modules[module] %><br>
+                            <%}
+                            %>
                         </td>
-                        <td class="text-right">
-                            <a href="<%= dataset.homepage %>" target="_blank">Plus d'information</a>
+                        <td>
+                            <a href="<%= dataset.url %>" target="_blank"><%= dataset.nom_url %></a>
                         </td>
                     </tr>
                     <% } %>
