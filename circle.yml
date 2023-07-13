@@ -17,7 +17,6 @@ dependencies:
     - psql -d apicarto -c "CREATE EXTENSION postgis;" -U postgres
     - npm config set apicarto:pgUser postgres
     - npm config list
-    - npm run import
     - npm install coveralls
 
 test:
