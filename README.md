@@ -87,13 +87,6 @@ createdb "apicarto"
 psql -d "apicarto" -c "CREATE EXTENSION postgis"
 ```
 
-
-### Chargement des données
-
-```bash
-PGDATABASE=apicarto npm run import
-```
-
 ### Lancer le service
 
 ```bash
