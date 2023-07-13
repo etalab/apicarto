@@ -35,13 +35,12 @@ La connexion à la base postgresql est configurée à l'aide des variables d'env
 
 ## Sources de données
 
-| Nom              | Description                                                        | Source                                                                                                 |
-|------------------|--------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| bdparcellaire    | Base de données cadastrale                                         | http://professionnels.ign.fr/bdparcellaire                                                             |
-| adminexpress     | Découpage administratif du territoire métropolitain et ultra-marin | http://professionnels.ign.fr/adminexpress                                                              |
-| osm-commune      | Découpage administratif issu de openstreetmap                      | https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/#  |
-| codes-postaux    | Codes postaux associés aux communes                                | Voir https://github.com/BaseAdresseNationale/codes-postaux                                                   |
-
+| Source                | Version            | Modules           | Plus d'information |
+|-----------------------|--------------------|-------------------|--------------------|
+| Géoportail            | Flux WFS | Cadastre <br/> RPG <br/> Nature <br/> WFS-Geoportail | [Geoservices](https://geoservices.ign.fr/services-web-experts) |
+| GPU                   | Flux WFS | GPU                                   | [Géoportail de l'urbanisme](https://www.geoportail-urbanisme.gouv.fr/) |
+| Base adresse nationale | v4.0.0  | Codes Postaux                         | [BAN](https://github.com/baseadressenationale/codes-postaux) |
+| Base des appellations viticoles | Flux WFS | Appellations viticoles      | [FranceAgriMer](https://www.franceagrimer.fr/filieres-Vin-et-cidre/Vin/Professionnels/Teleprocedures) |
 
 
 ## Installation
