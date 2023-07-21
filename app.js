@@ -52,6 +52,13 @@ app.get('/api/doc/:moduleName', function(req,res){
     res.render('module',{moduleName: req.params.moduleName});
 });
 
+app.get('/', function (req, res) {
+    res.redirect('/api/doc/');
+});
+
+app.get('/api/', function (req, res) {
+    res.redirect('/api/doc/');
+});
 /* -----------------------------------------------------------------------------
  * Routes
  -----------------------------------------------------------------------------*/
