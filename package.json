@@ -25,7 +25,7 @@
     "@terraformer/wkt": "^2.1.2",
     "@turf/meta": "6.5.0",
     "@turf/turf": "^6.5.0",
-    "axios": "^0.27.2",
+    "axios": "^1.6.5",
     "body-parser": "^1.20.0",
     "bunyan": "^1.8.15",
     "codes-postaux": "^4.0.0",
@@ -33,7 +33,7 @@
     "debug": "^4.3.4",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
-    "express-validator": "^6.14.2",
+    "express-validator": "^7.0.1",
     "geoportal-wfs-client": "https://github.com/IGNF/geoportal-wfs-client#v0.4.0",
     "handlebars": "^4.7.7",
     "http-proxy-agent": "^5.0.0",
@@ -42,8 +42,8 @@
     "pg": "^8.8.0",
     "pg-format": "^1.0.4",
     "shelljs": "^0.8.5",
-    "swagger-ui-dist": "^4.14.0",
-    "uuid": "^8.3.2"
+    "swagger-ui-dist": "^5.11.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "coveralls": "^3.1.1",
