@@ -8,7 +8,7 @@ const validateParams = require('../../middlewares/validateParams');
 const {isGeometry,isCodeInsee} = require('../../checker');
 const parseInseeCode = require('../../helper/parseInseeCode');
 
-const gppWfsClient = require('../../middlewares/cadastreWfsClient');
+const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 

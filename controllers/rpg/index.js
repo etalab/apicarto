@@ -7,7 +7,7 @@ const { matchedData } = require('express-validator');
 const validateParams = require('../../middlewares/validateParams');
 const {isGeometry} = require('../../checker');
 
-const gppWfsClient = require('../../middlewares/rpgWfsClient');
+const gppWfsClient = require('../../middlewares/gppWfsClient');
 
 const _ = require('lodash');
 const lastYearRPG = 2022;
