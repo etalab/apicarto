@@ -9,8 +9,7 @@ const GeoportalWfsClientEr = require('../lib/ClientEr.js');
 module.exports = function(req, res, next) {
     /* gestion des variables d'environnement et valeur par défaut */
     var options = {
-        apiKey:  'espacerevendeurs',
-        url: 'https://wxs.ign.fr/{apiKey}/geoportail/wfs',
+        url: 'https://data.geopf.fr/wfs/ows',
         headers:{
             'User-Agent': 'apicarto',
             'Referer': 'http://localhost'
