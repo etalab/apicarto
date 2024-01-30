@@ -22,7 +22,6 @@ function createErProxy(featureTypeName,typeSearch){
         validateParams,
         function(req,res){
             var params = matchedData(req);
-            params = _.omit(params,'apikey');
             
             /** Gestion affichage des valeurs avec has_geometrie
              * si true : affichage uniquement des résultats avec géométrie
@@ -183,8 +182,8 @@ var productValidators = erValidators.concat([
     
 ]);
 
-router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('ESPACEREVENDEUR:product_view','product'));
-router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('ESPACEREVENDEUR:product_view','product'));
+router.get('/product', cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product','product'));
+router.post('/product',cors(corsOptionsGlobal),productValidators, createErProxy('espace_revendeurs:product','product'));
 
 /**
  * Récupération des information sur les category dans le flux product_view
@@ -198,8 +197,8 @@ var categoryValidators = erValidators.concat([
     check('admin').optional().isAlphanumeric().isLength({min:1,max:1}).withMessage('Le champ admin doit être Y ou N')
 ]);
 
-router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('ESPACEREVENDEUR:product_view' ,'category'));
-router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('ESPACEREVENDEUR:product_view','category'));
+router.get('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product' ,'category'));
+router.post('/category', cors(corsOptionsGlobal),categoryValidators, createErProxy('espace_revendeurs:product','category'));
 
 
 /**
@@ -214,8 +213,8 @@ var gridValidators = erValidators.concat([
     check('zip_codes').optional().isString()
 ]);
 
-router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('ESPACEREVENDEUR:grid_view','grid'));
-router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('ESPACEREVENDEUR:grid_view','grid'));
+router.get('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid','grid'));
+router.post('/grid', cors(corsOptionsGlobal),gridValidators, createErProxy('espace_revendeurs:grid','grid'));
 
 
 module.exports=router;
