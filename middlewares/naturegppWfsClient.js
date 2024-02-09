@@ -10,8 +10,8 @@ module.exports = function(req, res, next) {
     /* gestion des variables d'environnement et valeur par défaut */
     var options = {
         'defaultCRS': 'EPSG:3857',
-        apiKey:  'environnement',
-        url: 'https://wxs.ign.fr/{apiKey}/geoportail/wfs',
+        'defaultGeomFieldName': 'geom',
+        url: 'https://data.geopf.fr/wfs/ows',
         headers:{
             'User-Agent': 'apicarto',
             'Referer': 'http://localhost'
