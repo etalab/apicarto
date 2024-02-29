@@ -19,7 +19,7 @@ info:
 
     ## Couche source
 
-      Les couches WFS disponibles sur le géoportail peuvent être listée via l’URL [https://wxs.ign.fr/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities](https://wxs.ign.fr/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities) 
+      Les couches WFS disponibles sur le géoportail peuvent être listée via l’URL [https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities](https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities) 
 
       Actuellement seules les couches exprimées dans le référentiel WGS84 (EPSG:4326) peuvent être utilisées. 
       Il est possible de vérifier le référentiel d’une couche en consultant la valeur de la balise `<DefaultCRS>`. 
@@ -58,10 +58,11 @@ info:
       
       Pour vérifier le nom du champ géométrique utilisez DescribeFeatureType avec l'exemple de la requête ci-dessous sur la couche CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle.
       
-      [https://wxs.ign.fr/parcellaire/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&TYPENAME=CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle&outputFormat=application/json](https://wxs.ign.fr/parcellaire/geoportail/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&TYPENAME=CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle&outputFormat=application/json) 
+      [https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&TYPENAME=CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle&outputFormat=application/json](https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=DescribeFeatureType&TYPENAME=CADASTRALPARCELS.PARCELLAIRE_EXPRESS:parcelle&outputFormat=application/json) 
 
       ## Historique des changements
 
+      * Utilisation des flux WFS de la geoplateforme
       * Suppression du paramètre *apikey*
 
 consumes:
