@@ -1,5 +1,4 @@
-const GeoportalWfsClientGpu = require('../lib/ClientGpu.js');
-
+const GeoportalWfsClient = require('geoportal-wfs-client');
 /*
  * middleware pour la création du client geoportail
  */
@@ -11,9 +10,9 @@ module.exports = function(req, res, next) {
         referer = req.headers.referer ;
     }
 
-    req.gpuWfsClient = new GeoportalWfsClientGpu({
-        'apiKey':  '39wtxmgtn23okfbbs1al2lz3',
-        'url' : 'https://wxs-gpu.mongeoportail.ign.fr/externe/{apiKey}/wfs/v',
+    req.gpuWfsClient = new GeoportalWfsClient({
+        'defaultGeomFieldName': 'the_geom',
+        url: 'https://data.geopf.fr/wfs/ows',
         'headers':{
             Referer: referer,
             'User-Agent': 'apicarto'
