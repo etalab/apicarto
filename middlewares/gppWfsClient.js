@@ -19,7 +19,7 @@ module.exports = function(req, res, next) {
     if ( req.headers.referer ){
         options.headers.Referer = req.headers.referer ;
     }
-    if ( process.env.GEOPORTAL_REFERER /*&& ! hasUserKey*/ ){
+    if ( process.env.GEOPORTAL_REFERER ){
         options.headers.Referer = process.env.GEOPORTAL_REFERER ;
     }
 
